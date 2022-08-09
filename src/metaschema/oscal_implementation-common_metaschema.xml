@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-model href="../../build/metaschema/toolchains/xslt-M4/validate/metaschema-check.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="../../build/metaschema/toolchains/xslt-M4/validate/metaschema-composition-check.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
 <!DOCTYPE METASCHEMA [
-      <!ENTITY allowed-values-responsible-roles-operations SYSTEM "shared-constraints/allowed-values-responsible-roles-operations.ent">
-      <!ENTITY allowed-values-responsible-roles-component-production SYSTEM "shared-constraints/allowed-values-responsible-roles-component-production.ent">
-      <!ENTITY allowed-values-property-name-asset-type-values SYSTEM "shared-constraints/allowed-values-property-name-asset-type-values.ent">
-      <!ENTITY allowed-values-component_component_property-name SYSTEM "shared-constraints/allowed-values-component_component_property-name.ent">
-      <!ENTITY allowed-values-component_component_software SYSTEM "shared-constraints/allowed-values-component_component_software.ent">
-      <!ENTITY allowed-values-component_component_service SYSTEM "shared-constraints/allowed-values-component_component_service.ent">
-      <!ENTITY allowed-values-component_inventory-item_property-name SYSTEM "shared-constraints/allowed-values-component_inventory-item_property-name.ent">
-      <!ENTITY allowed-values-component_component_link-rel SYSTEM "shared-constraints/allowed-values-component_component_link-rel.ent">
-      <!ENTITY allowed-values-component-type SYSTEM "shared-constraints/allowed-values-component-type.ent">
+      <!ENTITY allowed-values-responsible-roles-operations SYSTEM "./shared-constraints/allowed-values-responsible-roles-operations.ent">
+      <!ENTITY allowed-values-responsible-roles-component-production SYSTEM "./shared-constraints/allowed-values-responsible-roles-component-production.ent">
+      <!ENTITY allowed-values-property-name-asset-type-values SYSTEM "./shared-constraints/allowed-values-property-name-asset-type-values.ent">
+      <!ENTITY allowed-values-component_component_property-name SYSTEM "./shared-constraints/allowed-values-component_component_property-name.ent">
+      <!ENTITY allowed-values-component_component_software SYSTEM "./shared-constraints/allowed-values-component_component_software.ent">
+      <!ENTITY allowed-values-component_component_service SYSTEM "./shared-constraints/allowed-values-component_component_service.ent">
+      <!ENTITY allowed-values-component_inventory-item_property-name SYSTEM "./shared-constraints/allowed-values-component_inventory-item_property-name.ent">
+      <!ENTITY allowed-values-component_component_link-rel SYSTEM "./shared-constraints/allowed-values-component_component_link-rel.ent">
+      <!ENTITY allowed-values-component-type SYSTEM "./shared-constraints/allowed-values-component-type.ent">
 ]>
 <METASCHEMA xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://csrc.nist.gov/ns/oscal/metaschema/1.0" xsi:schemaLocation="http://csrc.nist.gov/ns/oscal/metaschema/1.0 ../../build/metaschema/toolchains/xslt-M4/validate/metaschema.xsd" abstract="yes">
       <schema-name>OSCAL Implementation Common Information</schema-name>
-      <schema-version>1.0.0</schema-version>
+      <schema-version>1.0.4</schema-version>
       <short-name>oscal-implementation-common</short-name>
       <namespace>http://csrc.nist.gov/ns/oscal/1.0</namespace>
       <json-base-uri>http://csrc.nist.gov/ns/oscal</json-base-uri>
@@ -30,7 +30,8 @@
             <description>A defined component that can be part of an implemented system.</description>
             <define-flag name="uuid" as-type="uuid" required="yes">
                   <formal-name>Component Identifier</formal-name>
-                  <description>The unique identifier for the component.</description>
+                  <!-- Identifier Declaration -->
+                  <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this component elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>component</code> can be used to reference the data item locally or globally (e.g., in an imported OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions of the document.</description>
             </define-flag>
             <flag ref="system-component-type" required="yes">
                   <!-- CHANGED: "component-type" to "type" -->
@@ -138,7 +139,7 @@
                   </allowed-values>
 
                   <allowed-values target="prop[@name='implementation-point']/@value">
-                        <enum value="inteneral">The component is implemented within the system boundary.</enum>
+                        <enum value="internal">The component is implemented within the system boundary.</enum>
                         <enum value="external">The component is implemented outside the system boundary.</enum>
                   </allowed-values>
 
@@ -181,7 +182,7 @@
             &allowed-values-component_component_service;
                   </allowed-values>
 
-                  <expect test="not(exists((.)[not(@type='service')]/protocol))"/>
+                  <expect target="." test="not(exists((.)[not(@type='service')]/protocol))"/>
 
                   <!-- ========================================================================================================== -->
                   <!-- = INTERCONNECTION: type='interconnection' constraints                        = -->
@@ -194,7 +195,7 @@
                         <enum value="ipv6-address">An Internet Protocol Version 6 interconnection address</enum>
                         <enum value="direction">An Internet Protocol Version 6 interconnection address</enum>
                   </allowed-values>
-                  <allowed-values target="prop[(@name=('ipv4-address','ipv6-address')]/@class" allow-other="yes">
+                  <allowed-values target="prop[@name=('ipv4-address','ipv6-address')]/@class" allow-other="yes">
                         <enum value="local">The identified IP address is for this system.</enum>
                         <enum value="remote">The identified IP address is for the remote system to which this system is connected.</enum>
                   </allowed-values>
@@ -211,11 +212,11 @@
                   <matches target="prop[@name='isa-date']/@value" datatype="dateTime"/>
                   <matches target="prop[@name='ipv4-address']/@value" datatype="ip-v4-address" />
                   <matches target="prop[@name='ipv6-address']/@value" datatype="ip-v6-address" />
-                  <allowed-values target="prop[@name='direction')]/@value" allow-other="yes">
+                  <allowed-values target="prop[@name='direction']/@value" allow-other="yes">
                         <enum value="incoming">Data from the remote system flows into this system.</enum>
                         <enum value="outgoing">Data from this system flows to the remote system.</enum>
                   </allowed-values>
-                  <is-unique name="unique-system-component-responsible-role" target="responsible-role">
+                  <is-unique id="unique-system-component-responsible-role" target="responsible-role">
                         <key-field target="@role-id"/>
                         <remarks>
                               <p>Since <code>responsible-role</code> associates multiple <code>party-uuid</code> entries with a single <code>role-id</code>, each role-id must be referenced only once.</p>
@@ -238,7 +239,7 @@
                   <allowed-values allow-other="yes">
                         <enum value="this-system">The system as a whole.</enum>
                         <enum value="system">An external system, which may be a leveraged system or the other side of an interconnection.</enum>
-            &allowed-values-component-type;
+                        &allowed-values-component-type;
                         <enum value="network">A physical or virtual network.</enum>
                   </allowed-values>
             </constraint>
@@ -249,7 +250,8 @@
             <description>Information about the protocol used to provide a service.</description>
             <define-flag name="uuid" as-type="uuid">
                   <formal-name>Service Protocol Information Universally Unique Identifier</formal-name>
-                  <description>A globally unique identifier that can be used to reference this service protocol entry elsewhere in an OSCAL document. A UUID should be consistently used for a given resource across revisions of the document.</description>
+                  <!-- Identifier Declaration -->
+                  <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this service protocol information elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>service protocol</code> can be used to reference the data item locally or globally (e.g., in an imported OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions of the document.</description>
             </define-flag>
             <define-flag name="name" required="yes">
                   <formal-name>Protocol Name</formal-name>
@@ -268,6 +270,11 @@
                         <group-as name="port-ranges" in-json="ARRAY"/>
                   </assembly>
             </model>
+            <constraint>
+                  <expect level="WARNING" target="." test="@uuid">
+                        <message>It is a best practice to provide a UUID.</message>
+                  </expect>
+            </constraint>
       </define-assembly>
       <define-assembly name="port-range">
             <formal-name>Port Range</formal-name>
@@ -337,7 +344,8 @@
             <description>A type of user that interacts with the system based on an associated role.</description>
             <define-flag name="uuid" as-type="uuid" required="yes">
                   <formal-name>User Universally Unique Identifier</formal-name>
-                  <description>The unique identifier for the user class.</description>
+                  <!-- Identifier Declaration -->
+                  <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this user class elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>system user</code> can be used to reference the data item locally or globally (e.g., in an imported OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions of the document.</description>
             </define-flag>
             <model>
                   <define-field name="title" as-type="markup-line">
@@ -422,7 +430,8 @@
 -->
             <define-flag name="uuid" as-type="uuid" required="yes">
                   <formal-name>Inventory Item Universally Unique Identifier</formal-name>
-                  <description>A globally unique identifier that can be used to reference this inventory item entry elsewhere in an OSCAL document. A UUID should be consistently used for a given resource across revisions of the document.</description>
+                  <!-- Identifier Declaration -->
+                  <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this inventory item elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>inventory item</code> can be used to reference the data item locally or globally (e.g., in an imported OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions of the document.</description>
             </define-flag>
             <!-- CHANGED: Moved to property[@name='asset-id']. -->
             <!--      <define-flag name="asset-id">
@@ -452,7 +461,8 @@
 
                         <define-flag required="yes" name="component-uuid" as-type="uuid">
                               <formal-name>Component Universally Unique Identifier Reference</formal-name>
-                              <description>A reference to a component that is implemented as part of an inventory item.</description>
+                              <!-- Identifier Reference -->
+                              <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a> identifier reference to a <code>component</code> that is implemented as part of an inventory item.</description>
                         </define-flag>
 
                         <!-- CHANGED (daw): the following is not needed since it is required on the referenced component -->
@@ -510,7 +520,7 @@
 
                               <!-- TODO: constrain party-id references to parties defined in the document. (BJR Unsure how to do this. )-->
 
-                              <is-unique name="unique-implemented-component-responsible-party" target="responsible-party">
+                              <is-unique id="unique-implemented-component-responsible-party" target="responsible-party">
                                     <key-field target="@role-id"/>
                                     <remarks>
                                           <p>Since <code>responsible-party</code> associates multiple <code>party-uuid</code> entries with a single <code>role-id</code>, each role-id must be referenced only once.</p>
@@ -581,9 +591,9 @@
                         <key-field target="@role-id"></key-field>
                   </index-has-key>
                   <index-has-key name="index-metadata-party-uuid" target="responsible-party">
-                        <key-field target="@party-uuid"></key-field>
+                        <key-field target="party-uuid"></key-field>
                   </index-has-key>
-                  <is-unique name="unique-inventory-item-responsible-party" target="responsible-party">
+                  <is-unique id="unique-inventory-item-responsible-party" target="responsible-party">
                         <key-field target="@role-id"/>
                         <remarks>
                               <p>Since <code>responsible-party</code> associates multiple <code>party-uuid</code> entries with a single <code>role-id</code>, each role-id must be referenced only once.</p>
@@ -631,7 +641,8 @@
 -->
       <define-flag name="statement-id" as-type="token">
             <formal-name>Control Statement Reference</formal-name>
-            <description>A reference to a control statement by its identifier</description>
+            <!-- Identifier Reference -->
+            <description>A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a> identifier reference to a <code>control statement</code>.</description>
       </define-flag>
       <define-assembly name="set-parameter">
             <formal-name>Set Parameter Value</formal-name>
@@ -653,15 +664,18 @@
       <define-field name="system-id" as-type="string">
             <!-- This is an id because the idenfier is assigned and managed by humans. -->
             <formal-name>System Identification</formal-name>
-            <description>A unique identifier for the system described by this system security plan.</description>
+            <!-- Identifier Declaration -->
+            <description>A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this system identification property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. When referencing an externally defined <code>system identification</code>, the <code>system identification</code> must be used in the context of the external / imported OSCAL instance (e.g., uri-reference). This string should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same system across revisions of the document.</description>
             <json-value-key>id</json-value-key>
             <define-flag name="identifier-type" as-type="uri">
                   <formal-name>Identification System Type</formal-name>
-                  <description>Identifies the identification system from which the provided identifier was assigned.</description>
+                  <description>Identifies the identification system from which the provided identifier was assigned. </description>
                   <constraint>
                         <allowed-values allow-other="yes">
-                              <enum value="https://fedramp.gov">The identifier was assigned by FedRAMP.</enum>
-                              <enum value="https://ietf.org/rfc/rfc4122">A Universally Unique Identifier (UUID) as defined by RFC4122.</enum>
+                              <enum value="https://fedramp.gov" deprecated="1.0.3">**deprecated** The identifier was assigned by FedRAMP. This has been deprecated; use <code>http://fedramp.gov/ns/oscal</code> instead.</enum>
+                              <enum value="http://fedramp.gov/ns/oscal">The identifier was assigned by FedRAMP.</enum>
+                              <enum value="https://ietf.org/rfc/rfc4122" deprecated="1.0.3">**deprecated** A Universally Unique Identifier (UUID) as defined by RFC4122. This value has been deprecated; use <code>http://ietf.org/rfc/rfc4122</code> instead.</enum>
+                              <enum value="http://ietf.org/rfc/rfc4122">A Universally Unique Identifier (UUID) as defined by RFC4122.</enum>
                         </allowed-values>
                   </constraint>
             </define-flag>
@@ -671,7 +685,8 @@
       <define-flag name="param-id" as-type="token">
             <!-- This is an id because the idenfier is assigned and managed by humans. -->
             <formal-name>Parameter ID</formal-name>
-            <description>A reference to a parameter within a control, who's catalog has been imported into the current implementation context.</description>
+            <!-- Identifier Reference -->
+            <description>A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a> reference to a <code>parameter</code> within a control, who's catalog has been imported into the current implementation context.</description>
             <example>
                   <set-param xmlns="http://csrc.nist.gov/ns/oscal/example" param-id="ac-2_prm_2">
                         <enum>System ISSO</enum>

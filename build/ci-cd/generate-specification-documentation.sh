@@ -15,8 +15,7 @@ Usage: $0 [options] [metaschema paths]
 EOF
 }
 
-OPTS=`getopt -o w:vh --long working-dir:,help -n "$0" -- "$@"`
-if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; usage ; exit 1 ; fi
+if ! OPTS=$(getopt -o w:vh --long working-dir:,help -n "$0" -- "$@"); then echo "Failed parsing options." >&2 ; usage ; exit 1 ; fi
 
 # Process arguments
 eval set -- "$OPTS"
@@ -57,7 +56,7 @@ if [ "$VERBOSE" = "true" ]; then
 fi
 
 SPEC_SOURCE="${OSCALDIR}/src/specifications/profile-resolution/profile-resolution-specml.xml"
-SPEC_OUTPUT="$WORKING_DIR/docs/content/documentation/processing/profile-resolution.html"
+SPEC_OUTPUT="$WORKING_DIR/docs/content/concepts/processing/profile-resolution.html"
 
 result=$(xsl_transform "$OSCALDIR/src/specifications/profile-resolution/specml-html-hugo-uswds.xsl" "${SPEC_SOURCE}" "${SPEC_OUTPUT}" 2>&1)
 cmd_exitcode=$?

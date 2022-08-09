@@ -1,28 +1,53 @@
-FROM ubuntu:20.04
-
-ARG saxonversion
-ARG hugoversion
+FROM ubuntu:22.04 as base-environment
 
 ENV TZ=US/Eastern
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN apt-get update && apt-get install -y wget apt-utils libxml2-utils jq maven nodejs npm build-essential python3-pip git && apt-get clean
-RUN npm install -g npm n
-RUN n latest
-RUN npm install -g markdown-link-check json-diff ajv-formats@"^1.5.x" ajv-cli@"^4.0.x" yaml-convert@"^1.0.x"
-RUN pip3 install lxml
+RUN apt-get update && apt-get dist-upgrade -y
 
-#RUN useradd --create-home --home-dir /home/user user
-#USER user
+FROM base-environment as oscal-os-dependencies
 
-RUN mvn org.apache.maven.plugins:maven-dependency-plugin:2.10:get -DartifactId=Saxon-HE -DgroupId=net.sf.saxon -Dversion=${saxonversion}
+RUN apt-get install -y \
+    apt-utils build-essential git jq libxml2-utils maven nodejs npm python3-pip unzip wget && \
+    apt-get clean
 
-RUN wget https://github.com/gohugoio/hugo/releases/download/v${hugoversion}/hugo_extended_${hugoversion}_Linux-64bit.deb
-RUN dpkg -i hugo_extended_${hugoversion}_Linux-64bit.deb
+FROM golang:1.18.3-bullseye as oscal-hugo-build
 
-#RUN chown -R user:user /home/user
+RUN mkdir -p /go/src/github.com/usnistgov/OSCAL/build
 
+WORKDIR /go/src/github.com/usnistgov/OSCAL/build
+
+ADD tools.go .
+ADD go.mod .
+ADD go.sum .
+
+RUN go install -tags "extended" github.com/gohugoio/hugo
+
+FROM oscal-os-dependencies as oscal-runtime-dependencies
+
+RUN mkdir -p /opt/oscal
+
+WORKDIR /opt/oscal
+
+ADD ./ci-cd/python/requirements.txt .
+ADD ./package.json .
+ADD ./package-lock.json .
+ADD ./pom.xml .
+
+RUN npm ci && \
+    pip3 install -r requirements.txt && \
+    mvn dependency:copy-dependencies -DoutputDirectory=/opt/oscal
+
+FROM oscal-runtime-dependencies as oscal-base
 VOLUME ["/oscal"]
 WORKDIR /oscal
 
-ENTRYPOINT /bin/bash
+FROM oscal-base as cli
+
+COPY --from=oscal-hugo-build /go/bin/hugo /usr/local/bin
+
+ENV SAXON_HOME=/opt/oscal
+ENV CALABASH_HOME=${SAXON_HOME}
+ENV PATH=/opt/oscal/node_modules/.bin:${PATH}
+
+ENTRYPOINT ["/bin/bash"]

@@ -9,9 +9,10 @@ This part of the OSCAL GitHub repository contains useful resources for working w
 - [Table of Contents](#table-of-contents)
 - [Available JSON Resources](#available-json-resources)
 - [JSON Schema for OSCAL Models](#json-schema-for-oscal-models)
-    - [Validating OSCAL JSON Content](#validating-oscal-json-content)
+  - [Validating OSCAL JSON Content](#validating-oscal-json-content)
 - [OSCAL XML to JSON Converters](#oscal-xml-to-json-converters)
-    - [Converting OSCAL XML Content to JSON](#converting-oscal-xml-content-to-json)
+  - [Converting OSCAL XML Content to JSON](#converting-oscal-xml-content-to-json)
+    - [Alternate invocations](#alternate-invocations)
 
 <!-- /TOC -->
 
@@ -69,9 +70,28 @@ The OSCAL project uses *Saxon-HE* with Java version 8 or greater.
 The following example uses **Saxon HE** to convert an OSCAL catalog XML file to JSON using one of the NIST-provided [JSON to XML XSLT converters](convert). This example assumes that Java 8+ has been installed and the Saxon-HE jar files have already unzipped.
 
 ```
-java -jar "saxon9he.jar" -xsl:"oscal_catalog_xml-to-json-converter.xsl" -s:"oscal-catalog.xml" -o:"oscal-catalog.json" json-indent=yes
+java -jar "saxon10he.jar" -xsl:"oscal_catalog_xml-to-json-converter.xsl" -s:"oscal-catalog.xml" -o:"oscal-catalog.json" json-indent=yes
 ```
 
-The Saxon JAR file is named ```saxon9he.jar```. The catalog converter is specified as ```-xsl:"oscal_catalog_xml-to-json-converter.xsl"```, the source catalog XML file is specified as ```-s:"oscal-catalog.xml"```, and the destination catalog JSON file is specified as ```-o:"oscal-catalog.json"```. Paths\names of these files need to be provided based on the location of the files on your computer.
+> *Note*: at time of writing, Saxon 9 users are being encouraged to upgrade systems to use Saxon 10, and the stylesheets provided should function equally well or better with the later software. Please feel free to use the latest Saxon or indeed any conformant XSLT 3.0 processor.
+>
+> Operators of XSLT-based platforms should by all means test these processes with any XSLT 3.0 conformant processor, and report problems to us via Github Issues.
+ 
+Paths\names of these files need to be provided based on the location of the files on your computer:
 
-The [online documentation](http://www.saxonica.com/documentation/#!using-xsl/commandline) for *Saxon* provides more information on the command line arguments.
+* The Saxon JAR file is named ```saxon10he.jar```.
+* The catalog converter is specified as ```-xsl:"oscal_catalog_xml-to-json-converter.xsl"```
+* The source catalog XML file is specified as ```-s:"oscal-catalog.xml"```
+* The destination catalog JSON file is specified as ```-o:"oscal-catalog.json"```.
+
+The [online documentation](http://www.saxonica.com) for *Saxon* provides more information on the command line arguments.
+
+### Alternate invocations
+
+The configuration just provided will convert a JSON file given as a file reference, into OSCAL XML. There are also different configurations available for debugging:
+
+* `-it:from-xml` (indicating initial template) - provides the default XSLT entry point explicitly.
+* `-file:mycatalog.xml` used with explicit `-it:from-xml` will look for the XML at the location given by the parameter, instead of on the source port (given by `-s`). This configuration parallels the JSON-to-XML converter.
+* `produce=supermodel` as a runtime parameter will emit not OSCAL XML, but the intermediate format produced by the converter (a so-called 'OSCAL supermodel' derived from its metaschema): useful for debugging or as a pivot to other serializations.
+* `produce=xpath-json` will produce the results in an XML format defined by the XPath function `json-to-xml()`, which when consumed by the complementary function `xml-to-json()` can deterministically provide syntactically correct JSON. This XML format is used internally to provide the JSON data description, to be cast into JSON as a (terminal) serialization step. Expressing the transformation results in this format directly can provide insight for debugging, especially in failure conditions (when the syntax cannot be written). See https://www.w3.org/TR/xpath-functions-31/#func-json-to-xml for more details on this format.
+

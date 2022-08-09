@@ -29,8 +29,8 @@ Usage: $0 [options]
 EOF
 }
 
-OPTS=`getopt -o a:o:w:c:hv --long resolve-profiles,artifact-dir:,oscal-dir:,working-dir:,config-file:,help -n "$0" -- "$@"`
-if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; usage ; exit 1 ; fi
+
+if ! OPTS=$(getopt -o a:o:w:c:hv --long resolve-profiles,artifact-dir:,oscal-dir:,working-dir:,config-file:,help -n "$0" -- "$@"); then echo "Failed parsing options." >&2 ; usage ; exit 1 ; fi
 
 # Process arguments
 eval set -- "$OPTS"
@@ -154,13 +154,7 @@ post_process_content() {
       if [ "$VERBOSE" = "true" ]; then
         echo -e "${P_INFO}Translating relative XML paths to JSON paths in '${P_END}${target_file_relative}${P_INFO}'.${P_END}"
       fi
-      # Remove extra slashes
-      perl -pi -e 's,\\/,/,g' "${target_file}"
-      # translate OSCAL mime types
-      perl -pi -e 's,(application/oscal\.[a-z]+\+)xml\",\1json\",g' "${target_file}"
-      # relative content paths
-      # translate path names for local references
-      perl -pi -e 's,((?:\.\./)+(?:(?!xml/)[^\s/"'']+/)+)xml/((?:(?!.xml)[^\s"'']+)+).xml,\1json/\2.json,g' "${target_file}"
+      if ! python3 "$OSCALDIR/build/ci-cd/python/convert_filetypes.py" --old-extension xml --new-extension json "${target_file}"; then echo "Failed running conversion of file extensions in content URIs" >&2 ; exit 1 ; fi
     fi
 
     # produce pretty JSON
@@ -205,11 +199,7 @@ post_process_content() {
     if [ "$VERBOSE" = "true" ]; then
       echo -e "${P_INFO}Translating relative paths in '${P_END}${yaml_file_relative}${P_INFO}'.${P_END}"
     fi
-    # translate OSCAL mime types
-    perl -pi -e 's,(application/oscal\.[a-z]+\+)json\",\1yaml\",g' "${yaml_file}"
-    # translate path names for local references
-    perl -pi -e 's,((?:\.\./)+(?:(?!json/)[^\s/"'']+/)+)json/((?:(?!.json)[^\s"'']+)+).json,\1yaml/\2.yaml,g' "${yaml_file}"
-
+    python3 "$OSCALDIR/build/ci-cd/python/convert_filetypes.py" --old-extension json --new-extension yaml "${yaml_file}"
     echo -e "${P_OK}Created YAML '${P_END}${yaml_file_relative}${P_OK}'.${P_END}"
     ;;
   xml)

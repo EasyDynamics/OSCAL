@@ -16,11 +16,13 @@ json_outline_filename="json-outline.md"
 json_reference_filename="json-reference.md"
 json_index_filename="json-index.md"
 json_definitions_filename="json-definitions.md"
-doc_path_base="/docs/content/reference/"
-BRANCH="$(git branch --show-current)"
+doc_path_base="/content/reference/"
+BRANCH=""
 DISABLE_ARCHETYPE_CREATION=false
+ARTIFACT_DIR="${OSCALDIR}"
 OSCAL_DIR="${OSCALDIR}"
 WORKING_DIR="${OSCALDIR}"
+CONFIG_FILE="build/ci-cd/config/metaschema-docs"
 
 declare -a doc_files=("$xml_outline_filename" "$xml_reference_filename" "$xml_index_filename" "$xml_definitions_filename" "$json_outline_filename" "$json_reference_filename" "$json_index_filename" "$json_definitions_filename")
 
@@ -28,8 +30,10 @@ usage() { # Function: Print a help message.
   cat <<EOF
 Usage: $0 [options]
 
+-a DIR, --artifact-dir            Build source artifacts are stored in DIR.
 -b, --branch NAME                 The name of the release branch the generated
                                   reference documentation is for (default: develop)
+-o DIR, --oscal-dir DIR           OSCAL schema are located in DIR.
 -h, --help                        Display help
 -w DIR, --working-dir DIR         Generate artifacts in DIR
 -v                                Provide verbose output
@@ -41,9 +45,9 @@ Usage: $0 [options]
 EOF
 }
 
-OPTS=$(getopt -o o:b:w:vh --long oscal-dir:,disable-archetype-creation,branch:,release:,scratch-dir:,keep-temp-scratch-dir,help -n "$0" -- "$@")
+OPTS=$(getopt -o a:o:b:w:vh --long artifact-dir:,oscal-dir:,working-dir:,disable-archetype-creation,branch:,release:,scratch-dir:,keep-temp-scratch-dir,help -n "$0" -- "$@")
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  OPTS=$(getopt b:r:w:vh $*)
+  OPTS=$(getopt a:o:b:w:vh $*)
 fi
 if [ $? != 0 ]; then
   echo "Failed parsing options." >&2
@@ -69,6 +73,10 @@ while [ $# -gt 0 ]; do
     ;;
   --keep-temp-scratch-dir)
     KEEP_TEMP_SCRATCH_DIR=true
+    ;;
+  -a|--artifact-dir)
+    ARTIFACT_DIR="$(realpath "$2")"
+    shift # past path
     ;;
   -o|--oscal-dir)
     OSCAL_DIR="$(realpath "$2")"
@@ -104,6 +112,8 @@ echo -e "${P_INFO}Generating XML and JSON Model Documentation${P_END}"
 echo -e "${P_INFO}===========================================${P_END}"
 
 if [ "$VERBOSE" = "true" ]; then
+  echo -e "${P_INFO}Using OSCAL directory:${P_END} ${OSCAL_DIR}"
+  echo -e "${P_INFO}Using artifact directory:${P_END} ${ARTIFACT_DIR}"
   echo -e "${P_INFO}Using scratch directory:${P_END} ${SCRATCH_DIR}"
 fi
 
@@ -131,13 +141,66 @@ if [ "$#" -ne 0 ]; then
 fi
 
 # generate reference documentation
-DOCS_DIR="${OSCAL_DIR}/docs";
+DOCS_DIR="${WORKING_DIR}/docs";
+if [ -z "$BRANCH" ]; then
+  BRANCH="$(cd "${OSCAL_DIR}";git symbolic-ref -q --short HEAD || git describe --tags --exact-match)"
+fi
+
+echo "BRANCH(initial)='${BRANCH}'"
+
+# Compute owner and repo from parsing revision symbolic data to support local
+# and remote automated CI/CD git clone scenarios more comprehensively. The
+# remote might be origin, or might be something custom, do no rely on this.
+# Out of this git rev-parse command is like owner/reponame
+OWNER_REPO_NAME="$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}')"
+# Use regex to group OWNER_REPO_NAME into (owner) (/) (reponame) in array at
+# indices 1 and 3, drop slash at index 2.
+remote_branch_filter='^([a-zA-Z0-9-]+)(\/)([a-zA-Z0-9_-]+)$'
+# Set defaults if error occurs and detection fails
+DEFAULT_REMOTE_NAME="origin"
+DEFAULT_REMOTE_URL="git@github.com:usnistgov/OSCAL.git"
+
+if [[ "${OWNER_REPO_NAME}" =~ $remote_branch_filter ]]; then
+    remote_name="${BASH_REMATCH[1]}"
+    remote_url="$(git remote get-url ${remote_name})"
+else
+    echo -e "${P_ERROR}Name and URL for remote not detected, using default${P_END}"
+    remote_name="${DEFAULT_REMOTE_NAME}"
+    remote_url="${DEFAULT_REMOTE_URL}"
+fi
+
+# Use regex to group variations of a GitHub remote URL determined by resolving
+# a git remote get-url remotename and consistently format it into a HTTPS URL
+# stub for the correct org name or username. Each group is below with the
+# numeric index of the array for BASH_REMATCH
+# 0: full matching string
+# 1: required SSH username, git protocol URI or HTTPS URI protocol, so git@ or
+#    git:// or https://
+# 2: required github.com hostname to match only GitHub orgs and user forks
+# 3: required colon or slash to support git SSH or GitHub HTTPS URL separators
+# 4: required GitHub org or username, this can be letters, numbers, or hyphens
+# 5: required slash, the separator between org/username and reponame
+# 6: required repo name, letters, numbers, hyphens, underscores, and periods,
+#    there are no official GH docs on this, common reference stackoverflow.com/a/59082561
+# 7: optional .git ending, common with git SSH URIs but also allow for HTTPS
+github_url_filter='^(git@|git:\/\/|https:\/\/)(github.com)(:|\/)([a-zA-Z0-9-]+)(\/)([a-zA-Z0-9_-]+)(.git){0,1}$'
+# Set defaults if error occurs and detection fails
+DEFAULT_REMOTE="usnistgov/OSCAL"
+
+if [[ "${remote_url}" =~ $github_url_filter ]]; then
+    REMOTE="${BASH_REMATCH[4]}/${BASH_REMATCH[6]}"
+else
+    echo -e "${P_ERROR}No URL detected remote matching pattern, setting remote stub to default${P_END}"
+    REMOTE="${DEFAULT_REMOTE}"
+fi
+
 if [[ "$BRANCH" =~ ^v.* ]]; then
   VERSION="${BRANCH/#"v"}"
   REVISION="${VERSION}"
   TYPE="tag"
 elif [ "$BRANCH" = "main" ]; then
-  VERSION="$(git describe --abbrev=0)"
+  VERSION="$(cd "${ARTIFACT_DIR}";git describe --abbrev=0; cd "$OLDPWD")"
+  VERSION="${VERSION/#"v"}"
   REVISION="latest"
   TYPE="branch"
 elif [ "$BRANCH" = "develop" ]; then
@@ -151,19 +214,21 @@ else
   TYPE="branch"
 fi
 
-doc_path="${WORKING_DIR}${doc_path_base}${REVISION}"
+doc_path="${DOCS_DIR}${doc_path_base}${REVISION}"
+config_file_path="${ARTIFACT_DIR}/${CONFIG_FILE}"
 
-#echo "BRANCH='${BRANCH}'"
-#echo "VERSION='${VERSION}'"
-#echo "REVISION='${REVISION}'"
-#echo "TYPE='${TYPE}'"
+echo "BRANCH='${BRANCH}'"
+echo "VERSION='${VERSION}'"
+echo "REVISION='${REVISION}'"
+echo "TYPE='${TYPE}'"
 #echo "doc_path='${doc_path}'"
 
 # build the version folder
 if [ ! -d "${doc_path}" ] || [ "$DISABLE_ARCHETYPE_CREATION" = "false" ]; then
-  [ -d "${doc_path}" ] && rm -rf "${doc_path}"
+  rm -rf "${doc_path}"
+  #mkdir -p "${doc_path}"
 
-  result=$(cd ${DOCS_DIR};HUGO_REF_TYPE="${TYPE}" HUGO_REF_BRANCH="${BRANCH}" HUGO_REF_VERSION="${VERSION}" HUGO_REF_REVISION="${REVISION}" hugo new --config "${OSCAL_DIR}/docs/config.yaml" --kind reference "${doc_path}" 2>&1)
+  result=$(cd ${DOCS_DIR};HUGO_REF_TYPE="${TYPE}" HUGO_REF_REMOTE="${REMOTE}" HUGO_REF_BRANCH="${BRANCH}" HUGO_REF_VERSION="${VERSION}" HUGO_REF_REVISION="${REVISION}" hugo new --kind reference-index "${doc_path}/_index.md" 2>&1)
   cmd_exitcode=$?
   if [ $cmd_exitcode -ne 0 ]; then
     echo -e "${P_ERROR}Generating index page failed for revision '${P_END}${REVISION}${P_ERROR}' on branch '${P_END}${BRANCH}${P_ERROR}'.${P_END}"
@@ -175,7 +240,7 @@ if [ ! -d "${doc_path}" ] || [ "$DISABLE_ARCHETYPE_CREATION" = "false" ]; then
 fi
 
 exitcode=0
-while IFS="|" read metaschema_path archetype model_id model_name schema_id || [[ -n "$metaschema_path" ]]; do
+while IFS="|" read metaschema_path archetype model_id model_name layer_id schema_id || [[ -n "$metaschema_path" ]]; do
   [[ "$metaschema_path" =~ ^[[:space:]]*# ]] && continue
   # remove leading space
   metaschema_path="${metaschema_path##+([[:space:]])}"
@@ -185,9 +250,14 @@ while IFS="|" read metaschema_path archetype model_id model_name schema_id || [[
   archetype="${archetype##+([[:space:]])}"
   model_id="${model_id##+([[:space:]])}"
   model_name="${model_name##+([[:space:]])}"
+  layer_id="${layer_id##+([[:space:]])}"
   schema_id="${schema_id##+([[:space:]])}"
 
-  metaschema="$OSCAL_DIR"/"$metaschema_path"
+  metaschema="$ARTIFACT_DIR"/"$metaschema_path"
+
+  # echo "metaschema: ${metaschema}"
+  [ ! -f "$metaschema" ] && continue;
+
   metaschema_relative=$(realpath --relative-to="$WORKING_DIR" "$metaschema")
 
   filename=$(basename -- "$metaschema")
@@ -204,6 +274,7 @@ while IFS="|" read metaschema_path archetype model_id model_name schema_id || [[
   #echo "model_id='${model_id}'"
   #echo "model_name='${model_name}'"
   #echo "schema_id='${schema_id}'"
+  #echo "layer_id='${layer_id}'"
   #echo "model_path='${model_path}'"
 
   # generate reference documentation
@@ -211,7 +282,7 @@ while IFS="|" read metaschema_path archetype model_id model_name schema_id || [[
     # build the version folder
     #if [ -d "${model_path}" ] && rm -rf "${doc_path}"
 
-    result=$(cd ${DOCS_DIR};HUGO_REF_TYPE="${TYPE}" HUGO_REF_BRANCH="${BRANCH}" HUGO_REF_VERSION="${VERSION}" HUGO_REF_REVISION="${REVISION}" HUGO_MODEL_NAME="${model_name}" HUGO_MODEL_ID="${model_id}" HUGO_SCHEMA_ID="${schema_id}" hugo new --kind ${archetype} "${model_path}" 2>&1)
+    result=$(cd ${DOCS_DIR};HUGO_REF_TYPE="${TYPE}" HUGO_REF_REMOTE="${REMOTE}" HUGO_REF_BRANCH="${BRANCH}" HUGO_REF_VERSION="${VERSION}" HUGO_REF_REVISION="${REVISION}" HUGO_MODEL_NAME="${model_name}" HUGO_MODEL_ID="${model_id}" HUGO_SCHEMA_ID="${schema_id}" HUGO_MODEL_CONCEPTS_URL="/concepts/layer/${layer_id}/${schema_id}/" hugo new --kind ${archetype} "${model_path}" 2>&1)
     cmd_exitcode=$?
     if [ $cmd_exitcode -ne 0 ]; then
       echo -e "${P_ERROR}Generating '${P_END}${model_id}${P_OK}' model page failed for revision '${P_END}${REVISION}${P_ERROR}' on branch '${P_END}${BRANCH}${P_ERROR}'.${P_END}"
@@ -257,6 +328,6 @@ while IFS="|" read metaschema_path archetype model_id model_name schema_id || [[
 
   echo -e "${P_OK}Generated docs for '${P_END}${metaschema_relative}${P_OK}' in '${P_END}${model_path}${P_OK}'.${P_END}"
 
-done <"$OSCAL_DIR/build/ci-cd/config/metaschema-docs"
+done <"${config_file_path}"
 
 exit $exitcode

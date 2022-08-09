@@ -35,7 +35,7 @@ Many privacy and security compliance programs are based on or make use of **cont
 In OSCAL, a control is *a requirement or guideline, which when implemented will reduce an aspect of risk related to an information system and its information.*
 
 {{% callout %}}
-A **security control** is defined in NIST Special Publication (SP) [SP 800-53 revision 5)](https://doi.org/10.6028/NIST.SP.800-53r5) and the Office of Management and Budget Memorandum Circular [A-130](https://www.whitehouse.gov/sites/whitehouse.gov/files/omb/circulars/A130/a130revised.pdf), *Managing Information as a Strategic Resource*, as:
+A **security control** is defined in NIST Special Publication (SP) [SP 800-53 revision 5)](https://doi.org/10.6028/NIST.SP.800-53r5) and the Office of Management and Budget Memorandum Circular [A-130](https://obamawhitehouse.archives.gov/sites/default/files/omb/assets/OMB/circulars/a130/a130revised.pdf), *Managing Information as a Strategic Resource*, as:
 
 > The safeguards or countermeasures prescribed for an information system or an organization to protect the confidentiality, integrity, and availability of the system and its information.
 
@@ -105,7 +105,7 @@ A baseline, or overlay in other terminology, defines a specific set of selected 
 
 {{<callout>}}NIST Special Publication (SP) [800-37 Revision 2](https://csrc.nist.gov/publications/detail/sp/800-37/rev-2/final) defines a baseline as "the set of controls that are applicable to information or an information system to meet legal, regulatory, or policy requirements, as well as address protection needs for the purpose of managing risk."{{</callout>}}
 
-Using the OSCAL profile model to express a baselines makes the mappings between the control catalog and the profile explicit and machine readable. A single OSCAL profile can reference controls in multiple catalogs. OSCAL permits profiles to use the same interoperable format irrespective of which catalogs are being used.
+Using the OSCAL profile model to express a baseline makes the mappings between the control catalog and the profile explicit and machine-readable. A single OSCAL profile can reference controls in multiple catalogs. OSCAL permits profiles to use the same interoperable format irrespective of which catalogs are being used.
 
 The figure below uses the NIST SP 800-53 low baseline as an example to sketch how a baseline relates to a catalog. The low baseline indicates which controls from the NIST SP 800-53 catalog are required for compliance with this baseline.
 

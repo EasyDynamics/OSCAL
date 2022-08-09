@@ -35,8 +35,7 @@ Usage: $0 [options]
 EOF
 }
 
-OPTS=`getopt -o a:o:w:c:hv --long scratch-dir:,keep-temp-scratch-dir,artifact-dir:,oscal-dir:,working-dir:,config-file:,help -n "$0" -- "$@"`
-if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; usage ; exit 1 ; fi
+if ! OPTS=$(getopt -o a:o:w:c:hv --long scratch-dir:,keep-temp-scratch-dir,artifact-dir:,oscal-dir:,working-dir:,config-file:,help -n "$0" -- "$@"); then echo "Failed parsing options." >&2 ; usage ; exit 1 ; fi
 
 # Process arguments
 eval set -- "$OPTS"
@@ -249,7 +248,7 @@ process_paths() {
 
         case $source_format in
         xml)
-          result=$(python ${OSCALDIR}/build/ci-cd/python/xmlComparison.py "$roundtrip_file" "$source_file" 2>&1)
+          result=$(python3 ${OSCALDIR}/build/ci-cd/python/xmlComparison.py "$roundtrip_file" "$source_file" 2>&1)
           ;;
         json)
           result=$(json-diff "$source_file" "$roundtrip_file" 2>&1)

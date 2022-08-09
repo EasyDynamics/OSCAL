@@ -1,7 +1,8 @@
 ---
 title: "OSCAL Catalog Model Development Snapshot JSON Format Metaschema Reference"
-heading: Catalog Model Development Snapshot Model JSON Metaschema Reference
+heading: "Catalog Model Development Snapshot Model JSON Metaschema Reference"
 weight: 40
+generateanchors: false
 sidenav:
   title: JSON Metaschema Reference
 toc:
@@ -9,17 +10,13 @@ toc:
   headingselectors: "h1.toc1, h2.toc2, h3.toc3, h4.toc4, h5.toc5, h6.toc6"
 ---
 
-The following is a reference for the JSON object definitions derived from this model's [metaschema](https://github.com/usnistgov/OSCAL/blob/develop//src/metaschema/oscal_catalog_metaschema.xml).
+The following is a reference for the JSON object definitions derived from the [metaschema](https://github.com/usnistgov/OSCAL/blob/develop//src/metaschema/oscal_catalog_metaschema.xml) for this [model](/concepts/layer/control/catalog/).
 
 <!-- DO NOT REMOVE. Generated text below -->
 {{< rawhtml >}}
 <div xmlns="http://www.w3.org/1999/xhtml" class="json-definition">
-   <p><span class="usa-tag">OSCAL model</span> OSCAL Control Catalog Model</p>
-   <p><span class="usa-tag">Version</span> 1.0.0</p>
    <p><span class="usa-tag">Short name</span> oscal-catalog</p>
    <p><span class="usa-tag">JSON Base URI</span> <code>http://csrc.nist.gov/ns/oscal</code></p>
-   <p><span class="usa-tag">JSON Schema</span> <a href="https://pages.nist.gov/OSCAL/artifacts/json/schema/oscal_catalog_schema.json">oscal_catalog_schema.json</a></p>
-   <p><span class="usa-tag">XML to JSON converter</span> <a href="https://pages.nist.gov/OSCAL/artifacts/xml/convert/oscal_catalog_xml-to-json-converter.xsl">oscal_catalog_xml-to-json-converter.xsl</a> <a href="https://github.com/usnistgov/OSCAL/tree/master/xml#converting-oscal-xml-content-to-json">(How do I use the converter to convert OSCAL XML to JSON)</a></p>
    <details class="remarks" open="open">
       <summary>Remarks</summary>
       <p class="p">The OSCAL Control Catalog format can be used to describe a collection of security
@@ -125,7 +122,7 @@ The following is a reference for the JSON object definitions derived from this m
                         <summary>Constraint (1)</summary>
                         
                         <div class="constraint">
-                           <p><span class="usa-tag">matches</span>: a target (value) must match the regular expression '[A-Z](2)'.</p>
+                           <p><span class="usa-tag">matches</span>: a target (value) must match the regular expression '[A-Z]{2}'.</p>
                         </div>
                         </details>
                   </div>
@@ -193,7 +190,7 @@ The following is a reference for the JSON object definitions derived from this m
                         </details>
                      </div>
                      <details>
-                        <summary>Constraints (7)</summary>
+                        <summary>Constraints (6)</summary>
                         
                         <div class="constraint">
                            <p><span class="usa-tag">allowed values</span> for <code class="path">prop/@name</code></p>
@@ -211,7 +208,7 @@ The following is a reference for the JSON object definitions derived from this m
                         </div>
                         
                         <div class="constraint">
-                           <p><span class="usa-tag">matches</span> for <code class="path">prop[(not(exists(@ns)) or @ns='http://csrc.nist.gov/ns/oscal') and @name='published']/@value</code>: the target value must match the lexical form of the 'dateTime' data type.</p>
+                           <p><span class="usa-tag">matches</span> for <code class="path">prop[has-oscal-namespace('http://csrc.nist.gov/ns/oscal') and @name='published']/@value</code>: the target value must match the lexical form of the 'dateTime' data type.</p>
                         </div>
                         
                         
@@ -288,10 +285,7 @@ The following is a reference for the JSON object definitions derived from this m
                            <p><span class="usa-tag">is unique</span> for <code class="path">base64</code>: any target value must be unique (i.e., occur only once)</p>
                         </div>
                         
-                        
-                        <div class="constraint">
-                           <p><span class="usa-tag">has cardinality</span> for <code class="path">title</code> the cardinality of  <code>title</code> is constrained: <b>1</b>; maximum <b>unbounded</b>.</p>
-                        </div>
+                        A title is required when a citation is provided.
                         
                         </details>
                      <details open="open">
@@ -306,9 +300,8 @@ The following is a reference for the JSON object definitions derived from this m
                                  <p class="formal-name">Resource Universally Unique Identifier</p>
                               </div>
                               <div class="body">
-                                 <p class="description"><span class="usa-tag">description</span> A globally unique identifier that can be used to reference this defined resource
-                                    elsewhere in an OSCAL document. A UUID should be consistently used for a given resource
-                                    across revisions of the document.</p>
+                                 <p class="description"><span class="usa-tag">description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined resource elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
+                                    of the document.</p>
                               </div>
                            </div>
                            <div class="model-entry definition define-field">
@@ -532,6 +525,16 @@ The following is a reference for the JSON object definitions derived from this m
                                              <p class="formal-name">Media Type</p>
                                           </div>
                                           <div class="body">
+                                             <div class="remarks-group usa-prose">
+                                                <details open="open">
+                                                   <summary class="subhead">Remarks</summary>
+                                                   <div class="remarks">
+                                                      <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                         type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                         suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                                   </div>
+                                                </details>
+                                             </div>
                                              <p class="definition-link"><a href="#/flag/oscal-metadata/media-type">See definition</a></p>
                                           </div>
                                        </div>
@@ -600,6 +603,16 @@ The following is a reference for the JSON object definitions derived from this m
                                              <p class="formal-name">Media Type</p>
                                           </div>
                                           <div class="body">
+                                             <div class="remarks-group usa-prose">
+                                                <details open="open">
+                                                   <summary class="subhead">Remarks</summary>
+                                                   <div class="remarks">
+                                                      <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                         type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                         suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                                   </div>
+                                                </details>
+                                             </div>
                                              <p class="definition-link"><a href="#/flag/oscal-metadata/media-type">See definition</a></p>
                                           </div>
                                        </div>
@@ -658,6 +671,27 @@ The following is a reference for the JSON object definitions derived from this m
                </div>
             </details>
          </div>
+         <details>
+            <summary>Constraints (2)</summary>
+            
+            <div class="constraint">
+               <p><span class="usa-tag">allowed value</span> for <code class="path">metadata/prop[has-oscal-namespace('http://csrc.nist.gov/ns/oscal')]/@name</code></p>
+               <p>The value <b>must</b> be one of the following:</p>
+               <ul>
+                  
+                  <li><strong>resolution-tool</strong>: The tool used to produce a resolved profile.</li>
+                  </ul>
+            </div>
+            
+            <div class="constraint">
+               <p><span class="usa-tag">allowed value</span> for <code class="path">metadata/link/@rel</code></p>
+               <p>The value <b>must</b> be one of the following:</p>
+               <ul>
+                  
+                  <li><strong>source-profile</strong>: The tool used to produce a resolved profile.</li>
+                  </ul>
+            </div>
+            </details>
          <details open="open">
             <summary>Properties (6)</summary>
             <div class="model assembly-model">
@@ -670,8 +704,8 @@ The following is a reference for the JSON object definitions derived from this m
                      <p class="formal-name">Catalog Universally Unique Identifier</p>
                   </div>
                   <div class="body">
-                     <p class="description"><span class="usa-tag">description</span> A globally unique identifier for this catalog instance. This UUID should be changed
-                        when this document is revised.</p>
+                     <p class="description"><span class="usa-tag">description</span> A globally unique identifier with cross-instance scope for this catalog instance.
+                        This UUID should be changed when this document is revised.</p>
                   </div>
                </div>
                <div class="model-entry definition assembly">
@@ -814,21 +848,21 @@ The following is a reference for the JSON object definitions derived from this m
             </details>
          </div>
          <details>
-            <summary>Constraints (4)</summary>
+            <summary>Constraints (10)</summary>
+            
             
             <div class="constraint">
-               <p><span class="usa-tag">has cardinality</span> for <code class="path">part[@name='statement']</code> the cardinality of  <code>part[@name='statement']</code> is constrained: <b>1</b>; maximum <b>1</b>.</p>
-            </div>
-            
-            <div class="constraint">
-               <p><span class="usa-tag">allowed values</span> for <code class="path">prop/@name</code></p>
-               <p>The value <b>may be locally defined</b>, or one of the following:</p>
+               <p><span class="usa-tag">allowed values</span> for <code class="path">prop[has-oscal-namespace('http://csrc.nist.gov/ns/oscal')]/@name</code></p>
+               <p>The value <b>must</b> be one of the following:</p>
                <ul>
                   
-                  <li><strong>label</strong>: A human-readable label for the parent context.</li>
+                  <li><strong>label</strong>: A human-readable label for the parent context, which may be rendered in place of
+                     the actual identifier for some use cases.</li>
                   
                   <li><strong>sort-id</strong>: An alternative identifier, whose value is easily sortable among other such values
                      in the document.</li>
+                  
+                  <li><strong>alt-identifier</strong>: An alternate or aliased identifier for the parent context.</li>
                   
                   
                   <li><strong>status</strong>: The status of a control. For example, a value of 'withdrawn' can indicate that the
@@ -837,7 +871,7 @@ The following is a reference for the JSON object definitions derived from this m
             </div>
             
             <div class="constraint">
-               <p><span class="usa-tag">allowed value</span> for <code class="path">prop[@name='status']/@value</code></p>
+               <p><span class="usa-tag">allowed value</span> for <code class="path">prop[has-oscal-namespace('http://csrc.nist.gov/ns/oscal') and @name='status']/@value</code></p>
                <p>The value <b>must</b> be one of the following:</p>
                <ul>
                   
@@ -857,11 +891,105 @@ The following is a reference for the JSON object definitions derived from this m
                   <li><strong>required</strong>: The link identifies another control that must be present if this control is present.</li>
                   
                   <li><strong>incorporated-into</strong>: The link identifies other control content where this control content is now addressed.</li>
+                  
+                  <li><strong>moved-to</strong>: The containing control definition was moved to the referenced control.</li>
+                  </ul>
+            </div>
+            
+            
+            <div class="constraint">
+               <p><span class="usa-tag">allowed values</span> for <code class="path">part[has-oscal-namespace('http://csrc.nist.gov/ns/oscal')]/@name</code></p>
+               <p>The value <b>must</b> be one of the following:</p>
+               <ul>
+                  
+                  <li><strong>overview</strong>: An introduction to a control or a group of controls.</li>
+                  
+                  <li><strong>statement</strong>: A set of control implementation requirements.</li>
+                  
+                  <li><strong>guidance</strong>: Additional information to consider when selecting, implementing, assessing, and
+                     monitoring a control.</li>
+                  
+                  <li><strong>assessment</strong>: **(deprecated)** Use 'assessment-method' instead.</li>
+                  
+                  <li><strong>assessment-method</strong>: The part describes a method-based assessment over a set of assessment objects.</li>
+                  </ul>
+            </div>
+            
+            <div class="constraint">
+               <p><span class="usa-tag">allowed value</span> for <code class="path">part[has-oscal-namespace('http://csrc.nist.gov/ns/oscal') and @name='statement']//part[has-oscal-namespace('http://csrc.nist.gov/ns/oscal')]/@name</code></p>
+               <p>The value <b>must</b> be one of the following:</p>
+               <ul>
+                  
+                  <li><strong>item</strong>: An individual item within a control statement.</li>
+                  Nested statement parts are "item" parts.
+                  </ul>
+            </div>
+            
+            <div class="constraint">
+               <p><span class="usa-tag">allowed values</span> for <code class="path">.//part[has-oscal-namespace('http://csrc.nist.gov/ns/oscal')]/@name</code></p>
+               <p>The value <b>must</b> be one of the following:</p>
+               <ul>
+                  
+                  <li><strong>objective</strong>: **(deprecated)** Use 'assessment-objective' instead.</li>
+                  
+                  <li><strong>assessment-objective</strong>: The part describes a set of assessment objectives.</li>
+                  Objectives can be nested.
+                  </ul>
+            </div>
+            
+            <div class="constraint">
+               <p><span class="usa-tag">allowed values</span> for <code class="path">part[has-oscal-namespace('http://csrc.nist.gov/ns/oscal') and @name=('assessment','assessment-method')]/part[has-oscal-namespace('http://csrc.nist.gov/ns/oscal')]/@name</code></p>
+               <p>The value <b>must</b> be one of the following:</p>
+               <ul>
+                  
+                  <li><strong>objects</strong>: **(deprecated)** Use 'assessment-objects' instead.</li>
+                  
+                  <li><strong>assessment-objects</strong>: Provides a listing of assessment objects.</li>
+                  Assessment objects appear on assessment methods.
+                  </ul>
+            </div>
+            
+            
+            <div class="constraint">
+               <p><span class="usa-tag">allowed value</span> for <code class="path">part[has-oscal-namespace('http://csrc.nist.gov/ns/oscal') and @name=('assessment','assessment-method')]/prop[has-oscal-namespace('http://csrc.nist.gov/ns/oscal')]/@name</code></p>
+               <p>The value <b>must</b> be one of the following:</p>
+               <ul>
+                  
+                  <li><strong>method</strong>: **(deprecated)** Use 'method' in the 'http://csrc.nist.gov/ns/rmf' namespace. The
+                     assessment method to use. This typically appears on parts with the name "assessment".</li>
+                  </ul>
+            </div>
+            
+            <div class="constraint">
+               <p><span class="usa-tag">allowed value</span> for <code class="path">part[has-oscal-namespace('http://csrc.nist.gov/ns/oscal') and @name=('assessment','assessment-method')]/prop[has-oscal-namespace('http://csrc.nist.gov/ns/rmf')]/@name</code></p>
+               <p>The value <b>must</b> be one of the following:</p>
+               <ul>
+                  
+                  <li><strong>method</strong>: The assessment method to use. This typically appears on parts with the name "assessment".</li>
+                  </ul>
+            </div>
+            
+            
+            <div class="constraint">
+               <p><span class="usa-tag">allowed values</span> for <code class="path">part[has-oscal-namespace('http://csrc.nist.gov/ns/oscal') and @name=('assessment','assessment-method')]/prop[has-oscal-namespace(('http://csrc.nist.gov/ns/oscal','http://csrc.nist.gov/ns/rmf'))
+                     and @name='method']/@value</code></p>
+               <p>The value <b>must</b> be one of the following:</p>
+               <ul>
+                  
+                  <li><strong>INTERVIEW</strong>: The process of holding discussions with individuals or groups of individuals within
+                     an organization to once again, facilitate assessor understanding, achieve clarification,
+                     or obtain evidence.</li>
+                  
+                  <li><strong>EXAMINE</strong>: The process of reviewing, inspecting, observing, studying, or analyzing one or more
+                     assessment objects (i.e., specifications, mechanisms, or activities).</li>
+                  
+                  <li><strong>TEST</strong>: The process of exercising one or more assessment objects (i.e., activities or mechanisms)
+                     under specified conditions to compare actual with expected behavior.</li>
                   </ul>
             </div>
             </details>
          <details open="open">
-            <summary>Properties (8)</summary>
+            <summary>Properties (9)</summary>
             <div class="model assembly-model">
                <div class="model-entry definition define-flag">
                   <div class="instance-header">
@@ -872,10 +1000,8 @@ The following is a reference for the JSON object definitions derived from this m
                      <p class="formal-name">Control Identifier</p>
                   </div>
                   <div class="body">
-                     <p class="description"><span class="usa-tag">description</span> A unique identifier for a specific control instance that can be used to reference
-                        the control in other OSCAL documents. This identifier's uniqueness is document scoped
-                        and is intended to be consistent for the same control across minor revisions of the
-                        document.</p>
+                     <p class="description"><span class="usa-tag">description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a>, <a href="/concepts/identifier-use/#locally-unique">locally unique</a> identifier with <a href="/concepts/identifier-use/#instance">instance</a> scope that can be used to reference this control elsewhere <a href="/concepts/identifier-use/#catalog-identifiers">in this and other OSCAL instances (e.g., profiles)</a>. This id should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same control across revisions
+                        of the document.</p>
                   </div>
                </div>
                <div class="model-entry definition define-flag">
@@ -1024,7 +1150,7 @@ The following is a reference for the JSON object definitions derived from this m
                                  <code>ns</code> is provided, the name is expected to be in the "OSCAL" namespace.</p>
                               <p>To ensure a <code>ns</code> is unique to an organization and naming conflicts are avoided, a URI containing a
                                  DNS or other globally defined organization name should be used. For example, if FedRAMP
-                                 and DoD both extend OSCAL, FedRAMP will use the <code>ns</code> "https://fedramp.gov", while DoD will use the <code>ns</code> "https://defense.gov" for any organization specific <code>name</code>. </p>
+                                 and DoD both extend OSCAL, FedRAMP will use the <code>ns</code> <code>http://fedramp.gov/ns/oscal</code>, while DoD might use the <code>ns</code> <code>https://defense.gov</code> for any organization specific <code>name</code>.</p>
                               <p>Tools that process OSCAL content are not required to interpret unrecognized OSCAL
                                  extensions; however, OSCAL compliant tools should not modify or remove unrecognized
                                  extensions, unless there is a compelling reason to do so, such as data sensitivity.</p>
@@ -1032,6 +1158,61 @@ The following is a reference for the JSON object definitions derived from this m
                         </details>
                      </div>
                      <p class="definition-link"><a href="#/assembly/oscal-catalog-common/part">See definition</a></p>
+                  </div>
+               </div>
+               <div class="model-entry definition define-assembly">
+                  <div class="instance-header">
+                     <h2 id="/assembly/oscal-catalog/control/mapping" class="toc2 name">mapping</h2>
+                     <p class="type">assembly<br class="br" /> </p>
+                     <p class="occurrence">[0 or 1]</p>
+                     <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-catalog/control/mapping">Switch to XML</a></div>
+                     <p class="formal-name">Mapping</p>
+                  </div>
+                  <div class="body">
+                     <p class="description"><span class="usa-tag">description</span> A mapping between the containing control and another resource.</p>
+                     <details open="open">
+                        <summary>Properties (3)</summary>
+                        <div class="model assembly-model">
+                           <div class="model-entry definition define-flag">
+                              <div class="instance-header">
+                                 <h3 id="/assembly/oscal-catalog/control/mapping/uuid" class="toc3 name">uuid</h3>
+                                 <p class="type"><a href="/reference/datatypes/#uuid">uuid</a></p>
+                                 <p class="occurrence">[0 or 1]</p>
+                                 <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-catalog/control/mapping/uuid">Switch to XML</a></div>
+                                 <p class="formal-name">Mapping Identifier</p>
+                              </div>
+                              <div class="body">
+                                 <p class="description"><span class="usa-tag">description</span> The unique identifier for the mapping.</p>
+                              </div>
+                           </div>
+                           <div class="model-entry definition assembly">
+                              <div class="instance-header">
+                                 <h3 id="/assembly/oscal-catalog/control/mapping/target-resource" class="toc3 name">target-resource</h3>
+                                 <p class="type">assembly<br class="br" /> </p>
+                                 <p class="occurrence">[1]</p>
+                                 <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-catalog/control/mapping/target-resource">Switch to XML</a></div>
+                                 <p class="formal-name">Mapped Resource Reference</p>
+                              </div>
+                              <div class="body">
+                                 <p><span class="usa-tag">use name</span> <code class="name">target-resource</code></p>
+                                 <p class="definition-link"><a href="#/assembly/oscal-mapping-common/mapping-resource-reference">See definition</a></p>
+                              </div>
+                           </div>
+                           <div class="model-entry definition assembly">
+                              <div class="instance-header">
+                                 <h3 id="/assembly/oscal-catalog/control/mapping/maps" class="toc3 name">map</h3>
+                                 <p class="type">assembly<br class="br" /> </p>
+                                 <p class="occurrence">[1 to ∞]</p>
+                                 <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-catalog/control/mapping/map">Switch to XML</a></div>
+                                 <p class="formal-name">Mapping Entry</p>
+                              </div>
+                              <div class="body">
+                                 <p><span class="usa-tag">group as</span> <code class="name">maps</code></p>
+                                 <p class="definition-link"><a href="#/assembly/oscal-mapping-common/map">See definition</a></p>
+                              </div>
+                           </div>
+                        </div>
+                     </details>
                   </div>
                </div>
                <div class="model-entry definition assembly">
@@ -1070,18 +1251,7 @@ The following is a reference for the JSON object definitions derived from this m
          <p class="formal-name">Control Identifier Reference</p>
       </div>
       <div class="body">
-         <p class="description"><span class="usa-tag">description</span> A reference to a control with a corresponding <code>id</code> value.</p>
-      </div>
-   </div>
-   <div class="model-entry definition define-flag">
-      <div class="definition-header">
-         <h1 id="/flag/oscal-catalog-common/depends-on" class="toc1 name">depends-on</h1>
-         <p class="type"><a href="/reference/datatypes/#token">token</a></p>
-         <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/flag/oscal-catalog-common/depends-on">Switch to XML</a></div>
-         <p class="formal-name">Depends on</p>
-      </div>
-      <div class="body">
-         <p class="description"><span class="usa-tag">description</span> Another parameter invoking this one</p>
+         <p class="description"><span class="usa-tag">description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a> identifier reference to a control with a corresponding <code>id</code> value. When referencing an externally defined <code>control</code>, the <code>Control Identifier Reference</code> must be used in the context of the external / imported OSCAL instance (e.g., uri-reference).</p>
       </div>
    </div>
    <div class="model-entry definition define-field">
@@ -1092,10 +1262,10 @@ The following is a reference for the JSON object definitions derived from this m
          <p class="formal-name">Document Identifier</p>
       </div>
       <div class="body">
-         <p class="description"><span class="usa-tag">description</span> A document identifier qualified by an identifier <code>scheme</code>. A document identifier provides a globally unique identifier for a group of documents
-            that are to be treated as different versions of the same document. If this element
-            does not appear, or if the value of this element is empty, the value of "document-id"
-            is equal to the value of the "uuid" flag of the top-level root element.</p>
+         <p class="description"><span class="usa-tag">description</span> A document identifier qualified by an identifier <code>scheme</code>. A document identifier provides a <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with a <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that is used for a group of documents that are to be treated as different versions
+            of the same document. If this element does not appear, or if the value of this element
+            is empty, the value of "document-id" is equal to the value of the "uuid" flag of the
+            top-level root element.</p>
          <p><span class="usa-tag">value key</span> <code class="name">identifier</code></p>
          <div class="remarks-group usa-prose">
             <details open="open">
@@ -1131,7 +1301,7 @@ The following is a reference for the JSON object definitions derived from this m
                            <p>The value <b>may be locally defined</b>, or the following:</p>
                            <ul>
                               
-                              <li><strong>https://www.doi.org/</strong>: A Digital Object Identifier (DOI); use is preferred, since this allows for retrieval
+                              <li><strong>http://www.doi.org/</strong>: A Digital Object Identifier (DOI); use is preferred, since this allows for retrieval
                                  of a full bibliographic record.</li>
                               </ul>
                         </div>
@@ -1186,19 +1356,31 @@ The following is a reference for the JSON object definitions derived from this m
             </details>
          </div>
          <details>
-            <summary>Constraint (1)</summary>
+            <summary>Constraints (2)</summary>
             
             
             <div class="constraint">
-               <p><span class="usa-tag">allowed values</span> for <code class="path">prop/@name</code></p>
-               <p>The value <b>may be locally defined</b>, or one of the following:</p>
+               <p><span class="usa-tag">allowed values</span> for <code class="path">prop[has-oscal-namespace('http://csrc.nist.gov/ns/oscal')]/@name</code></p>
+               <p>The value <b>must</b> be one of the following:</p>
                <ul>
                   
-                  <li><strong>label</strong>: A human-readable label for the parent context.</li>
+                  <li><strong>label</strong>: A human-readable label for the parent context, which may be rendered in place of
+                     the actual identifier for some use cases.</li>
                   
                   <li><strong>sort-id</strong>: An alternative identifier, whose value is easily sortable among other such values
                      in the document.</li>
                   
+                  <li><strong>alt-identifier</strong>: An alternate or aliased identifier for the parent context.</li>
+                  
+                  </ul>
+            </div>
+            
+            <div class="constraint">
+               <p><span class="usa-tag">allowed value</span> for <code class="path">part[has-oscal-namespace('http://csrc.nist.gov/ns/oscal')]/@name</code></p>
+               <p>The value <b>must</b> be one of the following:</p>
+               <ul>
+                  
+                  <li><strong>overview</strong>: An introduction to a control or a group of controls.</li>
                   </ul>
             </div>
             </details>
@@ -1214,9 +1396,7 @@ The following is a reference for the JSON object definitions derived from this m
                      <p class="formal-name">Group Identifier</p>
                   </div>
                   <div class="body">
-                     <p class="description"><span class="usa-tag">description</span> A unique identifier for a specific group instance that can be used to reference the
-                        group within this and in other OSCAL documents. This identifier's uniqueness is document
-                        scoped and is intended to be consistent for the same group across minor revisions
+                     <p class="description"><span class="usa-tag">description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a>, <a href="/concepts/identifier-use/#locally-unique">locally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined group elsewhere in <a href="/concepts/identifier-use/#catalog-identifiers">in this and other OSCAL instances (e.g., profiles)</a>. This id should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same group across revisions
                         of the document.</p>
                   </div>
                </div>
@@ -1366,7 +1546,7 @@ The following is a reference for the JSON object definitions derived from this m
                                  <code>ns</code> is provided, the name is expected to be in the "OSCAL" namespace.</p>
                               <p>To ensure a <code>ns</code> is unique to an organization and naming conflicts are avoided, a URI containing a
                                  DNS or other globally defined organization name should be used. For example, if FedRAMP
-                                 and DoD both extend OSCAL, FedRAMP will use the <code>ns</code> "https://fedramp.gov", while DoD will use the <code>ns</code> "https://defense.gov" for any organization specific <code>name</code>. </p>
+                                 and DoD both extend OSCAL, FedRAMP will use the <code>ns</code> <code>http://fedramp.gov/ns/oscal</code>, while DoD might use the <code>ns</code> <code>https://defense.gov</code> for any organization specific <code>name</code>.</p>
                               <p>Tools that process OSCAL content are not required to interpret unrecognized OSCAL
                                  extensions; however, OSCAL compliant tools should not modify or remove unrecognized
                                  extensions, unless there is a compelling reason to do so, such as data sensitivity.</p>
@@ -1521,6 +1701,25 @@ The following is a reference for the JSON object definitions derived from this m
          </details>
       </div>
    </div>
+   <div class="model-entry definition define-assembly">
+      <div class="definition-header">
+         <h1 id="/assembly/oscal-catalog-common/include-all" class="toc1 name">include-all</h1>
+         <p class="type">assembly<br class="br" /> </p>
+         <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-catalog-common/include-all">Switch to XML</a></div>
+         <p class="formal-name">Include All</p>
+      </div>
+      <div class="body">
+         <p class="description"><span class="usa-tag">description</span> Include all controls from the imported catalog or profile resources.</p>
+         <div class="remarks-group usa-prose">
+            <details open="open">
+               <summary class="subhead">Remarks</summary>
+               <div class="remarks">
+                  <p>This element provides an alternative to calling controls individually from a catalog.</p>
+               </div>
+            </details>
+         </div>
+      </div>
+   </div>
    <div class="model-entry definition define-field">
       <div class="definition-header">
          <h1 id="/field/oscal-metadata/last-modified" class="toc1 name">last-modified</h1>
@@ -1570,23 +1769,17 @@ The following is a reference for the JSON object definitions derived from this m
          <details>
             <summary>Constraints (3)</summary>
             
-            
-            
             <div class="constraint">
-               <p><span class="usa-tag">matches</span> for <code class="path">@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
+               <p><span class="usa-tag">matches</span> for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]/@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
             </div>
             
             <div class="constraint">
-               <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
+               <p><span class="usa-tag">index has key</span> for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]</code>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
             </div>
-            
-            
             
             <div class="constraint">
-               <p><span class="usa-tag">matches</span> for <code class="path">@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
+               <p><span class="usa-tag">matches</span> for <code class="path">.[@rel=('reference') and not(starts-with(@href,'#'))]/@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
             </div>
-            
-            
             </details>
          <details open="open">
             <summary>Properties (4)</summary>
@@ -1655,6 +1848,11 @@ The following is a reference for the JSON object definitions derived from this m
                         <details open="open">
                            <summary class="subhead">Remarks</summary>
                            <div class="remarks">
+                              <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                 type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                 suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                           </div>
+                           <div class="remarks">
                               <p>The <code>media-type</code> provides a hint about the content model of the referenced resource. A valid entry
                                  from the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a> SHOULD be used.</p>
                            </div>
@@ -1706,8 +1904,8 @@ The following is a reference for the JSON object definitions derived from this m
                <p>The value <b>may be locally defined</b>, or the following:</p>
                <ul>
                   
-                  <li><strong>data-center</strong>: A location that contains computing assets. A class can be used to indicate a subclass
-                     of data-center.</li>
+                  <li><strong>data-center</strong>: A location that contains computing assets. A class can be used to indicate the sub-type
+                     of data-center as primary or alternate.</li>
                   </ul>
             </div>
             
@@ -1734,9 +1932,9 @@ The following is a reference for the JSON object definitions derived from this m
                      <p class="formal-name">Location Universally Unique Identifier</p>
                   </div>
                   <div class="body">
-                     <p class="description"><span class="usa-tag">description</span> A unique identifier that can be used to reference this defined location elsewhere
-                        in an OSCAL document. A UUID should be consistently used for a given location across
-                        revisions of the document.</p>
+                     <p class="description"><span class="usa-tag">description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined location elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>location</code> can be used to reference the data item locally or globally (e.g., from an importing
+                        OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
+                        of the document.</p>
                   </div>
                </div>
                <div class="model-entry definition define-field">
@@ -1932,13 +2130,14 @@ The following is a reference for the JSON object definitions derived from this m
          <p class="formal-name">Location Reference</p>
       </div>
       <div class="body">
-         <p class="description"><span class="usa-tag">description</span> References a <code>location</code> defined in <code>metadata</code>. </p>
+         <p class="description"><span class="usa-tag">description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a> identifier reference to a <code>location</code> defined in the <code>metadata</code> section of this or another OSCAL instance. The <em>UUID</em> of the <code>location</code> in the source OSCAL instance is sufficient to reference the data item locally or
+            globally (e.g., in an imported OSCAL instance). </p>
          <details>
             <summary>Constraint (1)</summary>
             
             
             <div class="constraint">
-               <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-location-uuid</code> using a key constructed of key field(s) <code>value()</code></p>
+               <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-location-uuid</code> using a key constructed of key field(s) <code>.</code></p>
             </div>
             </details>
       </div>
@@ -1951,14 +2150,496 @@ The following is a reference for the JSON object definitions derived from this m
          <p class="formal-name">Location Reference</p>
       </div>
       <div class="body">
-         <p class="description"><span class="usa-tag">description</span> References a <code>location</code> defined in <code>metadata</code>. </p>
+         <p class="description"><span class="usa-tag">description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a> identifier reference to a <code>location</code> defined in the <code>metadata</code> section of this or another OSCAL instance. The <em>UUID</em> of the <code>location</code> in the source OSCAL instance is sufficient to reference the data item locally or
+            globally (e.g., in an imported OSCAL instance). </p>
+         <div class="remarks-group usa-prose">
+            <details open="open">
+               <summary class="subhead">Remarks</summary>
+               <div class="remarks">
+                  <p>See the <a href="/concepts/identifier-use/#scope">Concepts - Identifier Use</a> page for additional information about the referenced identifier's scope.</p>
+               </div>
+            </details>
+         </div>
          <details>
             <summary>Constraint (1)</summary>
             
             <div class="constraint">
-               <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-location-uuid</code> using a key constructed of key field(s) <code>value()</code></p>
+               <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-location-uuid</code> using a key constructed of key field(s) <code>.</code></p>
             </div>
             </details>
+      </div>
+   </div>
+   <div class="model-entry definition define-assembly">
+      <div class="definition-header">
+         <h1 id="/assembly/oscal-mapping-common/map" class="toc1 name">map</h1>
+         <p class="type">assembly<br class="br" /> </p>
+         <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-mapping-common/map">Switch to XML</a></div>
+         <p class="formal-name">Mapping Entry</p>
+      </div>
+      <div class="body">
+         <p class="description"><span class="usa-tag">description</span> A relationship-based mapping between a source and target set consisting of members
+            (i.e., controls, control statements) from the respective source and target.</p>
+         <details open="open">
+            <summary>Properties (7)</summary>
+            <div class="model assembly-model">
+               <div class="model-entry definition define-flag">
+                  <div class="instance-header">
+                     <h2 id="/assembly/oscal-mapping-common/map/uuid" class="toc2 name">uuid</h2>
+                     <p class="type"><a href="/reference/datatypes/#uuid">uuid</a></p>
+                     <p class="occurrence">[0 or 1]</p>
+                     <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-mapping-common/map/uuid">Switch to XML</a></div>
+                     <p class="formal-name">Mapping Entry Identifier</p>
+                  </div>
+                  <div class="body">
+                     <p class="description"><span class="usa-tag">description</span> The unique identifier for the mapping entry.</p>
+                  </div>
+               </div>
+               <div class="model-entry definition assembly">
+                  <div class="instance-header">
+                     <h2 id="/assembly/oscal-mapping-common/map/props" class="toc2 name">property</h2>
+                     <p class="type">assembly<br class="br" /> </p>
+                     <p class="occurrence">[0 to ∞]</p>
+                     <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-mapping-common/map/prop">Switch to XML</a></div>
+                     <p class="formal-name">Property</p>
+                  </div>
+                  <div class="body">
+                     <p><span class="usa-tag">use name</span> <code class="name">prop</code></p>
+                     <p><span class="usa-tag">group as</span> <code class="name">props</code></p>
+                     <div class="remarks-group usa-prose">
+                        <details open="open">
+                           <summary class="subhead">Remarks</summary>
+                           <div class="remarks">
+                              <p>Properties permit the deployment and management of arbitrary controlled values, within
+                                 OSCAL objects. A property can be included for any purpose useful to an application
+                                 or implementation. Typically, properties will be used to sort, filter, select, order,
+                                 and arrange OSCAL content objects, to relate OSCAL objects to one another, or to associate
+                                 an OSCAL object to class hierarchies, taxonomies, or external authorities. Thus, the
+                                 lexical composition of properties may be constrained by external processes to ensure
+                                 consistency.</p>
+                              <p>Property allows for associated remarks that describe why the specific property value
+                                 was applied to the containing object, or the significance of the value in the context
+                                 of the containing object.</p>
+                           </div>
+                        </details>
+                     </div>
+                     <p class="definition-link"><a href="#/assembly/oscal-metadata/property">See definition</a></p>
+                  </div>
+               </div>
+               <div class="model-entry definition assembly">
+                  <div class="instance-header">
+                     <h2 id="/assembly/oscal-mapping-common/map/links" class="toc2 name">link</h2>
+                     <p class="type">assembly<br class="br" /> </p>
+                     <p class="occurrence">[0 to ∞]</p>
+                     <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-mapping-common/map/link">Switch to XML</a></div>
+                     <p class="formal-name">Link</p>
+                  </div>
+                  <div class="body">
+                     <p><span class="usa-tag">group as</span> <code class="name">links</code></p>
+                     <div class="remarks-group usa-prose">
+                        <details open="open">
+                           <summary class="subhead">Remarks</summary>
+                           <div class="remarks">
+                              <p>To provide a cryptographic hash for a remote target resource, a local reference to
+                                 a back matter <code>resource</code> is needed. The resource allows one or more hash values to be provided using the <code>rlink/hash</code> object.</p>
+                              <p>The OSCAL <code>link</code> is a roughly based on the HTML <a href="https://www.w3.org/TR/html401/struct/links.html#edef-LINK">link element</a>. </p>
+                           </div>
+                        </details>
+                     </div>
+                     <p class="definition-link"><a href="#/assembly/oscal-metadata/link">See definition</a></p>
+                  </div>
+               </div>
+               <div class="model-entry definition define-field">
+                  <div class="instance-header">
+                     <h2 id="/assembly/oscal-mapping-common/map/relationship" class="toc2 name">relationship</h2>
+                     <p class="type"><a href="/reference/datatypes/#token">token</a></p>
+                     <p class="occurrence">[1]</p>
+                     <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-mapping-common/map/relationship">Switch to XML</a></div>
+                     <p class="formal-name">Mapping Entry Relationship</p>
+                  </div>
+                  <div class="body">
+                     <p class="description"><span class="usa-tag">description</span> The relationship type for the mapping entry, which describes the relationship between
+                        the effective requirements of the specified source and target sets.</p>
+                     <div class="remarks-group usa-prose">
+                        <details open="open">
+                           <summary class="subhead">Remarks</summary>
+                           <div class="remarks">
+                              <p>When establishing relationships, mapping SHOULD be done at the control statement level
+                                 where possible. This approach allows for more use of 'equivalent-to', which represents
+                                 a stronger relationship than the other relationship types.</p>
+                           </div>
+                        </details>
+                     </div>
+                     <details>
+                        <summary>Constraint (1)</summary>
+                        
+                        <div class="constraint">
+                           <p><span class="usa-tag">allowed values</span> for <code class="path">.[has-oscal-namespace('http://csrc.nist.gov/ns/oscal')]</code></p>
+                           <p>The value <b>must</b> be one of the following:</p>
+                           <ul>
+                              
+                              <li><strong>equivalent-to</strong>: The effective requirements of the source is equivalent in semantic meaning to the
+                                 effective requirements of the target. The words may differ, but both mapped sets convey
+                                 similar information with the same effective meaning. This relationship may be reversed,
+                                 since `A equivalent-to B` also means that `B equivalent-to A`.</li>
+                              
+                              <li><strong>equal-to</strong>: The actual requirements of the source are the same as the actual requirements target.
+                                 Differences in capitalization, spelling, and grammar can be ignored, if these differences
+                                 do not change the meaning. This relationship may be reversed, since `A equal-to B`
+                                 also means that `B equal-to A`.</li>
+                              
+                              <li><strong>subset-of</strong>: The effective requirements of the source is a semantic subset of the effective requirements
+                                 of the target. This relationship may be reversed as a `superset-of`, since `A subset-of
+                                 B` also means that `B superset-of A`.</li>
+                              
+                              <li><strong>superset-of</strong>: The effective requirements of the source is a semantic superset of the effective
+                                 requirements of the target. This relationship may be reversed as a `subset-of`, since
+                                 `A superset-of B` also means that `B subset-of A`.</li>
+                              
+                              <li><strong>intersects-with</strong>: The effective requirements of the source and target have some semantic equivalence,
+                                 but not all effective requirements from each are contained within the other. This
+                                 relationship may be reversed, since `A intersects-with B` also means that `B intersects-with
+                                 A`. A lower granularity mapping, such as a statement level mapping using 'equivalent-to',
+                                 'subset-of', and/or 'superset-of', may provide a more functional mapping that allows
+                                 for more inference than using this relationship type.</li>
+                              </ul>
+                        </div>
+                        </details>
+                     <details open="open">
+                        <summary>Properties (2)</summary>
+                        <div class="model field-model">
+                           <div class="model-entry definition define-flag">
+                              <div class="instance-header">
+                                 <h3 id="/assembly/oscal-mapping-common/map/relationship/ns" class="toc3 name">ns</h3>
+                                 <p class="type"><a href="/reference/datatypes/#uri">uri</a></p>
+                                 <p class="occurrence">[0 or 1]</p>
+                                 <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-mapping-common/map/relationship/ns">Switch to XML</a></div>
+                                 <p class="formal-name">Relationship Value Namespace</p>
+                              </div>
+                              <div class="body">
+                                 <p class="description"><span class="usa-tag">description</span> A namespace qualifying the relationship's value. This allows different organizations
+                                    to associate distinct semantics for relationships with the same name.</p>
+                                 <div class="remarks-group usa-prose">
+                                    <details open="open">
+                                       <summary class="subhead">Remarks</summary>
+                                       <div class="remarks">
+                                          <p>An organization MUST use a URI that they have control over. e.g., a domain registered
+                                             to the organization in a URI, a registered uniform resource names (URN) namespace.</p>
+                                          <p>When a <code>ns</code> is not provided, its value should be assumed to be <code>http://csrc.nist.gov/ns/oscal</code> and the name should be a name defined by the associated OSCAL model.</p>
+                                       </div>
+                                    </details>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="model-entry definition m:define-flag">
+                              <div class="instance-header">
+                                 <h3 id="/assembly/oscal-mapping-common/map/relationship/STRVALUE" class="toc3 name">STRVALUE</h3>
+                                 <p class="type"><a href="/reference/datatypes/#token">token</a></p>
+                                 <p class="occurrence">[0 or 1]</p>
+                                 <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-mapping-common/map/relationship">Switch to XML</a></div>
+                                 <p class="formal-name">Mapping Entry Relationship Value</p>
+                              </div>
+                              <div class="body">
+                                 <p class="description"><span class="usa-tag">description</span> This property provides the (nominal) value for this object as a whole.</p>
+                              </div>
+                           </div>
+                        </div>
+                     </details>
+                  </div>
+               </div>
+               <div class="model-entry definition assembly">
+                  <div class="instance-header">
+                     <h2 id="/assembly/oscal-mapping-common/map/sources" class="toc2 name">source</h2>
+                     <p class="type">assembly<br class="br" /> </p>
+                     <p class="occurrence">[1 to ∞]</p>
+                     <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-mapping-common/map/source">Switch to XML</a></div>
+                     <p class="formal-name">Mapping Entry Item (source or target)</p>
+                  </div>
+                  <div class="body">
+                     <p><span class="usa-tag">use name</span> <code class="name">source</code></p>
+                     <p><span class="usa-tag">group as</span> <code class="name">sources</code></p>
+                     <p class="definition-link"><a href="#/assembly/oscal-mapping-common/mapping-item">See definition</a></p>
+                  </div>
+               </div>
+               <div class="model-entry definition assembly">
+                  <div class="instance-header">
+                     <h2 id="/assembly/oscal-mapping-common/map/targets" class="toc2 name">target</h2>
+                     <p class="type">assembly<br class="br" /> </p>
+                     <p class="occurrence">[1 to ∞]</p>
+                     <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-mapping-common/map/target">Switch to XML</a></div>
+                     <p class="formal-name">Mapping Entry Item (source or target)</p>
+                  </div>
+                  <div class="body">
+                     <p><span class="usa-tag">use name</span> <code class="name">target</code></p>
+                     <p><span class="usa-tag">group as</span> <code class="name">targets</code></p>
+                     <p class="definition-link"><a href="#/assembly/oscal-mapping-common/mapping-item">See definition</a></p>
+                  </div>
+               </div>
+               <div class="model-entry definition field">
+                  <div class="instance-header">
+                     <h2 id="/assembly/oscal-mapping-common/map/remarks" class="toc2 name">remarks</h2>
+                     <p class="type"><a href="/reference/datatypes/#markup-multiline">markup-multiline</a></p>
+                     <p class="occurrence">[0 or 1]</p>
+                     <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-mapping-common/map/remarks">Switch to XML</a></div>
+                     <p class="formal-name">Remarks</p>
+                  </div>
+                  <div class="body">
+                     <p class="definition-link"><a href="#/field/oscal-metadata/remarks">See definition</a></p>
+                  </div>
+               </div>
+            </div>
+         </details>
+      </div>
+   </div>
+   <div class="model-entry definition define-assembly">
+      <div class="definition-header">
+         <h1 id="/assembly/oscal-mapping-common/mapping-item" class="toc1 name">mapping-item</h1>
+         <p class="type">assembly<br class="br" /> </p>
+         <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-mapping-common/mapping-item">Switch to XML</a></div>
+         <p class="formal-name">Mapping Entry Item (source or target)</p>
+      </div>
+      <div class="body">
+         <p class="description"><span class="usa-tag">description</span> Identifies a specific edge within a source or target that is the subject of a mapping.</p>
+         <details open="open">
+            <summary>Properties (5)</summary>
+            <div class="model assembly-model">
+               <div class="model-entry definition define-flag">
+                  <div class="instance-header">
+                     <h2 id="/assembly/oscal-mapping-common/mapping-item/type" class="toc2 name">type</h2>
+                     <p class="type"><a href="/reference/datatypes/#token">token</a></p>
+                     <p class="occurrence">[0 or 1]</p>
+                     <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-mapping-common/mapping-item/type">Switch to XML</a></div>
+                     <p class="formal-name">Subject Type</p>
+                  </div>
+                  <div class="body">
+                     <p class="description"><span class="usa-tag">description</span> The semantic type of the subject.</p>
+                     <details>
+                        <summary>Constraint (1)</summary>
+                        
+                        <div class="constraint">
+                           <p><span class="usa-tag">allowed values</span></p>
+                           <p>The value <b>must</b> be one of the following:</p>
+                           <ul>
+                              
+                              <li><strong>control</strong>: A control as defined by OSCAL.</li>
+                              
+                              <li><strong>statement</strong>: A textual element of a control that defines part of the control's requirements.</li>
+                              </ul>
+                        </div>
+                        </details>
+                  </div>
+               </div>
+               <div class="model-entry definition define-flag">
+                  <div class="instance-header">
+                     <h2 id="/assembly/oscal-mapping-common/mapping-item/id-ref" class="toc2 name">id-ref</h2>
+                     <p class="type"><a href="/reference/datatypes/#string">string</a></p>
+                     <p class="occurrence">[0 or 1]</p>
+                     <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-mapping-common/mapping-item/id-ref">Switch to XML</a></div>
+                     <p class="formal-name">Subject Type</p>
+                  </div>
+                  <div class="body">
+                     <p class="description"><span class="usa-tag">description</span> The semantic type of the subject.</p>
+                  </div>
+               </div>
+               <div class="model-entry definition assembly">
+                  <div class="instance-header">
+                     <h2 id="/assembly/oscal-mapping-common/mapping-item/props" class="toc2 name">property</h2>
+                     <p class="type">assembly<br class="br" /> </p>
+                     <p class="occurrence">[0 to ∞]</p>
+                     <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-mapping-common/mapping-item/prop">Switch to XML</a></div>
+                     <p class="formal-name">Property</p>
+                  </div>
+                  <div class="body">
+                     <p><span class="usa-tag">use name</span> <code class="name">prop</code></p>
+                     <p><span class="usa-tag">group as</span> <code class="name">props</code></p>
+                     <div class="remarks-group usa-prose">
+                        <details open="open">
+                           <summary class="subhead">Remarks</summary>
+                           <div class="remarks">
+                              <p>Properties permit the deployment and management of arbitrary controlled values, within
+                                 OSCAL objects. A property can be included for any purpose useful to an application
+                                 or implementation. Typically, properties will be used to sort, filter, select, order,
+                                 and arrange OSCAL content objects, to relate OSCAL objects to one another, or to associate
+                                 an OSCAL object to class hierarchies, taxonomies, or external authorities. Thus, the
+                                 lexical composition of properties may be constrained by external processes to ensure
+                                 consistency.</p>
+                              <p>Property allows for associated remarks that describe why the specific property value
+                                 was applied to the containing object, or the significance of the value in the context
+                                 of the containing object.</p>
+                           </div>
+                        </details>
+                     </div>
+                     <p class="definition-link"><a href="#/assembly/oscal-metadata/property">See definition</a></p>
+                  </div>
+               </div>
+               <div class="model-entry definition assembly">
+                  <div class="instance-header">
+                     <h2 id="/assembly/oscal-mapping-common/mapping-item/links" class="toc2 name">link</h2>
+                     <p class="type">assembly<br class="br" /> </p>
+                     <p class="occurrence">[0 to ∞]</p>
+                     <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-mapping-common/mapping-item/link">Switch to XML</a></div>
+                     <p class="formal-name">Link</p>
+                  </div>
+                  <div class="body">
+                     <p><span class="usa-tag">group as</span> <code class="name">links</code></p>
+                     <div class="remarks-group usa-prose">
+                        <details open="open">
+                           <summary class="subhead">Remarks</summary>
+                           <div class="remarks">
+                              <p>To provide a cryptographic hash for a remote target resource, a local reference to
+                                 a back matter <code>resource</code> is needed. The resource allows one or more hash values to be provided using the <code>rlink/hash</code> object.</p>
+                              <p>The OSCAL <code>link</code> is a roughly based on the HTML <a href="https://www.w3.org/TR/html401/struct/links.html#edef-LINK">link element</a>. </p>
+                           </div>
+                        </details>
+                     </div>
+                     <p class="definition-link"><a href="#/assembly/oscal-metadata/link">See definition</a></p>
+                  </div>
+               </div>
+               <div class="model-entry definition field">
+                  <div class="instance-header">
+                     <h2 id="/assembly/oscal-mapping-common/mapping-item/remarks" class="toc2 name">remarks</h2>
+                     <p class="type"><a href="/reference/datatypes/#markup-multiline">markup-multiline</a></p>
+                     <p class="occurrence">[0 or 1]</p>
+                     <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-mapping-common/mapping-item/remarks">Switch to XML</a></div>
+                     <p class="formal-name">Remarks</p>
+                  </div>
+                  <div class="body">
+                     <p class="definition-link"><a href="#/field/oscal-metadata/remarks">See definition</a></p>
+                  </div>
+               </div>
+            </div>
+         </details>
+      </div>
+   </div>
+   <div class="model-entry definition define-assembly">
+      <div class="definition-header">
+         <h1 id="/assembly/oscal-mapping-common/mapping-resource-reference" class="toc1 name">mapping-resource-reference</h1>
+         <p class="type">assembly<br class="br" /> </p>
+         <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-mapping-common/mapping-resource-reference">Switch to XML</a></div>
+         <p class="formal-name">Mapped Resource Reference</p>
+      </div>
+      <div class="body">
+         <p class="description"><span class="usa-tag">description</span> A reference to a back-matter resource that is either the source or target of a mapping.</p>
+         <details open="open">
+            <summary>Properties (5)</summary>
+            <div class="model assembly-model">
+               <div class="model-entry definition define-flag">
+                  <div class="instance-header">
+                     <h2 id="/assembly/oscal-mapping-common/mapping-resource-reference/type" class="toc2 name">type</h2>
+                     <p class="type"><a href="/reference/datatypes/#token">token</a></p>
+                     <p class="occurrence">[0 or 1]</p>
+                     <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-mapping-common/mapping-resource-reference/type">Switch to XML</a></div>
+                     <p class="formal-name">Resource Type</p>
+                  </div>
+                  <div class="body">
+                     <p class="description"><span class="usa-tag">description</span> The semantic type of the resource.</p>
+                     <details>
+                        <summary>Constraint (1)</summary>
+                        
+                        <div class="constraint">
+                           <p><span class="usa-tag">allowed value</span></p>
+                           <p>The value <b>must</b> be one of the following:</p>
+                           <ul>
+                              
+                              <li><strong>catalog</strong>: The mapped resource is a control catalog.</li>
+                              </ul>
+                        </div>
+                        </details>
+                  </div>
+               </div>
+               <div class="model-entry definition define-flag">
+                  <div class="instance-header">
+                     <h2 id="/assembly/oscal-mapping-common/mapping-resource-reference/href" class="toc2 name">href</h2>
+                     <p class="type"><a href="/reference/datatypes/#uri-reference">uri-reference</a></p>
+                     <p class="occurrence">[0 or 1]</p>
+                     <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-mapping-common/mapping-resource-reference/href">Switch to XML</a></div>
+                     <p class="formal-name">Catalog or Profile Reference</p>
+                  </div>
+                  <div class="body">
+                     <p class="description"><span class="usa-tag">description</span> A resolvable URL reference to the base catalog or profile that this profile is tailoring.</p>
+                     <div class="remarks-group usa-prose">
+                        <details open="open">
+                           <summary class="subhead">Remarks</summary>
+                           <div class="remarks">
+                              <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
+                                 that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
+                              <p>If a local reference using a fragment is used, this will be indicated by a fragment
+                                 "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document.</p>
+                              <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URL pointing to the location of the referenced
+                                 resource. A relative URL will be resolved relative to the location of the document
+                                 containing the link.</p>
+                           </div>
+                        </details>
+                     </div>
+                  </div>
+               </div>
+               <div class="model-entry definition assembly">
+                  <div class="instance-header">
+                     <h2 id="/assembly/oscal-mapping-common/mapping-resource-reference/props" class="toc2 name">property</h2>
+                     <p class="type">assembly<br class="br" /> </p>
+                     <p class="occurrence">[0 to ∞]</p>
+                     <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-mapping-common/mapping-resource-reference/prop">Switch to XML</a></div>
+                     <p class="formal-name">Property</p>
+                  </div>
+                  <div class="body">
+                     <p><span class="usa-tag">use name</span> <code class="name">prop</code></p>
+                     <p><span class="usa-tag">group as</span> <code class="name">props</code></p>
+                     <div class="remarks-group usa-prose">
+                        <details open="open">
+                           <summary class="subhead">Remarks</summary>
+                           <div class="remarks">
+                              <p>Properties permit the deployment and management of arbitrary controlled values, within
+                                 OSCAL objects. A property can be included for any purpose useful to an application
+                                 or implementation. Typically, properties will be used to sort, filter, select, order,
+                                 and arrange OSCAL content objects, to relate OSCAL objects to one another, or to associate
+                                 an OSCAL object to class hierarchies, taxonomies, or external authorities. Thus, the
+                                 lexical composition of properties may be constrained by external processes to ensure
+                                 consistency.</p>
+                              <p>Property allows for associated remarks that describe why the specific property value
+                                 was applied to the containing object, or the significance of the value in the context
+                                 of the containing object.</p>
+                           </div>
+                        </details>
+                     </div>
+                     <p class="definition-link"><a href="#/assembly/oscal-metadata/property">See definition</a></p>
+                  </div>
+               </div>
+               <div class="model-entry definition assembly">
+                  <div class="instance-header">
+                     <h2 id="/assembly/oscal-mapping-common/mapping-resource-reference/links" class="toc2 name">link</h2>
+                     <p class="type">assembly<br class="br" /> </p>
+                     <p class="occurrence">[0 to ∞]</p>
+                     <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-mapping-common/mapping-resource-reference/link">Switch to XML</a></div>
+                     <p class="formal-name">Link</p>
+                  </div>
+                  <div class="body">
+                     <p><span class="usa-tag">group as</span> <code class="name">links</code></p>
+                     <div class="remarks-group usa-prose">
+                        <details open="open">
+                           <summary class="subhead">Remarks</summary>
+                           <div class="remarks">
+                              <p>To provide a cryptographic hash for a remote target resource, a local reference to
+                                 a back matter <code>resource</code> is needed. The resource allows one or more hash values to be provided using the <code>rlink/hash</code> object.</p>
+                              <p>The OSCAL <code>link</code> is a roughly based on the HTML <a href="https://www.w3.org/TR/html401/struct/links.html#edef-LINK">link element</a>. </p>
+                           </div>
+                        </details>
+                     </div>
+                     <p class="definition-link"><a href="#/assembly/oscal-metadata/link">See definition</a></p>
+                  </div>
+               </div>
+               <div class="model-entry definition field">
+                  <div class="instance-header">
+                     <h2 id="/assembly/oscal-mapping-common/mapping-resource-reference/remarks" class="toc2 name">remarks</h2>
+                     <p class="type"><a href="/reference/datatypes/#markup-multiline">markup-multiline</a></p>
+                     <p class="occurrence">[0 or 1]</p>
+                     <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-mapping-common/mapping-resource-reference/remarks">Switch to XML</a></div>
+                     <p class="formal-name">Remarks</p>
+                  </div>
+                  <div class="body">
+                     <p class="definition-link"><a href="#/field/oscal-metadata/remarks">See definition</a></p>
+                  </div>
+               </div>
+            </div>
+         </details>
       </div>
    </div>
    <div class="model-entry definition define-flag">
@@ -1971,6 +2652,16 @@ The following is a reference for the JSON object definitions derived from this m
       <div class="body">
          <p class="description"><span class="usa-tag">description</span> Specifies a media type as defined by the Internet Assigned Numbers Authority (IANA)
             <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">Media Types Registry</a>. </p>
+         <div class="remarks-group usa-prose">
+            <details open="open">
+               <summary class="subhead">Remarks</summary>
+               <div class="remarks">
+                  <p>The IANA Media Types Registry should be used, but currently there is no official media
+                     type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                     suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+               </div>
+            </details>
+         </div>
       </div>
    </div>
    <div class="model-entry definition define-assembly">
@@ -1983,7 +2674,7 @@ The following is a reference for the JSON object definitions derived from this m
       <div class="body">
          <p class="description"><span class="usa-tag">description</span> Provides information about the publication and availability of the containing document.</p>
          <details>
-            <summary>Constraints (12)</summary>
+            <summary>Constraints (13)</summary>
             
             <div class="constraint">
                <p><span class="usa-tag">index</span> for <code class="path">role</code> an index <code>index-metadata-role-ids</code> shall list values returned by targets <code>role</code> using keys constructed of key field(s) <code>@id</code></p>
@@ -1998,7 +2689,7 @@ The following is a reference for the JSON object definitions derived from this m
             </div>
             
             <div class="constraint">
-               <p><span class="usa-tag">index</span> for <code class="path">.//prop</code> an index <code>index-metadata-property-id</code> shall list values returned by targets <code>.//prop</code> using keys constructed of key field(s) <code>@id</code></p>
+               <p><span class="usa-tag">index</span> for <code class="path">.//prop</code> an index <code>index-metadata-property-uuid</code> shall list values returned by targets <code>.//prop</code> using keys constructed of key field(s) <code>@uuid</code></p>
             </div>
             
             <div class="constraint">
@@ -2030,11 +2721,25 @@ The following is a reference for the JSON object definitions derived from this m
                <p>The value <b>may be locally defined</b>, or one of the following:</p>
                <ul>
                   
-                  <li><strong>prepared-by</strong>: Indicates the organization that created this content.</li>
+                  <li><strong>creator</strong>: Indicates the organization that created this content.</li>
+                  
+                  <li><strong>prepared-by</strong>: Indicates the organization that prepared this content.</li>
                   
                   <li><strong>prepared-for</strong>: Indicates the organization for which this content was created.</li>
                   
                   <li><strong>content-approver</strong>: Indicates the organization responsible for all content represented in the "document".</li>
+                  
+                  <li><strong>contact</strong>: Indicates the organization to contact for questions or support related to this content.</li>
+                  </ul>
+            </div>
+            
+            <div class="constraint">
+               <p><span class="usa-tag">allowed value</span> for <code class="path">prop[has-oscal-namespace('http://csrc.nist.gov/ns/oscal')]/@name</code></p>
+               <p>The value <b>must</b> be one of the following:</p>
+               <ul>
+                  
+                  <li><strong>keywords</strong>: The value identifies a comma-seperated listing of keywords associated with this
+                     content. These keywords may be used as search terms for indexing and other applications.</li>
                   </ul>
             </div>
             
@@ -2295,6 +3000,11 @@ The following is a reference for the JSON object definitions derived from this m
                            <div class="remarks">
                               <p>Permissible values to be determined closer to the application (e.g. by a receiving
                                  authority).</p>
+                              <p>OSCAL has defined a set of standardized roles for consistent use in OSCAL documents.
+                                 This allows tools consuming OSCAL content to infer specific semantics when these roles
+                                 are used. These roles are documented in the specific contexts of their use (e.g.,
+                                 responsible-party, responsible-role). When using such a role, it is necessary to define
+                                 these roles in this list, which will then allow such a role to be referenced.</p>
                            </div>
                         </details>
                      </div>
@@ -2402,6 +3112,41 @@ The following is a reference for the JSON object definitions derived from this m
                </div>
             </details>
          </div>
+         <details>
+            <summary>Constraints (2)</summary>
+            
+            <div class="constraint">
+               <p><span class="usa-tag">allowed values</span> for <code class="path">prop[has-oscal-namespace('http://csrc.nist.gov/ns/oscal')]/@name</code></p>
+               <p>The value <b>must</b> be one of the following:</p>
+               <ul>
+                  
+                  <li><strong>label</strong>: A human-readable label for the parent context, which may be rendered in place of
+                     the actual identifier for some use cases.</li>
+                  
+                  <li><strong>sort-id</strong>: An alternative identifier, whose value is easily sortable among other such values
+                     in the document.</li>
+                  
+                  <li><strong>alt-identifier</strong>: An alternate or aliased identifier for the parent context.</li>
+                  
+                  
+                  <li><strong>alt-label</strong>: An alternate to the value provided by the parameter's label. This will typically
+                     be qualified by a class.</li>
+                  </ul>
+            </div>
+            
+            <div class="constraint">
+               <p><span class="usa-tag">allowed value</span> for <code class="path">prop[has-oscal-namespace('http://csrc.nist.gov/ns/rmf')]/@name</code></p>
+               <p>The value <b>must</b> be one of the following:</p>
+               <ul>
+                  
+                  <li><strong>aggregates</strong>: The parent parameter provides an aggregation of 2 or more other parameters, each
+                     described by this property.</li>
+                  </ul>
+            </div>
+            
+            depends-on is deprecated
+            
+            </details>
          <details open="open">
             <summary>Properties (11)</summary>
             <div class="model assembly-model">
@@ -2414,9 +3159,10 @@ The following is a reference for the JSON object definitions derived from this m
                      <p class="formal-name">Parameter Identifier</p>
                   </div>
                   <div class="body">
-                     <p class="description"><span class="usa-tag">description</span> A unique identifier for a specific parameter instance. This identifier's uniqueness
-                        is document scoped and is intended to be consistent for the same parameter across
-                        minor revisions of the document.</p>
+                     <p class="description"><span class="usa-tag">description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a>, <a href="/concepts/identifier-use/#locally-unique">locally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined parameter elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. When referenced from another OSCAL instance, this identifier must be referenced
+                        in the context of the containing resource (e.g., import-profile). This id should be
+                        assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
+                        of the document.</p>
                   </div>
                </div>
                <div class="model-entry definition define-flag">
@@ -2440,7 +3186,7 @@ The following is a reference for the JSON object definitions derived from this m
                      </div>
                   </div>
                </div>
-               <div class="model-entry definition flag">
+               <div class="model-entry definition define-flag">
                   <div class="instance-header">
                      <h2 id="/assembly/oscal-catalog-common/parameter/depends-on" class="toc2 name">depends-on</h2>
                      <p class="type"><a href="/reference/datatypes/#token">token</a></p>
@@ -2449,7 +3195,8 @@ The following is a reference for the JSON object definitions derived from this m
                      <p class="formal-name">Depends on</p>
                   </div>
                   <div class="body">
-                     <p class="definition-link"><a href="#/flag/oscal-catalog-common/depends-on">See definition</a></p>
+                     <p class="description"><span class="usa-tag">description</span> **(deprecated)** Another parameter invoking this one. This construct has been deprecated
+                        and should not be used.</p>
                   </div>
                </div>
                <div class="model-entry definition assembly">
@@ -2717,7 +3464,7 @@ The following is a reference for the JSON object definitions derived from this m
                      <h2 id="/assembly/oscal-catalog-common/parameter-guideline/prose" class="toc2 name">prose</h2>
                      <p class="type"><a href="/reference/datatypes/#markup-multiline">markup-multiline</a></p>
                      <p class="occurrence">[1]</p>
-                     <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-catalog-common/parameter-guideline/p ul ol pre table h1 h2 h3 h4 h5 h6">Switch to XML</a></div>
+                     <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-catalog-common/parameter-guideline/prose">Switch to XML</a></div>
                      <p class="formal-name">Guideline Text</p>
                   </div>
                   <div class="body">
@@ -2832,7 +3579,7 @@ The following is a reference for the JSON object definitions derived from this m
                      <code>ns</code> is provided, the name is expected to be in the "OSCAL" namespace.</p>
                   <p>To ensure a <code>ns</code> is unique to an organization and naming conflicts are avoided, a URI containing a
                      DNS or other globally defined organization name should be used. For example, if FedRAMP
-                     and DoD both extend OSCAL, FedRAMP will use the <code>ns</code> "https://fedramp.gov", while DoD will use the <code>ns</code> "https://defense.gov" for any organization specific <code>name</code>. </p>
+                     and DoD both extend OSCAL, FedRAMP will use the <code>ns</code> <code>http://fedramp.gov/ns/oscal</code>, while DoD might use the <code>ns</code> <code>https://defense.gov</code> for any organization specific <code>name</code>.</p>
                   <p>Tools that process OSCAL content are not required to interpret unrecognized OSCAL
                      extensions; however, OSCAL compliant tools should not modify or remove unrecognized
                      extensions, unless there is a compelling reason to do so, such as data sensitivity.</p>
@@ -2840,53 +3587,24 @@ The following is a reference for the JSON object definitions derived from this m
             </details>
          </div>
          <details>
-            <summary>Constraints (4)</summary>
+            <summary>Constraint (1)</summary>
             
             
             <div class="constraint">
-               <p><span class="usa-tag">allowed values</span> for <code class="path">prop/@name</code></p>
-               <p>The value <b>may be locally defined</b>, or one of the following:</p>
+               <p><span class="usa-tag">allowed values</span> for <code class="path">prop[has-oscal-namespace('http://csrc.nist.gov/ns/oscal')]/@name</code></p>
+               <p>The value <b>must</b> be one of the following:</p>
                <ul>
                   
-                  <li><strong>label</strong>: A human-readable label for the parent context.</li>
+                  <li><strong>label</strong>: A human-readable label for the parent context, which may be rendered in place of
+                     the actual identifier for some use cases.</li>
                   
                   <li><strong>sort-id</strong>: An alternative identifier, whose value is easily sortable among other such values
                      in the document.</li>
                   
+                  <li><strong>alt-identifier</strong>: An alternate or aliased identifier for the parent context.</li>
+                  
                   </ul>
             </div>
-            
-            
-            <div class="constraint">
-               <p><span class="usa-tag">allowed value</span> for <code class="path">prop/@name</code></p>
-               <p>The value <b>may be locally defined</b>, or the following:</p>
-               <ul>
-                  
-                  <li><strong>method</strong>: The assessment method to use. This typically appears on parts with the name "assessment".</li>
-                  </ul>
-            </div>
-            
-            <div class="constraint">
-               <p><span class="usa-tag">has cardinality</span> for <code class="path">prop[@name='method']</code> the cardinality of  <code>prop[@name='method']</code> is constrained: <b>1</b>; maximum <b>unbounded</b>.</p>
-            </div>
-            
-            <div class="constraint">
-               <p><span class="usa-tag">allowed values</span> for <code class="path">prop[@name='method']/@value</code></p>
-               <p>The value <b>must</b> be one of the following:</p>
-               <ul>
-                  
-                  <li><strong>INTERVIEW</strong>: The process of holding discussions with individuals or groups of individuals within
-                     an organization to once again, facilitate assessor understanding, achieve clarification,
-                     or obtain evidence.</li>
-                  
-                  <li><strong>EXAMINE</strong>: The process of reviewing, inspecting, observing, studying, or analyzing one or more
-                     assessment objects (i.e., specifications, mechanisms, or activities).</li>
-                  
-                  <li><strong>TEST</strong>: The process of exercising one or more assessment objects (i.e., activities or mechanisms)
-                     under specified conditions to compare actual with expected behavior.</li>
-                  </ul>
-            </div>
-            
             </details>
          <details open="open">
             <summary>Properties (9)</summary>
@@ -2900,8 +3618,9 @@ The following is a reference for the JSON object definitions derived from this m
                      <p class="formal-name">Part Identifier</p>
                   </div>
                   <div class="body">
-                     <p class="description"><span class="usa-tag">description</span> A unique identifier for a specific part instance. This identifier's uniqueness is
-                        document scoped and is intended to be consistent for the same part across minor revisions
+                     <p class="description"><span class="usa-tag">description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a>, <a href="/concepts/identifier-use/#locally-unique">locally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined part elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. When referenced from another OSCAL instance, this identifier must be referenced
+                        in the context of the containing resource (e.g., import-profile). This id should be
+                        assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                         of the document.</p>
                   </div>
                </div>
@@ -2915,32 +3634,6 @@ The following is a reference for the JSON object definitions derived from this m
                   </div>
                   <div class="body">
                      <p class="description"><span class="usa-tag">description</span> A textual label that uniquely identifies the part's semantic type.</p>
-                     <details>
-                        <summary>Constraint (1)</summary>
-                        
-                        <div class="constraint">
-                           <p><span class="usa-tag">allowed values</span></p>
-                           <p>The value <b>may be locally defined</b>, or one of the following:</p>
-                           <ul>
-                              
-                              
-                              <li><strong>overview</strong>: An introduction to a control or a group of controls.</li>
-                              
-                              <li><strong>statement</strong>: A set of control implementation requirements.</li>
-                              
-                              <li><strong>item</strong>: An individual item within a control statement.</li>
-                              
-                              <li><strong>guidance</strong>: Additional information to consider when selecting, implementing, assessing, and
-                                 monitoring a control.</li>
-                              
-                              <li><strong>objective</strong>: Describes a set of assessment objectives.</li>
-                              
-                              <li><strong>assessment</strong>: Describes a method-based assessment over a set of assessment objects.</li>
-                              
-                              <li><strong>objects</strong>: Provides a list of assessment objects.</li>
-                              </ul>
-                        </div>
-                        </details>
                   </div>
                </div>
                <div class="model-entry definition define-flag">
@@ -3041,7 +3734,7 @@ The following is a reference for the JSON object definitions derived from this m
                      <h2 id="/assembly/oscal-catalog-common/part/prose" class="toc2 name">prose</h2>
                      <p class="type"><a href="/reference/datatypes/#markup-multiline">markup-multiline</a></p>
                      <p class="occurrence">[0 or 1]</p>
-                     <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-catalog-common/part/p ul ol pre table h1 h2 h3 h4 h5 h6">Switch to XML</a></div>
+                     <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-catalog-common/part/prose">Switch to XML</a></div>
                      <p class="formal-name">Part Text</p>
                   </div>
                   <div class="body">
@@ -3076,7 +3769,7 @@ The following is a reference for the JSON object definitions derived from this m
                                  <code>ns</code> is provided, the name is expected to be in the "OSCAL" namespace.</p>
                               <p>To ensure a <code>ns</code> is unique to an organization and naming conflicts are avoided, a URI containing a
                                  DNS or other globally defined organization name should be used. For example, if FedRAMP
-                                 and DoD both extend OSCAL, FedRAMP will use the <code>ns</code> "https://fedramp.gov", while DoD will use the <code>ns</code> "https://defense.gov" for any organization specific <code>name</code>. </p>
+                                 and DoD both extend OSCAL, FedRAMP will use the <code>ns</code> <code>http://fedramp.gov/ns/oscal</code>, while DoD might use the <code>ns</code> <code>https://defense.gov</code> for any organization specific <code>name</code>.</p>
                               <p>Tools that process OSCAL content are not required to interpret unrecognized OSCAL
                                  extensions; however, OSCAL compliant tools should not modify or remove unrecognized
                                  extensions, unless there is a compelling reason to do so, such as data sensitivity.</p>
@@ -3150,9 +3843,9 @@ The following is a reference for the JSON object definitions derived from this m
                      <p class="formal-name">Party Universally Unique Identifier</p>
                   </div>
                   <div class="body">
-                     <p class="description"><span class="usa-tag">description</span> A unique identifier that can be used to reference this defined location elsewhere
-                        in an OSCAL document. A UUID should be consistently used for a given party across
-                        revisions of the document.</p>
+                     <p class="description"><span class="usa-tag">description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined party elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>party</code> can be used to reference the data item locally or globally (e.g., from an importing
+                        OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
+                        of the document.</p>
                   </div>
                </div>
                <div class="model-entry definition define-flag">
@@ -3240,7 +3933,7 @@ The following is a reference for the JSON object definitions derived from this m
                                        <p>The value <b>may be locally defined</b>, or the following:</p>
                                        <ul>
                                           
-                                          <li><strong>https://orcid.org/</strong>: The identifier is Open Researcher and Contributor ID (ORCID).</li>
+                                          <li><strong>http://orcid.org/</strong>: The identifier is Open Researcher and Contributor ID (ORCID).</li>
                                           </ul>
                                     </div>
                                     </details>
@@ -3382,6 +4075,14 @@ The following is a reference for the JSON object definitions derived from this m
                   </div>
                   <div class="body">
                      <p><span class="usa-tag">group as</span> <code class="name">location-uuids</code></p>
+                     <div class="remarks-group usa-prose">
+                        <details open="open">
+                           <summary class="subhead">Remarks</summary>
+                           <div class="remarks">
+                              <p>See the <a href="/concepts/identifier-use/#scope">Concepts - Identifier Use</a> page for additional information about the referenced identifier's scope.</p>
+                           </div>
+                        </details>
+                     </div>
                      <p class="definition-link"><a href="#/field/oscal-metadata/location-uuid">See definition</a></p>
                   </div>
                </div>
@@ -3394,14 +4095,14 @@ The following is a reference for the JSON object definitions derived from this m
                      <p class="formal-name">Organizational Affiliation</p>
                   </div>
                   <div class="body">
-                     <p class="description"><span class="usa-tag">description</span> Identifies that the party object is a member of the organization associated with
-                        the provided UUID.</p>
+                     <p class="description"><span class="usa-tag">description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a> identifier reference to another <code>party</code> (<code>person</code> or <code>organization</code>) that this subject is associated with. The <em>UUID</em> of the <code>party</code> in the source OSCAL instance is sufficient to reference the data item locally or
+                        globally (e.g., in an imported OSCAL instance). </p>
                      <p><span class="usa-tag">group as</span> <code class="name">member-of-organizations</code></p>
                      <div class="remarks-group usa-prose">
                         <details open="open">
                            <summary class="subhead">Remarks</summary>
                            <div class="remarks">
-                              <p>Parties of both the <code>person</code> or <code>organization</code> type can be associated with an organization using the <code>member-of-organization</code>. </p>
+                              <p>Parties of both the <code>person</code> or <code>organization</code> type can be associated with an organization using the <code>member-of-organization</code>.</p>
                            </div>
                         </details>
                      </div>
@@ -3409,7 +4110,7 @@ The following is a reference for the JSON object definitions derived from this m
                         <summary>Constraint (1)</summary>
                         
                         <div class="constraint">
-                           <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-party-organizations-uuid</code> using a key constructed of key field(s) <code>value()</code></p>
+                           <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-party-organizations-uuid</code> using a key constructed of key field(s) <code>.</code></p>
                         </div>
                         </details>
                   </div>
@@ -3438,12 +4139,21 @@ The following is a reference for the JSON object definitions derived from this m
          <p class="formal-name">Party Reference</p>
       </div>
       <div class="body">
-         <p class="description"><span class="usa-tag">description</span> References a <code>party</code> defined in <code>metadata</code>. </p>
+         <p class="description"><span class="usa-tag">description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a> identifier reference to another <code>party</code> defined in <code>metadata</code>. The <em>UUID</em> of the <code>party</code> in the source OSCAL instance is sufficient to reference the data item locally or
+            globally (e.g., in an imported OSCAL instance). </p>
+         <div class="remarks-group usa-prose">
+            <details open="open">
+               <summary class="subhead">Remarks</summary>
+               <div class="remarks">
+                  <p>See the <a href="/concepts/identifier-use/#scope">Concepts - Identifier Use</a> page for additional information about the referenced identifier's scope.</p>
+               </div>
+            </details>
+         </div>
          <details>
             <summary>Constraint (1)</summary>
             
             <div class="constraint">
-               <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-party-uuid</code> using a key constructed of key field(s) <code>value()</code></p>
+               <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-party-uuid</code> using a key constructed of key field(s) <code>.</code></p>
             </div>
             </details>
       </div>
@@ -3516,8 +4226,7 @@ The following is a reference for the JSON object definitions derived from this m
                      <p class="formal-name">Property Universally Unique Identifier</p>
                   </div>
                   <div class="body">
-                     <p class="description"><span class="usa-tag">description</span> A unique identifier that can be used to reference this property elsewhere in an OSCAL
-                        document. A UUID should be consistently used for a given location across revisions
+                     <p class="description"><span class="usa-tag">description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                         of the document.</p>
                   </div>
                </div>
@@ -3653,7 +4362,7 @@ The following is a reference for the JSON object definitions derived from this m
             </div>
             
             <div class="constraint">
-               <p><span class="usa-tag">index has key</span> for <code class="path">party-uuid</code>this value must correspond to a listing in the index <code>index-metadata-party-uuid</code> using a key constructed of key field(s) <code>value()</code></p>
+               <p><span class="usa-tag">index has key</span> for <code class="path">party-uuid</code>this value must correspond to a listing in the index <code>index-metadata-party-uuid</code> using a key constructed of key field(s) <code>.</code></p>
             </div>
             </details>
          <details open="open">
@@ -3668,7 +4377,7 @@ The following is a reference for the JSON object definitions derived from this m
                      <p class="formal-name">Responsible Role</p>
                   </div>
                   <div class="body">
-                     <p class="description"><span class="usa-tag">description</span> The role that the party is responsible for.</p>
+                     <p class="description"><span class="usa-tag">description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a> identifier reference to <code>roles</code> served by the user.</p>
                   </div>
                </div>
                <div class="model-entry definition field">
@@ -3684,6 +4393,9 @@ The following is a reference for the JSON object definitions derived from this m
                      <div class="remarks-group usa-prose">
                         <details open="open">
                            <summary class="subhead">Remarks</summary>
+                           <div class="remarks">
+                              <p>See the <a href="/concepts/identifier-use/#scope">Concepts - Identifier Use</a> page for additional information about the referenced identifier's scope.</p>
+                           </div>
                            <div class="remarks">
                               <p>Specifies one or more parties that are responsible for performing the associated <code>role</code>. </p>
                            </div>
@@ -3784,7 +4496,7 @@ The following is a reference for the JSON object definitions derived from this m
                      <p class="formal-name">Responsible Role ID</p>
                   </div>
                   <div class="body">
-                     <p class="description"><span class="usa-tag">description</span> The role that is responsible for the business function.</p>
+                     <p class="description"><span class="usa-tag">description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a> identifier reference to <code>roles</code> responsible for the business function.</p>
                   </div>
                </div>
                <div class="model-entry definition assembly">
@@ -3851,6 +4563,14 @@ The following is a reference for the JSON object definitions derived from this m
                   </div>
                   <div class="body">
                      <p><span class="usa-tag">group as</span> <code class="name">party-uuids</code></p>
+                     <div class="remarks-group usa-prose">
+                        <details open="open">
+                           <summary class="subhead">Remarks</summary>
+                           <div class="remarks">
+                              <p>See the <a href="/concepts/identifier-use/#scope">Concepts - Identifier Use</a> page for additional information about the referenced identifier's scope.</p>
+                           </div>
+                        </details>
+                     </div>
                      <p class="definition-link"><a href="#/field/oscal-metadata/party-uuid">See definition</a></p>
                   </div>
                </div>
@@ -3891,11 +4611,8 @@ The following is a reference for the JSON object definitions derived from this m
             </details>
          </div>
          <details>
-            <summary>Constraints (2)</summary>
+            <summary>Constraint (1)</summary>
             
-            <div class="constraint">
-               <p><span class="usa-tag">has cardinality</span> for <code class="path">published|last-modified|version|link[@rel='canonical']</code> the cardinality of  <code>published|last-modified|version|link[@rel='canonical']</code> is constrained: <b>1</b>; maximum <b>unbounded</b>.</p>
-            </div>
             
             <div class="constraint">
                <p><span class="usa-tag">allowed values</span> for <code class="path">link/@rel</code></p>
@@ -3989,7 +4706,7 @@ The following is a reference for the JSON object definitions derived from this m
                   <div class="instance-header">
                      <h2 id="/assembly/oscal-metadata/revision/version" class="toc2 name">version</h2>
                      <p class="type"><a href="/reference/datatypes/#string">string</a></p>
-                     <p class="occurrence">[0 or 1]</p>
+                     <p class="occurrence">[1]</p>
                      <div class="crosslink"><a class="usa-button" href="../xml-definitions/#/assembly/oscal-metadata/revision/version">Switch to XML</a></div>
                      <p class="formal-name">Document Version</p>
                   </div>
@@ -4118,6 +4835,11 @@ The following is a reference for the JSON object definitions derived from this m
                <div class="remarks">
                   <p>Permissible values to be determined closer to the application (e.g. by a receiving
                      authority).</p>
+                  <p>OSCAL has defined a set of standardized roles for consistent use in OSCAL documents.
+                     This allows tools consuming OSCAL content to infer specific semantics when these roles
+                     are used. These roles are documented in the specific contexts of their use (e.g.,
+                     responsible-party, responsible-role). When using such a role, it is necessary to define
+                     these roles in this list, which will then allow such a role to be referenced.</p>
                </div>
             </details>
          </div>
@@ -4133,21 +4855,10 @@ The following is a reference for the JSON object definitions derived from this m
                      <p class="formal-name">Role Identifier</p>
                   </div>
                   <div class="body">
-                     <p class="description"><span class="usa-tag">description</span> A unique identifier for a specific role instance. This identifier's uniqueness is
-                        document scoped and is intended to be consistent for the same role across minor revisions
+                     <p class="description"><span class="usa-tag">description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a>, <a href="/concepts/identifier-use/#locally-unique">locally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined role elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. When referenced from another OSCAL instance, the locally defined <em>ID</em> of the <code>Role</code> from the imported OSCAL instance must be referenced in the context of the containing
+                        resource (e.g., import, import-component-definition, import-profile, import-ssp or
+                        import-ap). This ID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                         of the document.</p>
-                     <div class="remarks-group usa-prose">
-                        <details open="open">
-                           <summary class="subhead">Remarks</summary>
-                           <div class="remarks">
-                              <p>OSCAL has defined a set of standardized roles for consistent use in OSCAL documents.
-                                 This allows tools consuming OSCAL content to infer specific semantics when these roles
-                                 are used. These roles are documented in the specific contexts of their use (e.g.,
-                                 responsible-party, responsible-role). When using such a role, it is necessary to define
-                                 these roles in this list, which will then allow such a role to be referenced.</p>
-                           </div>
-                        </details>
-                     </div>
                   </div>
                </div>
                <div class="model-entry definition define-field">
@@ -4264,12 +4975,12 @@ The following is a reference for the JSON object definitions derived from this m
          <p class="formal-name">Role Identifier Reference</p>
       </div>
       <div class="body">
-         <p class="description"><span class="usa-tag">description</span> A reference to the roles served by the user.</p>
+         <p class="description"><span class="usa-tag">description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a> identifier reference to <code>roles</code> served by the user.</p>
          <details>
             <summary>Constraint (1)</summary>
             
             <div class="constraint">
-               <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-role-id</code> using a key constructed of key field(s) <code>value()</code></p>
+               <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-role-id</code> using a key constructed of key field(s) <code>.</code></p>
             </div>
             </details>
       </div>

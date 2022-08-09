@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+<xsl:stylesheet xmlns="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel"
                 xmlns:m="http://csrc.nist.gov/ns/oscal/metaschema/1.0"
-                xmlns="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="3.0"
                 exclude-result-prefixes="#all"
                 xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
@@ -22,7 +22,7 @@
    <xsl:output omit-xml-declaration="true" method="xml"/>
    <xsl:variable name="write-options" as="map(*)">
       <xsl:map>
-         <xsl:map-entry key="'indent'" expand-text="true">{ $json-indent='yes' }</xsl:map-entry>
+         <xsl:map-entry key="'indent'" select="$json-indent='yes'"/>
       </xsl:map>
    </xsl:variable>
    <xsl:variable name="source-xml" select="/"/>
@@ -83,14 +83,7 @@
    <xsl:template match="assessment-plan"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-ap/assessment-plan"
-                _metaschema-json-id="/assembly/oscal-ap/assessment-plan"
-                name="assessment-plan"
-                key="assessment-plan"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-plan_metaschema.xml"
-                _key-name="oscal-ap:assessment-plan"
-                _using-root-name="assessment-plan"
-                gi="assessment-plan">
+      <assembly name="assessment-plan" key="assessment-plan" gi="assessment-plan">
          <xsl:if test="$with-key">
             <xsl:attribute name="key">assessment-plan</xsl:attribute>
          </xsl:if>
@@ -124,19 +117,7 @@
    <xsl:template match="metadata"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-ap/assessment-plan/metadata"
-                _metaschema-json-id="/assembly/oscal-ap/assessment-plan/metadata"
-                name="metadata"
-                key="metadata"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-                _key-name="oscal-metadata:metadata"
-                _step="metadata"
-                _key="metadata"
-                _key-ref="oscal-metadata:metadata"
-                _using-name="metadata"
-                _in-xml-name="metadata"
-                _in-json-name="metadata"
-                gi="metadata">
+      <assembly name="metadata" key="metadata" gi="metadata">
          <xsl:if test="$with-key">
             <xsl:attribute name="key">metadata</xsl:attribute>
          </xsl:if>
@@ -201,18 +182,7 @@
    <xsl:template match="prop"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-metadata/revision/prop"
-                _metaschema-json-id="/assembly/oscal-metadata/revision/props"
-                name="property"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-                _key-name="oscal-metadata:property"
-                _step="prop"
-                _key="props"
-                _key-ref="oscal-metadata:property"
-                _using-name="prop"
-                _in-xml-name="prop"
-                _in-json-name="props"
-                gi="prop">
+      <assembly name="property" gi="prop">
          <xsl:apply-templates select="@name"/>
          <xsl:apply-templates select="@uuid"/>
          <xsl:apply-templates select="@ns"/>
@@ -224,18 +194,7 @@
    <xsl:template match="link"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-metadata/revision/link"
-                _metaschema-json-id="/assembly/oscal-metadata/revision/links"
-                name="link"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-                _key-name="oscal-metadata:link"
-                _step="link"
-                _key="links"
-                _key-ref="oscal-metadata:link"
-                _using-name="link"
-                _in-xml-name="link"
-                _in-json-name="links"
-                gi="link">
+      <assembly name="link" gi="link">
          <xsl:apply-templates select="@href"/>
          <xsl:apply-templates select="@rel"/>
          <xsl:apply-templates select="@media-type"/>
@@ -245,18 +204,7 @@
    <xsl:template match="role"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-metadata/metadata/role"
-                _metaschema-json-id="/assembly/oscal-metadata/metadata/roles"
-                name="role"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-                _key-name="oscal-metadata:role"
-                _step="role"
-                _key="roles"
-                _key-ref="oscal-metadata:role"
-                _using-name="role"
-                _in-xml-name="role"
-                _in-json-name="roles"
-                gi="role">
+      <assembly name="role" gi="role">
          <xsl:apply-templates select="@id"/>
          <xsl:apply-templates select="title"/>
          <xsl:apply-templates select="short-name"/>
@@ -281,18 +229,7 @@
    <xsl:template match="location"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-metadata/metadata/location"
-                _metaschema-json-id="/assembly/oscal-metadata/metadata/locations"
-                name="location"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-                _key-name="oscal-metadata:location"
-                _step="location"
-                _key="locations"
-                _key-ref="oscal-metadata:location"
-                _using-name="location"
-                _in-xml-name="location"
-                _in-json-name="locations"
-                gi="location">
+      <assembly name="location" gi="location">
          <xsl:apply-templates select="@uuid"/>
          <xsl:apply-templates select="title"/>
          <xsl:apply-templates select="address"/>
@@ -337,18 +274,7 @@
    <xsl:template match="party"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-metadata/metadata/party"
-                _metaschema-json-id="/assembly/oscal-metadata/metadata/parties"
-                name="party"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-                _key-name="oscal-metadata:party"
-                _step="party"
-                _key="parties"
-                _key-ref="oscal-metadata:party"
-                _using-name="party"
-                _in-xml-name="party"
-                _in-json-name="parties"
-                gi="party">
+      <assembly name="party" gi="party">
          <xsl:apply-templates select="@uuid"/>
          <xsl:apply-templates select="@type"/>
          <xsl:apply-templates select="name"/>
@@ -415,18 +341,7 @@
    <xsl:template match="responsible-party"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-metadata/metadata/responsible-party"
-                _metaschema-json-id="/assembly/oscal-metadata/metadata/responsible-parties"
-                name="responsible-party"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-                _key-name="oscal-metadata:responsible-party"
-                _step="responsible-party"
-                _key="responsible-parties"
-                _key-ref="oscal-metadata:responsible-party"
-                _using-name="responsible-party"
-                _in-xml-name="responsible-party"
-                _in-json-name="responsible-parties"
-                gi="responsible-party">
+      <assembly name="responsible-party" gi="responsible-party">
          <xsl:apply-templates select="@role-id"/>
          <xsl:for-each-group select="party-uuid" group-by="true()">
             <group in-json="ARRAY" key="party-uuids">
@@ -455,19 +370,7 @@
    <xsl:template match="import-ssp"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-ap/assessment-plan/import-ssp"
-                _metaschema-json-id="/assembly/oscal-ap/assessment-plan/import-ssp"
-                name="import-ssp"
-                key="import-ssp"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-                _key-name="oscal-assessment-common:import-ssp"
-                _step="import-ssp"
-                _key="import-ssp"
-                _key-ref="oscal-assessment-common:import-ssp"
-                _using-name="import-ssp"
-                _in-xml-name="import-ssp"
-                _in-json-name="import-ssp"
-                gi="import-ssp">
+      <assembly name="import-ssp" key="import-ssp" gi="import-ssp">
          <xsl:if test="$with-key">
             <xsl:attribute name="key">import-ssp</xsl:attribute>
          </xsl:if>
@@ -478,18 +381,7 @@
    <xsl:template match="component"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-ap/assessment-plan/local-definitions/component"
-                _metaschema-json-id="/assembly/oscal-ap/assessment-plan/local-definitions/components"
-                name="system-component"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_implementation-common_metaschema.xml"
-                _key-name="oscal-implementation-common:system-component"
-                _step="component"
-                _key="components"
-                _key-ref="oscal-implementation-common:system-component"
-                _using-name="component"
-                _in-xml-name="component"
-                _in-json-name="components"
-                gi="component">
+      <assembly name="system-component" gi="component">
          <xsl:apply-templates select="@uuid"/>
          <xsl:apply-templates select="@type"/>
          <xsl:apply-templates select="title"/>
@@ -530,18 +422,7 @@
    <xsl:template match="responsible-role"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-implementation-common/system-component/responsible-role"
-                _metaschema-json-id="/assembly/oscal-implementation-common/system-component/responsible-roles"
-                name="responsible-role"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-                _key-name="oscal-metadata:responsible-role"
-                _step="responsible-role"
-                _key="responsible-roles"
-                _key-ref="oscal-metadata:responsible-role"
-                _using-name="responsible-role"
-                _in-xml-name="responsible-role"
-                _in-json-name="responsible-roles"
-                gi="responsible-role">
+      <assembly name="responsible-role" gi="responsible-role">
          <xsl:apply-templates select="@role-id"/>
          <xsl:for-each-group select="prop" group-by="true()">
             <group in-json="ARRAY" key="props">
@@ -570,18 +451,7 @@
    <xsl:template match="protocol"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-implementation-common/system-component/protocol"
-                _metaschema-json-id="/assembly/oscal-implementation-common/system-component/protocols"
-                name="protocol"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_implementation-common_metaschema.xml"
-                _key-name="oscal-implementation-common:protocol"
-                _step="protocol"
-                _key="protocols"
-                _key-ref="oscal-implementation-common:protocol"
-                _using-name="protocol"
-                _in-xml-name="protocol"
-                _in-json-name="protocols"
-                gi="protocol">
+      <assembly name="protocol" gi="protocol">
          <xsl:apply-templates select="@uuid"/>
          <xsl:apply-templates select="@name"/>
          <xsl:apply-templates select="title"/>
@@ -597,19 +467,7 @@
    <xsl:template match="port-range"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly as-type="empty"
-                _metaschema-xml-id="/assembly/oscal-implementation-common/protocol/port-range"
-                _metaschema-json-id="/assembly/oscal-implementation-common/protocol/port-ranges"
-                name="port-range"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_implementation-common_metaschema.xml"
-                _key-name="oscal-implementation-common:port-range"
-                _step="port-range"
-                _key="port-ranges"
-                _key-ref="oscal-implementation-common:port-range"
-                _using-name="port-range"
-                _in-xml-name="port-range"
-                _in-json-name="port-ranges"
-                gi="port-range">
+      <assembly as-type="empty" name="port-range" gi="port-range">
          <xsl:apply-templates select="@start"/>
          <xsl:apply-templates select="@end"/>
          <xsl:apply-templates select="@transport"/>
@@ -618,18 +476,7 @@
    <xsl:template match="inventory-item"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-ap/assessment-plan/local-definitions/inventory-item"
-                _metaschema-json-id="/assembly/oscal-ap/assessment-plan/local-definitions/inventory-items"
-                name="inventory-item"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_implementation-common_metaschema.xml"
-                _key-name="oscal-implementation-common:inventory-item"
-                _step="inventory-item"
-                _key="inventory-items"
-                _key-ref="oscal-implementation-common:inventory-item"
-                _using-name="inventory-item"
-                _in-xml-name="inventory-item"
-                _in-json-name="inventory-items"
-                gi="inventory-item">
+      <assembly name="inventory-item" gi="inventory-item">
          <xsl:apply-templates select="@uuid"/>
          <xsl:apply-templates select="description"/>
          <xsl:for-each-group select="prop" group-by="true()">
@@ -666,18 +513,7 @@
    <xsl:template match="user"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-ap/assessment-plan/local-definitions/user"
-                _metaschema-json-id="/assembly/oscal-ap/assessment-plan/local-definitions/users"
-                name="system-user"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_implementation-common_metaschema.xml"
-                _key-name="oscal-implementation-common:system-user"
-                _step="user"
-                _key="users"
-                _key-ref="oscal-implementation-common:system-user"
-                _using-name="user"
-                _in-xml-name="user"
-                _in-json-name="users"
-                gi="user">
+      <assembly name="system-user" gi="user">
          <xsl:apply-templates select="@uuid"/>
          <xsl:apply-templates select="title"/>
          <xsl:apply-templates select="short-name"/>
@@ -716,18 +552,7 @@
    <xsl:template match="authorized-privilege"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-implementation-common/system-user/authorized-privilege"
-                _metaschema-json-id="/assembly/oscal-implementation-common/system-user/authorized-privileges"
-                name="authorized-privilege"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_implementation-common_metaschema.xml"
-                _key-name="oscal-implementation-common:authorized-privilege"
-                _step="authorized-privilege"
-                _key="authorized-privileges"
-                _key-ref="oscal-implementation-common:authorized-privilege"
-                _using-name="authorized-privilege"
-                _in-xml-name="authorized-privilege"
-                _in-json-name="authorized-privileges"
-                gi="authorized-privilege">
+      <assembly name="authorized-privilege" gi="authorized-privilege">
          <xsl:apply-templates select="title"/>
          <xsl:apply-templates select="description"/>
          <xsl:for-each-group select="function-performed" group-by="true()">
@@ -742,18 +567,7 @@
    <xsl:template match="objectives-and-methods"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-ap/assessment-plan/local-definitions/objectives-and-methods"
-                _metaschema-json-id="/assembly/oscal-ap/assessment-plan/local-definitions/objectives-and-methods"
-                name="local-objective"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-                _key-name="oscal-assessment-common:local-objective"
-                _step="objectives-and-methods"
-                _key="objectives-and-methods"
-                _key-ref="oscal-assessment-common:local-objective"
-                _using-name="objectives-and-methods"
-                _in-xml-name="objectives-and-methods"
-                _in-json-name="objectives-and-methods"
-                gi="objectives-and-methods">
+      <assembly name="local-objective" gi="objectives-and-methods">
          <xsl:apply-templates select="@control-id"/>
          <xsl:apply-templates select="description"/>
          <xsl:for-each-group select="prop" group-by="true()">
@@ -783,18 +597,7 @@
    <xsl:template match="objectives-and-methods/part | objectives-and-methods/part//part"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-assessment-common/local-objective/part"
-                _metaschema-json-id="/assembly/oscal-assessment-common/local-objective/parts"
-                name="part"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_control-common_metaschema.xml"
-                _key-name="oscal-catalog-common:part"
-                _step="part"
-                _key="parts"
-                _key-ref="oscal-catalog-common:part"
-                _using-name="part"
-                _in-xml-name="part"
-                _in-json-name="parts"
-                gi="part">
+      <assembly name="part" gi="part">
          <xsl:apply-templates select="@id"/>
          <xsl:apply-templates select="@name"/>
          <xsl:apply-templates select="@ns"/>
@@ -810,21 +613,14 @@
          <xsl:for-each-group select="p | ul | ol | pre | h1 | h2 | h3 | h4 | h5 | h6 | table"
                              group-by="true()">
             <field in-json="SCALAR"
-                   _step="p ul ol pre table h1 h2 h3 h4 h5 h6"
-                   _key="prose"
-                   _metaschema-xml-id="/assembly/oscal-catalog-common/part/p ul ol pre table h1 h2 h3 h4 h5 h6"
-                   _metaschema-json-id="/assembly/oscal-catalog-common/part/prose"
                    in-xml="UNWRAPPED"
                    collapsible="no"
                    as-type="markup-multiline"
                    name="prose"
-                   key="prose"
-                   _using-name="prose"
-                   _in-xml-name="p ul ol pre table h1 h2 h3 h4 h5 h6"
-                   _in-json-name="prose">
+                   key="prose">
                <value in-json="string"
                       as-type="markup-multiline"
-                      _metaschema-xml-id="/assembly/oscal-catalog-common/part/p ul ol pre table h1 h2 h3 h4 h5 h6/PROSE"
+                      _metaschema-xml-id="/assembly/oscal-catalog-common/part/prose/PROSE"
                       _metaschema-json-id="/assembly/oscal-catalog-common/part/prose/PROSE">
                   <xsl:apply-templates select="current-group()" mode="cast-prose"/>
                </value>
@@ -849,18 +645,7 @@
    <xsl:template match="terms-and-conditions/part | terms-and-conditions/part//part"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-ap/assessment-plan/terms-and-conditions/part"
-                _metaschema-json-id="/assembly/oscal-ap/assessment-plan/terms-and-conditions/parts"
-                name="assessment-part"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-                _key-name="oscal-assessment-common:assessment-part"
-                _step="part"
-                _key="parts"
-                _key-ref="oscal-assessment-common:assessment-part"
-                _using-name="part"
-                _in-xml-name="part"
-                _in-json-name="parts"
-                gi="part">
+      <assembly name="assessment-part" gi="part">
          <xsl:apply-templates select="@uuid"/>
          <xsl:apply-templates select="@name"/>
          <xsl:apply-templates select="@ns"/>
@@ -876,21 +661,14 @@
          <xsl:for-each-group select="p | ul | ol | pre | h1 | h2 | h3 | h4 | h5 | h6 | table"
                              group-by="true()">
             <field in-json="SCALAR"
-                   _step="p ul ol pre table h1 h2 h3 h4 h5 h6"
-                   _key="prose"
-                   _metaschema-xml-id="/assembly/oscal-assessment-common/assessment-part/p ul ol pre table h1 h2 h3 h4 h5 h6"
-                   _metaschema-json-id="/assembly/oscal-assessment-common/assessment-part/prose"
                    in-xml="UNWRAPPED"
                    collapsible="no"
                    as-type="markup-multiline"
                    name="prose"
-                   key="prose"
-                   _using-name="prose"
-                   _in-xml-name="p ul ol pre table h1 h2 h3 h4 h5 h6"
-                   _in-json-name="prose">
+                   key="prose">
                <value in-json="string"
                       as-type="markup-multiline"
-                      _metaschema-xml-id="/assembly/oscal-assessment-common/assessment-part/p ul ol pre table h1 h2 h3 h4 h5 h6/PROSE"
+                      _metaschema-xml-id="/assembly/oscal-assessment-common/assessment-part/prose/PROSE"
                       _metaschema-json-id="/assembly/oscal-assessment-common/assessment-part/prose/PROSE">
                   <xsl:apply-templates select="current-group()" mode="cast-prose"/>
                </value>
@@ -915,18 +693,7 @@
    <xsl:template match="activity"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-ap/assessment-plan/local-definitions/activity"
-                _metaschema-json-id="/assembly/oscal-ap/assessment-plan/local-definitions/activities"
-                name="activity"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-                _key-name="oscal-assessment-common:activity"
-                _step="activity"
-                _key="activities"
-                _key-ref="oscal-assessment-common:activity"
-                _using-name="activity"
-                _in-xml-name="activity"
-                _in-json-name="activities"
-                gi="activity">
+      <assembly name="activity" gi="activity">
          <xsl:apply-templates select="@uuid"/>
          <xsl:apply-templates select="title"/>
          <xsl:apply-templates select="description"/>
@@ -965,18 +732,8 @@
    <xsl:template match="reviewed-controls"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-assessment-common/activity/step/reviewed-controls"
-                _metaschema-json-id="/assembly/oscal-assessment-common/activity/steps/reviewed-controls"
-                name="reviewed-controls"
+      <assembly name="reviewed-controls"
                 key="reviewed-controls"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-                _key-name="oscal-assessment-common:reviewed-controls"
-                _step="reviewed-controls"
-                _key="reviewed-controls"
-                _key-ref="oscal-assessment-common:reviewed-controls"
-                _using-name="reviewed-controls"
-                _in-xml-name="reviewed-controls"
-                _in-json-name="reviewed-controls"
                 gi="reviewed-controls">
          <xsl:if test="$with-key">
             <xsl:attribute name="key">reviewed-controls</xsl:attribute>
@@ -1013,21 +770,23 @@
          <xsl:apply-templates select="remarks"/>
       </assembly>
    </xsl:template>
+   <xsl:template match="include-all"
+                 xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
+      <xsl:param name="with-key" select="true()"/>
+      <assembly as-type="empty"
+                name="include-all"
+                key="include-all"
+                gi="include-all">
+         <xsl:if test="$with-key">
+            <xsl:attribute name="key">include-all</xsl:attribute>
+         </xsl:if>
+      </assembly>
+   </xsl:template>
    <xsl:template match="include-objective"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
       <assembly as-type="empty"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-objective-selection/include-objective"
-                _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-objective-selections/include-objectives"
                 name="select-objective-by-id"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-                _key-name="oscal-assessment-common:select-objective-by-id"
-                _step="include-objective"
-                _key="include-objectives"
-                _key-ref="oscal-assessment-common:select-objective-by-id"
-                _using-name="include-objective"
-                _in-xml-name="include-objective"
-                _in-json-name="include-objectives"
                 gi="include-objective">
          <xsl:apply-templates select="@objective-id"/>
       </assembly>
@@ -1036,17 +795,7 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
       <assembly as-type="empty"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-objective-selection/exclude-objective"
-                _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-objective-selections/exclude-objectives"
                 name="select-objective-by-id"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-                _key-name="oscal-assessment-common:select-objective-by-id"
-                _step="exclude-objective"
-                _key="exclude-objectives"
-                _key-ref="oscal-assessment-common:select-objective-by-id"
-                _using-name="exclude-objective"
-                _in-xml-name="exclude-objective"
-                _in-json-name="exclude-objectives"
                 gi="exclude-objective">
          <xsl:apply-templates select="@objective-id"/>
       </assembly>
@@ -1054,18 +803,8 @@
    <xsl:template match="related-controls"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-assessment-common/activity/related-controls"
-                _metaschema-json-id="/assembly/oscal-assessment-common/activity/related-controls"
-                name="reviewed-controls"
+      <assembly name="reviewed-controls"
                 key="related-controls"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-                _key-name="oscal-assessment-common:reviewed-controls"
-                _step="related-controls"
-                _key="related-controls"
-                _key-ref="oscal-assessment-common:reviewed-controls"
-                _using-name="related-controls"
-                _in-xml-name="related-controls"
-                _in-json-name="related-controls"
                 gi="related-controls">
          <xsl:if test="$with-key">
             <xsl:attribute name="key">related-controls</xsl:attribute>
@@ -1105,18 +844,7 @@
    <xsl:template match="assessment-subject"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-ap/assessment-plan/assessment-subject"
-                _metaschema-json-id="/assembly/oscal-ap/assessment-plan/assessment-subjects"
-                name="assessment-subject"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-                _key-name="oscal-assessment-common:assessment-subject"
-                _step="assessment-subject"
-                _key="assessment-subjects"
-                _key-ref="oscal-assessment-common:assessment-subject"
-                _using-name="assessment-subject"
-                _in-xml-name="assessment-subject"
-                _in-json-name="assessment-subjects"
-                gi="assessment-subject">
+      <assembly name="assessment-subject" gi="assessment-subject">
          <xsl:apply-templates select="@type"/>
          <xsl:apply-templates select="description"/>
          <xsl:for-each-group select="prop" group-by="true()">
@@ -1154,18 +882,7 @@
    <xsl:template match="include-subject"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-assessment-common/assessment-subject/include-subject"
-                _metaschema-json-id="/assembly/oscal-assessment-common/assessment-subject/include-subjects"
-                name="select-subject-by-id"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-                _key-name="oscal-assessment-common:select-subject-by-id"
-                _step="include-subject"
-                _key="include-subjects"
-                _key-ref="oscal-assessment-common:select-subject-by-id"
-                _using-name="include-subject"
-                _in-xml-name="include-subject"
-                _in-json-name="include-subjects"
-                gi="include-subject">
+      <assembly name="select-subject-by-id" gi="include-subject">
          <xsl:apply-templates select="@subject-uuid"/>
          <xsl:apply-templates select="@type"/>
          <xsl:for-each-group select="prop" group-by="true()">
@@ -1188,18 +905,7 @@
    <xsl:template match="exclude-subject"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-assessment-common/assessment-subject/exclude-subject"
-                _metaschema-json-id="/assembly/oscal-assessment-common/assessment-subject/exclude-subjects"
-                name="select-subject-by-id"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-                _key-name="oscal-assessment-common:select-subject-by-id"
-                _step="exclude-subject"
-                _key="exclude-subjects"
-                _key-ref="oscal-assessment-common:select-subject-by-id"
-                _using-name="exclude-subject"
-                _in-xml-name="exclude-subject"
-                _in-json-name="exclude-subjects"
-                gi="exclude-subject">
+      <assembly name="select-subject-by-id" gi="exclude-subject">
          <xsl:apply-templates select="@subject-uuid"/>
          <xsl:apply-templates select="@type"/>
          <xsl:for-each-group select="prop" group-by="true()">
@@ -1222,18 +928,8 @@
    <xsl:template match="assessment-assets"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-ap/assessment-plan/assessment-assets"
-                _metaschema-json-id="/assembly/oscal-ap/assessment-plan/assessment-assets"
-                name="assessment-assets"
+      <assembly name="assessment-assets"
                 key="assessment-assets"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-                _key-name="oscal-assessment-common:assessment-assets"
-                _step="assessment-assets"
-                _key="assessment-assets"
-                _key-ref="oscal-assessment-common:assessment-assets"
-                _using-name="assessment-assets"
-                _in-xml-name="assessment-assets"
-                _in-json-name="assessment-assets"
                 gi="assessment-assets">
          <xsl:if test="$with-key">
             <xsl:attribute name="key">assessment-assets</xsl:attribute>
@@ -1257,18 +953,7 @@
    <xsl:template match="task"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-ap/assessment-plan/task"
-                _metaschema-json-id="/assembly/oscal-ap/assessment-plan/tasks"
-                name="task"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-                _key-name="oscal-assessment-common:task"
-                _step="task"
-                _key="tasks"
-                _key-ref="oscal-assessment-common:task"
-                _using-name="task"
-                _in-xml-name="task"
-                _in-json-name="tasks"
-                gi="task">
+      <assembly name="task" gi="task">
          <xsl:apply-templates select="@uuid"/>
          <xsl:apply-templates select="@type"/>
          <xsl:apply-templates select="title"/>
@@ -1329,18 +1014,7 @@
    <xsl:template match="subject"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-assessment-common/task/associated-activity/subject"
-                _metaschema-json-id="/assembly/oscal-assessment-common/task/associated-activities/subjects"
-                name="assessment-subject"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-                _key-name="oscal-assessment-common:assessment-subject"
-                _step="subject"
-                _key="subjects"
-                _key-ref="oscal-assessment-common:assessment-subject"
-                _using-name="subject"
-                _in-xml-name="subject"
-                _in-json-name="subjects"
-                gi="subject">
+      <assembly name="assessment-subject" gi="subject">
          <xsl:apply-templates select="@type"/>
          <xsl:apply-templates select="description"/>
          <xsl:for-each-group select="prop" group-by="true()">
@@ -1378,19 +1052,7 @@
    <xsl:template match="back-matter"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-ap/assessment-plan/back-matter"
-                _metaschema-json-id="/assembly/oscal-ap/assessment-plan/back-matter"
-                name="back-matter"
-                key="back-matter"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-                _key-name="oscal-metadata:back-matter"
-                _step="back-matter"
-                _key="back-matter"
-                _key-ref="oscal-metadata:back-matter"
-                _using-name="back-matter"
-                _in-xml-name="back-matter"
-                _in-json-name="back-matter"
-                gi="back-matter">
+      <assembly name="back-matter" key="back-matter" gi="back-matter">
          <xsl:if test="$with-key">
             <xsl:attribute name="key">back-matter</xsl:attribute>
          </xsl:if>
@@ -1406,21 +1068,11 @@
    <xsl:template match="remarks"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _metaschema-xml-id="/assembly/oscal-metadata/property/remarks"
-             _metaschema-json-id="/assembly/oscal-metadata/property/remarks"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="remarks"
              key="remarks"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-             _key-name="oscal-metadata:remarks"
-             _step="remarks"
-             _key="remarks"
-             _key-ref="oscal-metadata:remarks"
-             _using-name="remarks"
-             _in-xml-name="remarks"
-             _in-json-name="remarks"
              gi="remarks"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -1437,19 +1089,9 @@
    <xsl:template match="location-uuid"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _metaschema-xml-id="/assembly/oscal-metadata/party/location-uuid"
-             _metaschema-json-id="/assembly/oscal-metadata/party/location-uuids"
-             collapsible="no"
+      <field collapsible="no"
              as-type="uuid"
              name="location-uuid"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-             _key-name="oscal-metadata:location-uuid"
-             _step="location-uuid"
-             _key="location-uuids"
-             _key-ref="oscal-metadata:location-uuid"
-             _using-name="location-uuid"
-             _in-xml-name="location-uuid"
-             _in-json-name="location-uuids"
              gi="location-uuid"
              in-json="SCALAR">
          <value as-type="uuid" in-json="string">
@@ -1460,19 +1102,9 @@
    <xsl:template match="party-uuid"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _metaschema-xml-id="/assembly/oscal-metadata/responsible-party/party-uuid"
-             _metaschema-json-id="/assembly/oscal-metadata/responsible-party/party-uuids"
-             collapsible="no"
+      <field collapsible="no"
              as-type="uuid"
              name="party-uuid"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-             _key-name="oscal-metadata:party-uuid"
-             _step="party-uuid"
-             _key="party-uuids"
-             _key-ref="oscal-metadata:party-uuid"
-             _using-name="party-uuid"
-             _in-xml-name="party-uuid"
-             _in-json-name="party-uuids"
              gi="party-uuid"
              in-json="SCALAR">
          <value as-type="uuid" in-json="string">
@@ -1483,19 +1115,9 @@
    <xsl:template match="role-id"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _metaschema-xml-id="/assembly/oscal-implementation-common/system-user/role-id"
-             _metaschema-json-id="/assembly/oscal-implementation-common/system-user/role-ids"
-             collapsible="no"
+      <field collapsible="no"
              as-type="token"
              name="role-id"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-             _key-name="oscal-metadata:role-id"
-             _step="role-id"
-             _key="role-ids"
-             _key-ref="oscal-metadata:role-id"
-             _using-name="role-id"
-             _in-xml-name="role-id"
-             _in-json-name="role-ids"
              gi="role-id"
              in-json="SCALAR">
          <value as-type="token" in-json="string">
@@ -1506,19 +1128,9 @@
    <xsl:template match="function-performed"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _metaschema-xml-id="/assembly/oscal-implementation-common/authorized-privilege/function-performed"
-             _metaschema-json-id="/assembly/oscal-implementation-common/authorized-privilege/functions-performed"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="function-performed"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_implementation-common_metaschema.xml"
-             _key-name="oscal-implementation-common:function-performed"
-             _step="function-performed"
-             _key="functions-performed"
-             _key-ref="oscal-implementation-common:function-performed"
-             _using-name="function-performed"
-             _in-xml-name="function-performed"
-             _in-json-name="functions-performed"
              gi="function-performed"
              in-json="SCALAR">
          <value as-type="string" in-json="string">
@@ -1529,20 +1141,7 @@
    <xsl:template match="hash"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _metaschema-xml-id="/assembly/oscal-metadata/back-matter/resource/rlink/hash"
-             _metaschema-json-id="/assembly/oscal-metadata/back-matter/resources/rlinks/hashes"
-             collapsible="no"
-             as-type="string"
-             name="hash"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-             _key-name="oscal-metadata:hash"
-             _step="hash"
-             _key="hashes"
-             _key-ref="oscal-metadata:hash"
-             _using-name="hash"
-             _in-xml-name="hash"
-             _in-json-name="hashes"
-             gi="hash">
+      <field collapsible="no" as-type="string" name="hash" gi="hash">
          <xsl:apply-templates select="@algorithm"/>
          <value as-type="string" key="value" in-json="string">
             <xsl:value-of select="."/>
@@ -1550,137 +1149,85 @@
       </field>
    </xsl:template>
    <xsl:template match="assessment-plan/@uuid"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uuid"
-            _step="uuid"
-            _key="uuid"
-            _metaschema-xml-id="/assembly/oscal-ap/assessment-plan/uuid"
-            _metaschema-json-id="/assembly/oscal-ap/assessment-plan/uuid"
             name="uuid"
             key="uuid"
-            _using-name="uuid"
-            _in-xml-name="uuid"
-            _in-json-name="uuid"
             gi="uuid">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="prop/@name"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="token"
-            _step="name"
-            _key="name"
-            _metaschema-xml-id="/assembly/oscal-metadata/property/name"
-            _metaschema-json-id="/assembly/oscal-metadata/property/name"
             name="name"
             key="name"
-            _using-name="name"
-            _in-xml-name="name"
-            _in-json-name="name"
             gi="name">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="prop/@uuid"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uuid"
-            _step="uuid"
-            _key="uuid"
-            _metaschema-xml-id="/assembly/oscal-metadata/property/uuid"
-            _metaschema-json-id="/assembly/oscal-metadata/property/uuid"
             name="uuid"
             key="uuid"
-            _using-name="uuid"
-            _in-xml-name="uuid"
-            _in-json-name="uuid"
             gi="uuid">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="prop/@ns"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
-      <flag in-json="string"
-            as-type="uri"
-            _step="ns"
-            _key="ns"
-            _metaschema-xml-id="/assembly/oscal-metadata/property/ns"
-            _metaschema-json-id="/assembly/oscal-metadata/property/ns"
-            name="ns"
-            key="ns"
-            _using-name="ns"
-            _in-xml-name="ns"
-            _in-json-name="ns"
-            gi="ns">
+      <flag in-json="string" as-type="uri" name="ns" key="ns" gi="ns">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="prop/@value"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="string"
-            _step="value"
-            _key="value"
-            _metaschema-xml-id="/assembly/oscal-metadata/property/value"
-            _metaschema-json-id="/assembly/oscal-metadata/property/value"
             name="value"
             key="value"
-            _using-name="value"
-            _in-xml-name="value"
-            _in-json-name="value"
             gi="value">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="prop/@class"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="token"
-            _step="class"
-            _key="class"
-            _metaschema-xml-id="/assembly/oscal-metadata/property/class"
-            _metaschema-json-id="/assembly/oscal-metadata/property/class"
             name="class"
             key="class"
-            _using-name="class"
-            _in-xml-name="class"
-            _in-json-name="class"
             gi="class">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="link/@href"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uri-reference"
-            _step="href"
-            _key="href"
-            _metaschema-xml-id="/assembly/oscal-metadata/link/href"
-            _metaschema-json-id="/assembly/oscal-metadata/link/href"
             name="href"
             key="href"
-            _using-name="href"
-            _in-xml-name="href"
-            _in-json-name="href"
             gi="href">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="link/@rel"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="token"
-            _step="rel"
-            _key="rel"
-            _metaschema-xml-id="/assembly/oscal-metadata/link/rel"
-            _metaschema-json-id="/assembly/oscal-metadata/link/rel"
             name="rel"
             key="rel"
-            _using-name="rel"
-            _in-xml-name="rel"
-            _in-json-name="rel"
             gi="rel">
          <xsl:value-of select="."/>
       </flag>
@@ -1689,18 +1236,8 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="string"
-            _metaschema-xml-id="/assembly/oscal-metadata/link/media-type"
-            _metaschema-json-id="/assembly/oscal-metadata/link/media-type"
             name="media-type"
             key="media-type"
-            _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-            _key-name="oscal-metadata:media-type"
-            _step="media-type"
-            _key="media-type"
-            _key-ref="oscal-metadata:media-type"
-            _using-name="media-type"
-            _in-xml-name="media-type"
-            _in-json-name="media-type"
             gi="media-type">
          <xsl:value-of select="."/>
       </flag>
@@ -1710,49 +1247,26 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uri"
-            _step="scheme"
-            _key="scheme"
-            _metaschema-xml-id="/field/oscal-metadata/document-id/scheme"
-            _metaschema-json-id="/field/oscal-metadata/document-id/scheme"
             name="scheme"
             key="scheme"
-            _using-name="scheme"
-            _in-xml-name="scheme"
-            _in-json-name="scheme"
             gi="scheme">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="role/@id"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
-      <flag in-json="string"
-            as-type="token"
-            _step="id"
-            _key="id"
-            _metaschema-xml-id="/assembly/oscal-metadata/role/id"
-            _metaschema-json-id="/assembly/oscal-metadata/role/id"
-            name="id"
-            key="id"
-            _using-name="id"
-            _in-xml-name="id"
-            _in-json-name="id"
-            gi="id">
+      <flag in-json="string" as-type="token" name="id" key="id" gi="id">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="location/@uuid"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uuid"
-            _step="uuid"
-            _key="uuid"
-            _metaschema-xml-id="/assembly/oscal-metadata/location/uuid"
-            _metaschema-json-id="/assembly/oscal-metadata/location/uuid"
             name="uuid"
             key="uuid"
-            _using-name="uuid"
-            _in-xml-name="uuid"
-            _in-json-name="uuid"
             gi="uuid">
          <xsl:value-of select="."/>
       </flag>
@@ -1761,18 +1275,8 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="token"
-            _metaschema-xml-id="/assembly/oscal-metadata/address/type"
-            _metaschema-json-id="/assembly/oscal-metadata/address/type"
             name="location-type"
             key="type"
-            _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-            _key-name="oscal-metadata:location-type"
-            _step="type"
-            _key="type"
-            _key-ref="oscal-metadata:location-type"
-            _using-name="type"
-            _in-xml-name="type"
-            _in-json-name="type"
             gi="type">
          <xsl:value-of select="."/>
       </flag>
@@ -1782,49 +1286,30 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="string"
-            _step="type"
-            _key="type"
-            _metaschema-xml-id="/field/oscal-metadata/telephone-number/type"
-            _metaschema-json-id="/field/oscal-metadata/telephone-number/type"
             name="type"
             key="type"
-            _using-name="type"
-            _in-xml-name="type"
-            _in-json-name="type"
             gi="type">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="party/@uuid"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uuid"
-            _step="uuid"
-            _key="uuid"
-            _metaschema-xml-id="/assembly/oscal-metadata/party/uuid"
-            _metaschema-json-id="/assembly/oscal-metadata/party/uuid"
             name="uuid"
             key="uuid"
-            _using-name="uuid"
-            _in-xml-name="uuid"
-            _in-json-name="uuid"
             gi="uuid">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="party/@type"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="string"
-            _step="type"
-            _key="type"
-            _metaschema-xml-id="/assembly/oscal-metadata/party/type"
-            _metaschema-json-id="/assembly/oscal-metadata/party/type"
             name="type"
             key="type"
-            _using-name="type"
-            _in-xml-name="type"
-            _in-json-name="type"
             gi="type">
          <xsl:value-of select="."/>
       </flag>
@@ -1834,66 +1319,41 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uri"
-            _step="scheme"
-            _key="scheme"
-            _metaschema-xml-id="/assembly/oscal-metadata/party/external-id/scheme"
-            _metaschema-json-id="/assembly/oscal-metadata/party/external-ids/scheme"
             name="scheme"
             key="scheme"
-            _using-name="scheme"
-            _in-xml-name="scheme"
-            _in-json-name="scheme"
             gi="scheme">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="responsible-party/@role-id"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="token"
-            _step="role-id"
-            _key="role-id"
-            _metaschema-xml-id="/assembly/oscal-metadata/responsible-party/role-id"
-            _metaschema-json-id="/assembly/oscal-metadata/responsible-party/role-id"
             name="role-id"
             key="role-id"
-            _using-name="role-id"
-            _in-xml-name="role-id"
-            _in-json-name="role-id"
             gi="role-id">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="import-ssp/@href"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uri-reference"
-            _step="href"
-            _key="href"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/import-ssp/href"
-            _metaschema-json-id="/assembly/oscal-assessment-common/import-ssp/href"
             name="href"
             key="href"
-            _using-name="href"
-            _in-xml-name="href"
-            _in-json-name="href"
             gi="href">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="component/@uuid"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uuid"
-            _step="uuid"
-            _key="uuid"
-            _metaschema-xml-id="/assembly/oscal-implementation-common/system-component/uuid"
-            _metaschema-json-id="/assembly/oscal-implementation-common/system-component/uuid"
             name="uuid"
             key="uuid"
-            _using-name="uuid"
-            _in-xml-name="uuid"
-            _in-json-name="uuid"
             gi="uuid">
          <xsl:value-of select="."/>
       </flag>
@@ -1902,18 +1362,8 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="string"
-            _metaschema-xml-id="/assembly/oscal-implementation-common/system-component/type"
-            _metaschema-json-id="/assembly/oscal-implementation-common/system-component/type"
             name="system-component-type"
             key="type"
-            _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_implementation-common_metaschema.xml"
-            _key-name="oscal-implementation-common:system-component-type"
-            _step="type"
-            _key="type"
-            _key-ref="oscal-implementation-common:system-component-type"
-            _using-name="type"
-            _in-xml-name="type"
-            _in-json-name="type"
             gi="type">
          <xsl:value-of select="."/>
       </flag>
@@ -1923,134 +1373,85 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="token"
-            _step="state"
-            _key="state"
-            _metaschema-xml-id="/assembly/oscal-implementation-common/system-component/status/state"
-            _metaschema-json-id="/assembly/oscal-implementation-common/system-component/status/state"
             name="state"
             key="state"
-            _using-name="state"
-            _in-xml-name="state"
-            _in-json-name="state"
             gi="state">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="responsible-role/@role-id"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="token"
-            _step="role-id"
-            _key="role-id"
-            _metaschema-xml-id="/assembly/oscal-metadata/responsible-role/role-id"
-            _metaschema-json-id="/assembly/oscal-metadata/responsible-role/role-id"
             name="role-id"
             key="role-id"
-            _using-name="role-id"
-            _in-xml-name="role-id"
-            _in-json-name="role-id"
             gi="role-id">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="protocol/@uuid"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uuid"
-            _step="uuid"
-            _key="uuid"
-            _metaschema-xml-id="/assembly/oscal-implementation-common/protocol/uuid"
-            _metaschema-json-id="/assembly/oscal-implementation-common/protocol/uuid"
             name="uuid"
             key="uuid"
-            _using-name="uuid"
-            _in-xml-name="uuid"
-            _in-json-name="uuid"
             gi="uuid">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="protocol/@name"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="string"
-            _step="name"
-            _key="name"
-            _metaschema-xml-id="/assembly/oscal-implementation-common/protocol/name"
-            _metaschema-json-id="/assembly/oscal-implementation-common/protocol/name"
             name="name"
             key="name"
-            _using-name="name"
-            _in-xml-name="name"
-            _in-json-name="name"
             gi="name">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="port-range/@start"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="number"
             as-type="nonNegativeInteger"
-            _step="start"
-            _key="start"
-            _metaschema-xml-id="/assembly/oscal-implementation-common/port-range/start"
-            _metaschema-json-id="/assembly/oscal-implementation-common/port-range/start"
             name="start"
             key="start"
-            _using-name="start"
-            _in-xml-name="start"
-            _in-json-name="start"
             gi="start">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="port-range/@end"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="number"
             as-type="nonNegativeInteger"
-            _step="end"
-            _key="end"
-            _metaschema-xml-id="/assembly/oscal-implementation-common/port-range/end"
-            _metaschema-json-id="/assembly/oscal-implementation-common/port-range/end"
             name="end"
             key="end"
-            _using-name="end"
-            _in-xml-name="end"
-            _in-json-name="end"
             gi="end">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="port-range/@transport"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="token"
-            _step="transport"
-            _key="transport"
-            _metaschema-xml-id="/assembly/oscal-implementation-common/port-range/transport"
-            _metaschema-json-id="/assembly/oscal-implementation-common/port-range/transport"
             name="transport"
             key="transport"
-            _using-name="transport"
-            _in-xml-name="transport"
-            _in-json-name="transport"
             gi="transport">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="inventory-item/@uuid"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uuid"
-            _step="uuid"
-            _key="uuid"
-            _metaschema-xml-id="/assembly/oscal-implementation-common/inventory-item/uuid"
-            _metaschema-json-id="/assembly/oscal-implementation-common/inventory-item/uuid"
             name="uuid"
             key="uuid"
-            _using-name="uuid"
-            _in-xml-name="uuid"
-            _in-json-name="uuid"
             gi="uuid">
          <xsl:value-of select="."/>
       </flag>
@@ -2060,32 +1461,19 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uuid"
-            _step="component-uuid"
-            _key="component-uuid"
-            _metaschema-xml-id="/assembly/oscal-implementation-common/inventory-item/implemented-component/component-uuid"
-            _metaschema-json-id="/assembly/oscal-implementation-common/inventory-item/implemented-components/component-uuid"
             name="component-uuid"
             key="component-uuid"
-            _using-name="component-uuid"
-            _in-xml-name="component-uuid"
-            _in-json-name="component-uuid"
             gi="component-uuid">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="user/@uuid"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uuid"
-            _step="uuid"
-            _key="uuid"
-            _metaschema-xml-id="/assembly/oscal-implementation-common/system-user/uuid"
-            _metaschema-json-id="/assembly/oscal-implementation-common/system-user/uuid"
             name="uuid"
             key="uuid"
-            _using-name="uuid"
-            _in-xml-name="uuid"
-            _in-json-name="uuid"
             gi="uuid">
          <xsl:value-of select="."/>
       </flag>
@@ -2094,103 +1482,55 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="token"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/local-objective/control-id"
-            _metaschema-json-id="/assembly/oscal-assessment-common/local-objective/control-id"
             name="control-id"
             key="control-id"
-            _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_control-common_metaschema.xml"
-            _key-name="oscal-catalog-common:control-id"
-            _step="control-id"
-            _key="control-id"
-            _key-ref="oscal-catalog-common:control-id"
-            _using-name="control-id"
-            _in-xml-name="control-id"
-            _in-json-name="control-id"
             gi="control-id">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="part/@id"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
-      <flag in-json="string"
-            as-type="token"
-            _step="id"
-            _key="id"
-            _metaschema-xml-id="/assembly/oscal-catalog-common/part/id"
-            _metaschema-json-id="/assembly/oscal-catalog-common/part/id"
-            name="id"
-            key="id"
-            _using-name="id"
-            _in-xml-name="id"
-            _in-json-name="id"
-            gi="id">
+      <flag in-json="string" as-type="token" name="id" key="id" gi="id">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="part/@name"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="token"
-            _step="name"
-            _key="name"
-            _metaschema-xml-id="/assembly/oscal-catalog-common/part/name"
-            _metaschema-json-id="/assembly/oscal-catalog-common/part/name"
             name="name"
             key="name"
-            _using-name="name"
-            _in-xml-name="name"
-            _in-json-name="name"
             gi="name">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="part/@ns"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
-      <flag in-json="string"
-            as-type="uri"
-            _step="ns"
-            _key="ns"
-            _metaschema-xml-id="/assembly/oscal-catalog-common/part/ns"
-            _metaschema-json-id="/assembly/oscal-catalog-common/part/ns"
-            name="ns"
-            key="ns"
-            _using-name="ns"
-            _in-xml-name="ns"
-            _in-json-name="ns"
-            gi="ns">
+      <flag in-json="string" as-type="uri" name="ns" key="ns" gi="ns">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="part/@class"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="token"
-            _step="class"
-            _key="class"
-            _metaschema-xml-id="/assembly/oscal-catalog-common/part/class"
-            _metaschema-json-id="/assembly/oscal-catalog-common/part/class"
             name="class"
             key="class"
-            _using-name="class"
-            _in-xml-name="class"
-            _in-json-name="class"
             gi="class">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="activity/@uuid"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uuid"
-            _step="uuid"
-            _key="uuid"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/activity/uuid"
-            _metaschema-json-id="/assembly/oscal-assessment-common/activity/uuid"
             name="uuid"
             key="uuid"
-            _using-name="uuid"
-            _in-xml-name="uuid"
-            _in-json-name="uuid"
             gi="uuid">
          <xsl:value-of select="."/>
       </flag>
@@ -2200,15 +1540,8 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uuid"
-            _step="uuid"
-            _key="uuid"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/activity/step/uuid"
-            _metaschema-json-id="/assembly/oscal-assessment-common/activity/steps/uuid"
             name="uuid"
             key="uuid"
-            _using-name="uuid"
-            _in-xml-name="uuid"
-            _in-json-name="uuid"
             gi="uuid">
          <xsl:value-of select="."/>
       </flag>
@@ -2217,18 +1550,8 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="token"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/select-control-by-id/control-id"
-            _metaschema-json-id="/assembly/oscal-assessment-common/select-control-by-id/control-id"
             name="control-id"
             key="control-id"
-            _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_control-common_metaschema.xml"
-            _key-name="oscal-catalog-common:control-id"
-            _step="control-id"
-            _key="control-id"
-            _key-ref="oscal-catalog-common:control-id"
-            _using-name="control-id"
-            _in-xml-name="control-id"
-            _in-json-name="control-id"
             gi="control-id">
          <xsl:value-of select="."/>
       </flag>
@@ -2237,103 +1560,59 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="token"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/select-objective-by-id/objective-id"
-            _metaschema-json-id="/assembly/oscal-assessment-common/select-objective-by-id/objective-id"
             name="objective-id"
             key="objective-id"
-            _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-            _key-name="oscal-assessment-common:objective-id"
-            _step="objective-id"
-            _key="objective-id"
-            _key-ref="oscal-assessment-common:objective-id"
-            _using-name="objective-id"
-            _in-xml-name="objective-id"
-            _in-json-name="objective-id"
             gi="objective-id">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="part/@uuid"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uuid"
-            _step="uuid"
-            _key="uuid"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/assessment-part/uuid"
-            _metaschema-json-id="/assembly/oscal-assessment-common/assessment-part/uuid"
             name="uuid"
             key="uuid"
-            _using-name="uuid"
-            _in-xml-name="uuid"
-            _in-json-name="uuid"
             gi="uuid">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="part/@name"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="token"
-            _step="name"
-            _key="name"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/assessment-part/name"
-            _metaschema-json-id="/assembly/oscal-assessment-common/assessment-part/name"
             name="name"
             key="name"
-            _using-name="name"
-            _in-xml-name="name"
-            _in-json-name="name"
             gi="name">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="part/@ns"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
-      <flag in-json="string"
-            as-type="uri"
-            _step="ns"
-            _key="ns"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/assessment-part/ns"
-            _metaschema-json-id="/assembly/oscal-assessment-common/assessment-part/ns"
-            name="ns"
-            key="ns"
-            _using-name="ns"
-            _in-xml-name="ns"
-            _in-json-name="ns"
-            gi="ns">
+      <flag in-json="string" as-type="uri" name="ns" key="ns" gi="ns">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="part/@class"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="token"
-            _step="class"
-            _key="class"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/assessment-part/class"
-            _metaschema-json-id="/assembly/oscal-assessment-common/assessment-part/class"
             name="class"
             key="class"
-            _using-name="class"
-            _in-xml-name="class"
-            _in-json-name="class"
             gi="class">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="assessment-subject/@type | subject/@type"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="token"
-            _step="type"
-            _key="type"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/assessment-subject/type"
-            _metaschema-json-id="/assembly/oscal-assessment-common/assessment-subject/type"
             name="type"
             key="type"
-            _using-name="type"
-            _in-xml-name="type"
-            _in-json-name="type"
             gi="type">
          <xsl:value-of select="."/>
       </flag>
@@ -2342,18 +1621,8 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uuid"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/select-subject-by-id/subject-uuid"
-            _metaschema-json-id="/assembly/oscal-assessment-common/select-subject-by-id/subject-uuid"
             name="subject-uuid"
             key="subject-uuid"
-            _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-            _key-name="oscal-assessment-common:subject-uuid"
-            _step="subject-uuid"
-            _key="subject-uuid"
-            _key-ref="oscal-assessment-common:subject-uuid"
-            _using-name="subject-uuid"
-            _in-xml-name="subject-uuid"
-            _in-json-name="subject-uuid"
             gi="subject-uuid">
          <xsl:value-of select="."/>
       </flag>
@@ -2362,18 +1631,8 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="token"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/select-subject-by-id/type"
-            _metaschema-json-id="/assembly/oscal-assessment-common/select-subject-by-id/type"
             name="subject-type"
             key="type"
-            _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-            _key-name="oscal-assessment-common:subject-type"
-            _step="type"
-            _key="type"
-            _key-ref="oscal-assessment-common:subject-type"
-            _using-name="type"
-            _in-xml-name="type"
-            _in-json-name="type"
             gi="type">
          <xsl:value-of select="."/>
       </flag>
@@ -2383,15 +1642,8 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uuid"
-            _step="uuid"
-            _key="uuid"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/assessment-assets/assessment-platform/uuid"
-            _metaschema-json-id="/assembly/oscal-assessment-common/assessment-assets/assessment-platforms/uuid"
             name="uuid"
             key="uuid"
-            _using-name="uuid"
-            _in-xml-name="uuid"
-            _in-json-name="uuid"
             gi="uuid">
          <xsl:value-of select="."/>
       </flag>
@@ -2401,49 +1653,30 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uuid"
-            _step="component-uuid"
-            _key="component-uuid"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/assessment-assets/assessment-platform/uses-component/component-uuid"
-            _metaschema-json-id="/assembly/oscal-assessment-common/assessment-assets/assessment-platforms/uses-components/component-uuid"
             name="component-uuid"
             key="component-uuid"
-            _using-name="component-uuid"
-            _in-xml-name="component-uuid"
-            _in-json-name="component-uuid"
             gi="component-uuid">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="task/@uuid"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uuid"
-            _step="uuid"
-            _key="uuid"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/task/uuid"
-            _metaschema-json-id="/assembly/oscal-assessment-common/task/uuid"
             name="uuid"
             key="uuid"
-            _using-name="uuid"
-            _in-xml-name="uuid"
-            _in-json-name="uuid"
             gi="uuid">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="task/@type"
+                 priority="1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="token"
-            _step="type"
-            _key="type"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/task/type"
-            _metaschema-json-id="/assembly/oscal-assessment-common/task/type"
             name="type"
             key="type"
-            _using-name="type"
-            _in-xml-name="type"
-            _in-json-name="type"
             gi="type">
          <xsl:value-of select="."/>
       </flag>
@@ -2453,15 +1686,8 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="dateTime-with-timezone"
-            _step="date"
-            _key="date"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/task/timing/on-date/date"
-            _metaschema-json-id="/assembly/oscal-assessment-common/task/timing/on-date/date"
             name="date"
             key="date"
-            _using-name="date"
-            _in-xml-name="date"
-            _in-json-name="date"
             gi="date">
          <xsl:value-of select="."/>
       </flag>
@@ -2471,15 +1697,8 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="dateTime-with-timezone"
-            _step="start"
-            _key="start"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/task/timing/within-date-range/start"
-            _metaschema-json-id="/assembly/oscal-assessment-common/task/timing/within-date-range/start"
             name="start"
             key="start"
-            _using-name="start"
-            _in-xml-name="start"
-            _in-json-name="start"
             gi="start">
          <xsl:value-of select="."/>
       </flag>
@@ -2489,15 +1708,8 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="dateTime-with-timezone"
-            _step="end"
-            _key="end"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/task/timing/within-date-range/end"
-            _metaschema-json-id="/assembly/oscal-assessment-common/task/timing/within-date-range/end"
             name="end"
             key="end"
-            _using-name="end"
-            _in-xml-name="end"
-            _in-json-name="end"
             gi="end">
          <xsl:value-of select="."/>
       </flag>
@@ -2507,15 +1719,8 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="number"
             as-type="positiveInteger"
-            _step="period"
-            _key="period"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/task/timing/at-frequency/period"
-            _metaschema-json-id="/assembly/oscal-assessment-common/task/timing/at-frequency/period"
             name="period"
             key="period"
-            _using-name="period"
-            _in-xml-name="period"
-            _in-json-name="period"
             gi="period">
          <xsl:value-of select="."/>
       </flag>
@@ -2525,15 +1730,8 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="string"
-            _step="unit"
-            _key="unit"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/task/timing/at-frequency/unit"
-            _metaschema-json-id="/assembly/oscal-assessment-common/task/timing/at-frequency/unit"
             name="unit"
             key="unit"
-            _using-name="unit"
-            _in-xml-name="unit"
-            _in-json-name="unit"
             gi="unit">
          <xsl:value-of select="."/>
       </flag>
@@ -2543,15 +1741,8 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uuid"
-            _step="task-uuid"
-            _key="task-uuid"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/task/dependency/task-uuid"
-            _metaschema-json-id="/assembly/oscal-assessment-common/task/dependencies/task-uuid"
             name="task-uuid"
             key="task-uuid"
-            _using-name="task-uuid"
-            _in-xml-name="task-uuid"
-            _in-json-name="task-uuid"
             gi="task-uuid">
          <xsl:value-of select="."/>
       </flag>
@@ -2561,15 +1752,8 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uuid"
-            _step="activity-uuid"
-            _key="activity-uuid"
-            _metaschema-xml-id="/assembly/oscal-assessment-common/task/associated-activity/activity-uuid"
-            _metaschema-json-id="/assembly/oscal-assessment-common/task/associated-activities/activity-uuid"
             name="activity-uuid"
             key="activity-uuid"
-            _using-name="activity-uuid"
-            _in-xml-name="activity-uuid"
-            _in-json-name="activity-uuid"
             gi="activity-uuid">
          <xsl:value-of select="."/>
       </flag>
@@ -2579,15 +1763,8 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uuid"
-            _step="uuid"
-            _key="uuid"
-            _metaschema-xml-id="/assembly/oscal-metadata/back-matter/resource/uuid"
-            _metaschema-json-id="/assembly/oscal-metadata/back-matter/resources/uuid"
             name="uuid"
             key="uuid"
-            _using-name="uuid"
-            _in-xml-name="uuid"
-            _in-json-name="uuid"
             gi="uuid">
          <xsl:value-of select="."/>
       </flag>
@@ -2597,15 +1774,8 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uri-reference"
-            _step="href"
-            _key="href"
-            _metaschema-xml-id="/assembly/oscal-metadata/back-matter/resource/rlink/href"
-            _metaschema-json-id="/assembly/oscal-metadata/back-matter/resources/rlinks/href"
             name="href"
             key="href"
-            _using-name="href"
-            _in-xml-name="href"
-            _in-json-name="href"
             gi="href">
          <xsl:value-of select="."/>
       </flag>
@@ -2614,35 +1784,19 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="string"
-            _metaschema-xml-id="/assembly/oscal-metadata/back-matter/resource/rlink/media-type"
-            _metaschema-json-id="/assembly/oscal-metadata/back-matter/resources/rlinks/media-type"
             name="media-type"
             key="media-type"
-            _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-            _key-name="oscal-metadata:media-type"
-            _step="media-type"
-            _key="media-type"
-            _key-ref="oscal-metadata:media-type"
-            _using-name="media-type"
-            _in-xml-name="media-type"
-            _in-json-name="media-type"
             gi="media-type">
          <xsl:value-of select="."/>
       </flag>
    </xsl:template>
    <xsl:template match="hash/@algorithm"
+                 priority="3"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="string"
-            _step="algorithm"
-            _key="algorithm"
-            _metaschema-xml-id="/field/oscal-metadata/hash/algorithm"
-            _metaschema-json-id="/field/oscal-metadata/hash/algorithm"
             name="algorithm"
             key="algorithm"
-            _using-name="algorithm"
-            _in-xml-name="algorithm"
-            _in-json-name="algorithm"
             gi="algorithm">
          <xsl:value-of select="."/>
       </flag>
@@ -2652,15 +1806,8 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="uri-reference"
-            _step="filename"
-            _key="filename"
-            _metaschema-xml-id="/assembly/oscal-metadata/back-matter/resource/base64/filename"
-            _metaschema-json-id="/assembly/oscal-metadata/back-matter/resources/base64/filename"
             name="filename"
             key="filename"
-            _using-name="filename"
-            _in-xml-name="filename"
-            _in-json-name="filename"
             gi="filename">
          <xsl:value-of select="."/>
       </flag>
@@ -2669,18 +1816,8 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <flag in-json="string"
             as-type="string"
-            _metaschema-xml-id="/assembly/oscal-metadata/back-matter/resource/base64/media-type"
-            _metaschema-json-id="/assembly/oscal-metadata/back-matter/resources/base64/media-type"
             name="media-type"
             key="media-type"
-            _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-            _key-name="oscal-metadata:media-type"
-            _step="media-type"
-            _key="media-type"
-            _key-ref="oscal-metadata:media-type"
-            _using-name="media-type"
-            _in-xml-name="media-type"
-            _in-json-name="media-type"
             gi="media-type">
          <xsl:value-of select="."/>
       </flag>
@@ -2689,17 +1826,10 @@
                  priority="4"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="title"
-             _key="title"
-             _metaschema-xml-id="/assembly/oscal-metadata/metadata/title"
-             _metaschema-json-id="/assembly/oscal-metadata/metadata/title"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="title"
              key="title"
-             _using-name="title"
-             _in-xml-name="title"
-             _in-json-name="title"
              gi="title"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -2714,20 +1844,10 @@
                  priority="4"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _metaschema-xml-id="/assembly/oscal-metadata/metadata/published"
-             _metaschema-json-id="/assembly/oscal-metadata/metadata/published"
-             collapsible="no"
+      <field collapsible="no"
              as-type="dateTime-with-timezone"
              name="published"
              key="published"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-             _key-name="oscal-metadata:published"
-             _step="published"
-             _key="published"
-             _key-ref="oscal-metadata:published"
-             _using-name="published"
-             _in-xml-name="published"
-             _in-json-name="published"
              gi="published"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -2742,20 +1862,10 @@
                  priority="4"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _metaschema-xml-id="/assembly/oscal-metadata/metadata/last-modified"
-             _metaschema-json-id="/assembly/oscal-metadata/metadata/last-modified"
-             collapsible="no"
+      <field collapsible="no"
              as-type="dateTime-with-timezone"
              name="last-modified"
              key="last-modified"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-             _key-name="oscal-metadata:last-modified"
-             _step="last-modified"
-             _key="last-modified"
-             _key-ref="oscal-metadata:last-modified"
-             _using-name="last-modified"
-             _in-xml-name="last-modified"
-             _in-json-name="last-modified"
              gi="last-modified"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -2770,20 +1880,10 @@
                  priority="4"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _metaschema-xml-id="/assembly/oscal-metadata/metadata/version"
-             _metaschema-json-id="/assembly/oscal-metadata/metadata/version"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="version"
              key="version"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-             _key-name="oscal-metadata:version"
-             _step="version"
-             _key="version"
-             _key-ref="oscal-metadata:version"
-             _using-name="version"
-             _in-xml-name="version"
-             _in-json-name="version"
              gi="version"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -2798,20 +1898,10 @@
                  priority="4"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _metaschema-xml-id="/assembly/oscal-metadata/metadata/oscal-version"
-             _metaschema-json-id="/assembly/oscal-metadata/metadata/oscal-version"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="oscal-version"
              key="oscal-version"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-             _key-name="oscal-metadata:oscal-version"
-             _step="oscal-version"
-             _key="oscal-version"
-             _key-ref="oscal-metadata:oscal-version"
-             _using-name="oscal-version"
-             _in-xml-name="oscal-version"
-             _in-json-name="oscal-version"
              gi="oscal-version"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -2826,18 +1916,7 @@
                  priority="5"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-metadata/metadata/revisions/revision"
-                _metaschema-json-id="/assembly/oscal-metadata/metadata/revisions"
-                name="revision"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-                _key-name="oscal-metadata:revision"
-                _step="revisions/revision"
-                _key="revisions"
-                _key-ref="oscal-metadata:revision"
-                _using-name="revision"
-                _in-xml-name="revision"
-                _in-json-name="revisions"
-                gi="revision">
+      <assembly name="revision" gi="revision">
          <xsl:apply-templates select="title"/>
          <xsl:apply-templates select="published"/>
          <xsl:apply-templates select="last-modified"/>
@@ -2868,10 +1947,7 @@
              gi="revisions"
              group-json="ARRAY"
              name="revision"
-             key="revisions"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-             _key-name="oscal-metadata:revision"
-             _key-ref="oscal-metadata:revision">
+             key="revisions">
          <xsl:if test="$with-key">
             <xsl:attribute name="key">revisions</xsl:attribute>
          </xsl:if>
@@ -2882,17 +1958,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="title"
-             _key="title"
-             _metaschema-xml-id="/assembly/oscal-metadata/revision/title"
-             _metaschema-json-id="/assembly/oscal-metadata/revision/title"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="title"
              key="title"
-             _using-name="title"
-             _in-xml-name="title"
-             _in-json-name="title"
              gi="title"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -2907,20 +1976,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _metaschema-xml-id="/assembly/oscal-metadata/revision/published"
-             _metaschema-json-id="/assembly/oscal-metadata/revision/published"
-             collapsible="no"
+      <field collapsible="no"
              as-type="dateTime-with-timezone"
              name="published"
              key="published"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-             _key-name="oscal-metadata:published"
-             _step="published"
-             _key="published"
-             _key-ref="oscal-metadata:published"
-             _using-name="published"
-             _in-xml-name="published"
-             _in-json-name="published"
              gi="published"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -2935,20 +1994,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _metaschema-xml-id="/assembly/oscal-metadata/revision/last-modified"
-             _metaschema-json-id="/assembly/oscal-metadata/revision/last-modified"
-             collapsible="no"
+      <field collapsible="no"
              as-type="dateTime-with-timezone"
              name="last-modified"
              key="last-modified"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-             _key-name="oscal-metadata:last-modified"
-             _step="last-modified"
-             _key="last-modified"
-             _key-ref="oscal-metadata:last-modified"
-             _using-name="last-modified"
-             _in-xml-name="last-modified"
-             _in-json-name="last-modified"
              gi="last-modified"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -2963,20 +2012,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _metaschema-xml-id="/assembly/oscal-metadata/revision/version"
-             _metaschema-json-id="/assembly/oscal-metadata/revision/version"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="version"
              key="version"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-             _key-name="oscal-metadata:version"
-             _step="version"
-             _key="version"
-             _key-ref="oscal-metadata:version"
-             _using-name="version"
-             _in-xml-name="version"
-             _in-json-name="version"
              gi="version"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -2991,20 +2030,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _metaschema-xml-id="/assembly/oscal-metadata/revision/oscal-version"
-             _metaschema-json-id="/assembly/oscal-metadata/revision/oscal-version"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="oscal-version"
              key="oscal-version"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-             _key-name="oscal-metadata:oscal-version"
-             _step="oscal-version"
-             _key="oscal-version"
-             _key-ref="oscal-metadata:oscal-version"
-             _using-name="oscal-version"
-             _in-xml-name="oscal-version"
-             _in-json-name="oscal-version"
              gi="oscal-version"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3019,17 +2048,10 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3044,19 +2066,9 @@
                  priority="5"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _metaschema-xml-id="/assembly/oscal-metadata/metadata/document-id"
-             _metaschema-json-id="/assembly/oscal-metadata/metadata/document-ids"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="document-id"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-             _key-name="oscal-metadata:document-id"
-             _step="document-id"
-             _key="document-ids"
-             _key-ref="oscal-metadata:document-id"
-             _using-name="document-id"
-             _in-xml-name="document-id"
-             _in-json-name="document-ids"
              gi="document-id">
          <xsl:apply-templates select="@scheme"/>
          <value as-type="string" key="identifier" in-json="string">
@@ -3068,17 +2080,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3093,17 +2098,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="title"
-             _key="title"
-             _metaschema-xml-id="/assembly/oscal-metadata/role/title"
-             _metaschema-json-id="/assembly/oscal-metadata/role/title"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="title"
              key="title"
-             _using-name="title"
-             _in-xml-name="title"
-             _in-json-name="title"
              gi="title"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3118,17 +2116,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="short-name"
-             _key="short-name"
-             _metaschema-xml-id="/assembly/oscal-metadata/role/short-name"
-             _metaschema-json-id="/assembly/oscal-metadata/role/short-name"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="short-name"
              key="short-name"
-             _using-name="short-name"
-             _in-xml-name="short-name"
-             _in-json-name="short-name"
              gi="short-name"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3143,18 +2134,11 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-metadata/role/description"
-             _metaschema-json-id="/assembly/oscal-metadata/role/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3172,17 +2156,10 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3197,17 +2174,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="title"
-             _key="title"
-             _metaschema-xml-id="/assembly/oscal-metadata/location/title"
-             _metaschema-json-id="/assembly/oscal-metadata/location/title"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="title"
              key="title"
-             _using-name="title"
-             _in-xml-name="title"
-             _in-json-name="title"
              gi="title"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3222,19 +2192,7 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-metadata/location/address"
-                _metaschema-json-id="/assembly/oscal-metadata/location/address"
-                name="address"
-                key="address"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-                _key-name="oscal-metadata:address"
-                _step="address"
-                _key="address"
-                _key-ref="oscal-metadata:address"
-                _using-name="address"
-                _in-xml-name="address"
-                _in-json-name="address"
-                gi="address">
+      <assembly name="address" key="address" gi="address">
          <xsl:if test="$with-key">
             <xsl:attribute name="key">address</xsl:attribute>
          </xsl:if>
@@ -3256,19 +2214,9 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _metaschema-xml-id="/assembly/oscal-metadata/address/addr-line"
-             _metaschema-json-id="/assembly/oscal-metadata/address/addr-lines"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="addr-line"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-             _key-name="oscal-metadata:addr-line"
-             _step="addr-line"
-             _key="addr-lines"
-             _key-ref="oscal-metadata:addr-line"
-             _using-name="addr-line"
-             _in-xml-name="addr-line"
-             _in-json-name="addr-lines"
              gi="addr-line"
              in-json="SCALAR">
          <value as-type="string" in-json="string">
@@ -3280,17 +2228,10 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="city"
-             _key="city"
-             _metaschema-xml-id="/assembly/oscal-metadata/address/city"
-             _metaschema-json-id="/assembly/oscal-metadata/address/city"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="city"
              key="city"
-             _using-name="city"
-             _in-xml-name="city"
-             _in-json-name="city"
              gi="city"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3305,17 +2246,10 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="state"
-             _key="state"
-             _metaschema-xml-id="/assembly/oscal-metadata/address/state"
-             _metaschema-json-id="/assembly/oscal-metadata/address/state"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="state"
              key="state"
-             _using-name="state"
-             _in-xml-name="state"
-             _in-json-name="state"
              gi="state"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3330,17 +2264,10 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="postal-code"
-             _key="postal-code"
-             _metaschema-xml-id="/assembly/oscal-metadata/address/postal-code"
-             _metaschema-json-id="/assembly/oscal-metadata/address/postal-code"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="postal-code"
              key="postal-code"
-             _using-name="postal-code"
-             _in-xml-name="postal-code"
-             _in-json-name="postal-code"
              gi="postal-code"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3355,17 +2282,10 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="country"
-             _key="country"
-             _metaschema-xml-id="/assembly/oscal-metadata/address/country"
-             _metaschema-json-id="/assembly/oscal-metadata/address/country"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="country"
              key="country"
-             _using-name="country"
-             _in-xml-name="country"
-             _in-json-name="country"
              gi="country"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3380,19 +2300,9 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _metaschema-xml-id="/assembly/oscal-metadata/location/email-address"
-             _metaschema-json-id="/assembly/oscal-metadata/location/email-addresses"
-             collapsible="no"
+      <field collapsible="no"
              as-type="email"
              name="email-address"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-             _key-name="oscal-metadata:email-address"
-             _step="email-address"
-             _key="email-addresses"
-             _key-ref="oscal-metadata:email-address"
-             _using-name="email-address"
-             _in-xml-name="email-address"
-             _in-json-name="email-addresses"
              gi="email-address"
              in-json="SCALAR">
          <value as-type="email" in-json="string">
@@ -3404,19 +2314,9 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _metaschema-xml-id="/assembly/oscal-metadata/location/telephone-number"
-             _metaschema-json-id="/assembly/oscal-metadata/location/telephone-numbers"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="telephone-number"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-             _key-name="oscal-metadata:telephone-number"
-             _step="telephone-number"
-             _key="telephone-numbers"
-             _key-ref="oscal-metadata:telephone-number"
-             _using-name="telephone-number"
-             _in-xml-name="telephone-number"
-             _in-json-name="telephone-numbers"
              gi="telephone-number">
          <xsl:apply-templates select="@type"/>
          <value as-type="string" key="number" in-json="string">
@@ -3428,16 +2328,9 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="url"
-             _key="urls"
-             _metaschema-xml-id="/assembly/oscal-metadata/location/url"
-             _metaschema-json-id="/assembly/oscal-metadata/location/urls"
-             collapsible="no"
+      <field collapsible="no"
              as-type="uri"
              name="url"
-             _using-name="url"
-             _in-xml-name="url"
-             _in-json-name="urls"
              gi="url"
              in-json="SCALAR">
          <value as-type="uri" in-json="string">
@@ -3449,17 +2342,10 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3474,17 +2360,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="name"
-             _key="name"
-             _metaschema-xml-id="/assembly/oscal-metadata/party/name"
-             _metaschema-json-id="/assembly/oscal-metadata/party/name"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="name"
              key="name"
-             _using-name="name"
-             _in-xml-name="name"
-             _in-json-name="name"
              gi="name"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3499,17 +2378,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="short-name"
-             _key="short-name"
-             _metaschema-xml-id="/assembly/oscal-metadata/party/short-name"
-             _metaschema-json-id="/assembly/oscal-metadata/party/short-name"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="short-name"
              key="short-name"
-             _using-name="short-name"
-             _in-xml-name="short-name"
-             _in-json-name="short-name"
              gi="short-name"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3524,16 +2396,9 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="external-id"
-             _key="external-ids"
-             _metaschema-xml-id="/assembly/oscal-metadata/party/external-id"
-             _metaschema-json-id="/assembly/oscal-metadata/party/external-ids"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="external-id"
-             _using-name="external-id"
-             _in-xml-name="external-id"
-             _in-json-name="external-ids"
              gi="external-id">
          <xsl:apply-templates select="@scheme"/>
          <value as-type="string" key="id" in-json="string">
@@ -3545,17 +2410,10 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3570,19 +2428,9 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _metaschema-xml-id="/assembly/oscal-metadata/party/email-address"
-             _metaschema-json-id="/assembly/oscal-metadata/party/email-addresses"
-             collapsible="no"
+      <field collapsible="no"
              as-type="email"
              name="email-address"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-             _key-name="oscal-metadata:email-address"
-             _step="email-address"
-             _key="email-addresses"
-             _key-ref="oscal-metadata:email-address"
-             _using-name="email-address"
-             _in-xml-name="email-address"
-             _in-json-name="email-addresses"
              gi="email-address"
              in-json="SCALAR">
          <value as-type="email" in-json="string">
@@ -3594,19 +2442,9 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _metaschema-xml-id="/assembly/oscal-metadata/party/telephone-number"
-             _metaschema-json-id="/assembly/oscal-metadata/party/telephone-numbers"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="telephone-number"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-             _key-name="oscal-metadata:telephone-number"
-             _step="telephone-number"
-             _key="telephone-numbers"
-             _key-ref="oscal-metadata:telephone-number"
-             _using-name="telephone-number"
-             _in-xml-name="telephone-number"
-             _in-json-name="telephone-numbers"
              gi="telephone-number">
          <xsl:apply-templates select="@type"/>
          <value as-type="string" key="number" in-json="string">
@@ -3618,18 +2456,7 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-metadata/party/address"
-                _metaschema-json-id="/assembly/oscal-metadata/party/addresses"
-                name="address"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-                _key-name="oscal-metadata:address"
-                _step="address"
-                _key="addresses"
-                _key-ref="oscal-metadata:address"
-                _using-name="address"
-                _in-xml-name="address"
-                _in-json-name="addresses"
-                gi="address">
+      <assembly name="address" gi="address">
          <xsl:apply-templates select="@type"/>
          <xsl:for-each-group select="addr-line" group-by="true()">
             <group in-json="ARRAY" key="addr-lines">
@@ -3648,19 +2475,9 @@
                  priority="10"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _metaschema-xml-id="/assembly/oscal-metadata/address/addr-line"
-             _metaschema-json-id="/assembly/oscal-metadata/address/addr-lines"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="addr-line"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-             _key-name="oscal-metadata:addr-line"
-             _step="addr-line"
-             _key="addr-lines"
-             _key-ref="oscal-metadata:addr-line"
-             _using-name="addr-line"
-             _in-xml-name="addr-line"
-             _in-json-name="addr-lines"
              gi="addr-line"
              in-json="SCALAR">
          <value as-type="string" in-json="string">
@@ -3672,17 +2489,10 @@
                  priority="9"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="city"
-             _key="city"
-             _metaschema-xml-id="/assembly/oscal-metadata/address/city"
-             _metaschema-json-id="/assembly/oscal-metadata/address/city"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="city"
              key="city"
-             _using-name="city"
-             _in-xml-name="city"
-             _in-json-name="city"
              gi="city"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3697,17 +2507,10 @@
                  priority="9"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="state"
-             _key="state"
-             _metaschema-xml-id="/assembly/oscal-metadata/address/state"
-             _metaschema-json-id="/assembly/oscal-metadata/address/state"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="state"
              key="state"
-             _using-name="state"
-             _in-xml-name="state"
-             _in-json-name="state"
              gi="state"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3722,17 +2525,10 @@
                  priority="9"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="postal-code"
-             _key="postal-code"
-             _metaschema-xml-id="/assembly/oscal-metadata/address/postal-code"
-             _metaschema-json-id="/assembly/oscal-metadata/address/postal-code"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="postal-code"
              key="postal-code"
-             _using-name="postal-code"
-             _in-xml-name="postal-code"
-             _in-json-name="postal-code"
              gi="postal-code"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3747,17 +2543,10 @@
                  priority="9"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="country"
-             _key="country"
-             _metaschema-xml-id="/assembly/oscal-metadata/address/country"
-             _metaschema-json-id="/assembly/oscal-metadata/address/country"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="country"
              key="country"
-             _using-name="country"
-             _in-xml-name="country"
-             _in-json-name="country"
              gi="country"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3772,16 +2561,9 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="member-of-organization"
-             _key="member-of-organizations"
-             _metaschema-xml-id="/assembly/oscal-metadata/party/member-of-organization"
-             _metaschema-json-id="/assembly/oscal-metadata/party/member-of-organizations"
-             collapsible="no"
+      <field collapsible="no"
              as-type="uuid"
              name="member-of-organization"
-             _using-name="member-of-organization"
-             _in-xml-name="member-of-organization"
-             _in-json-name="member-of-organizations"
              gi="member-of-organization"
              in-json="SCALAR">
          <value as-type="uuid" in-json="string">
@@ -3793,17 +2575,10 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3818,15 +2593,8 @@
                  priority="3"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _step="local-definitions"
-                _key="local-definitions"
-                _metaschema-xml-id="/assembly/oscal-ap/assessment-plan/local-definitions"
-                _metaschema-json-id="/assembly/oscal-ap/assessment-plan/local-definitions"
-                name="local-definitions"
+      <assembly name="local-definitions"
                 key="local-definitions"
-                _using-name="local-definitions"
-                _in-xml-name="local-definitions"
-                _in-json-name="local-definitions"
                 gi="local-definitions">
          <xsl:if test="$with-key">
             <xsl:attribute name="key">local-definitions</xsl:attribute>
@@ -3873,17 +2641,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="title"
-             _key="title"
-             _metaschema-xml-id="/assembly/oscal-implementation-common/system-component/title"
-             _metaschema-json-id="/assembly/oscal-implementation-common/system-component/title"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="title"
              key="title"
-             _using-name="title"
-             _in-xml-name="title"
-             _in-json-name="title"
              gi="title"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3898,18 +2659,11 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-implementation-common/system-component/description"
-             _metaschema-json-id="/assembly/oscal-implementation-common/system-component/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3927,17 +2681,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="purpose"
-             _key="purpose"
-             _metaschema-xml-id="/assembly/oscal-implementation-common/system-component/purpose"
-             _metaschema-json-id="/assembly/oscal-implementation-common/system-component/purpose"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="purpose"
              key="purpose"
-             _using-name="purpose"
-             _in-xml-name="purpose"
-             _in-json-name="purpose"
              gi="purpose"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3952,17 +2699,10 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -3977,16 +2717,7 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _step="status"
-                _key="status"
-                _metaschema-xml-id="/assembly/oscal-implementation-common/system-component/status"
-                _metaschema-json-id="/assembly/oscal-implementation-common/system-component/status"
-                name="status"
-                key="status"
-                _using-name="status"
-                _in-xml-name="status"
-                _in-json-name="status"
-                gi="status">
+      <assembly name="status" key="status" gi="status">
          <xsl:if test="$with-key">
             <xsl:attribute name="key">status</xsl:attribute>
          </xsl:if>
@@ -3998,17 +2729,10 @@
                  priority="10"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4023,17 +2747,10 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="title"
-             _key="title"
-             _metaschema-xml-id="/assembly/oscal-implementation-common/protocol/title"
-             _metaschema-json-id="/assembly/oscal-implementation-common/protocol/title"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="title"
              key="title"
-             _using-name="title"
-             _in-xml-name="title"
-             _in-json-name="title"
              gi="title"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4048,18 +2765,11 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-implementation-common/inventory-item/description"
-             _metaschema-json-id="/assembly/oscal-implementation-common/inventory-item/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4077,17 +2787,10 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4102,17 +2805,10 @@
                  priority="10"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4127,15 +2823,7 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _step="implemented-component"
-                _key="implemented-components"
-                _metaschema-xml-id="/assembly/oscal-implementation-common/inventory-item/implemented-component"
-                _metaschema-json-id="/assembly/oscal-implementation-common/inventory-item/implemented-components"
-                name="implemented-component"
-                _using-name="implemented-component"
-                _in-xml-name="implemented-component"
-                _in-json-name="implemented-components"
-                gi="implemented-component">
+      <assembly name="implemented-component" gi="implemented-component">
          <xsl:apply-templates select="@component-uuid"/>
          <xsl:for-each-group select="prop" group-by="true()">
             <group in-json="ARRAY" key="props">
@@ -4165,17 +2853,10 @@
                  priority="10"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4190,17 +2871,10 @@
                  priority="12"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4215,17 +2889,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="title"
-             _key="title"
-             _metaschema-xml-id="/assembly/oscal-implementation-common/system-user/title"
-             _metaschema-json-id="/assembly/oscal-implementation-common/system-user/title"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="title"
              key="title"
-             _using-name="title"
-             _in-xml-name="title"
-             _in-json-name="title"
              gi="title"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4240,17 +2907,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="short-name"
-             _key="short-name"
-             _metaschema-xml-id="/assembly/oscal-implementation-common/system-user/short-name"
-             _metaschema-json-id="/assembly/oscal-implementation-common/system-user/short-name"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="short-name"
              key="short-name"
-             _using-name="short-name"
-             _in-xml-name="short-name"
-             _in-json-name="short-name"
              gi="short-name"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4265,18 +2925,11 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-implementation-common/system-user/description"
-             _metaschema-json-id="/assembly/oscal-implementation-common/system-user/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4294,17 +2947,10 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4319,17 +2965,10 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="title"
-             _key="title"
-             _metaschema-xml-id="/assembly/oscal-implementation-common/authorized-privilege/title"
-             _metaschema-json-id="/assembly/oscal-implementation-common/authorized-privilege/title"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="title"
              key="title"
-             _using-name="title"
-             _in-xml-name="title"
-             _in-json-name="title"
              gi="title"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4344,18 +2983,11 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-implementation-common/authorized-privilege/description"
-             _metaschema-json-id="/assembly/oscal-implementation-common/authorized-privilege/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4373,18 +3005,11 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/local-objective/description"
-             _metaschema-json-id="/assembly/oscal-assessment-common/local-objective/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4402,17 +3027,10 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4427,17 +3045,10 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="title"
-             _key="title"
-             _metaschema-xml-id="/assembly/oscal-catalog-common/part/title"
-             _metaschema-json-id="/assembly/oscal-catalog-common/part/title"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="title"
              key="title"
-             _using-name="title"
-             _in-xml-name="title"
-             _in-json-name="title"
              gi="title"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4452,17 +3063,10 @@
                  priority="10"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4477,17 +3081,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="title"
-             _key="title"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/activity/title"
-             _metaschema-json-id="/assembly/oscal-assessment-common/activity/title"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="title"
              key="title"
-             _using-name="title"
-             _in-xml-name="title"
-             _in-json-name="title"
              gi="title"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4502,18 +3099,11 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/activity/description"
-             _metaschema-json-id="/assembly/oscal-assessment-common/activity/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4531,17 +3121,10 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4556,15 +3139,7 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _step="step"
-                _key="steps"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/activity/step"
-                _metaschema-json-id="/assembly/oscal-assessment-common/activity/steps"
-                name="step"
-                _using-name="step"
-                _in-xml-name="step"
-                _in-json-name="steps"
-                gi="step">
+      <assembly name="step" gi="step">
          <xsl:apply-templates select="@uuid"/>
          <xsl:apply-templates select="title"/>
          <xsl:apply-templates select="description"/>
@@ -4597,17 +3172,10 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="title"
-             _key="title"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/activity/step/title"
-             _metaschema-json-id="/assembly/oscal-assessment-common/activity/steps/title"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="title"
              key="title"
-             _using-name="title"
-             _in-xml-name="title"
-             _in-json-name="title"
              gi="title"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4622,18 +3190,11 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/activity/step/description"
-             _metaschema-json-id="/assembly/oscal-assessment-common/activity/steps/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4651,17 +3212,10 @@
                  priority="10"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4676,18 +3230,11 @@
                  priority="9"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/description"
-             _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4705,17 +3252,10 @@
                  priority="11"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4730,15 +3270,7 @@
                  priority="10"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _step="control-selection"
-                _key="control-selections"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-selection"
-                _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-selections"
-                name="control-selection"
-                _using-name="control-selection"
-                _in-xml-name="control-selection"
-                _in-json-name="control-selections"
-                gi="control-selection">
+      <assembly name="control-selection" gi="control-selection">
          <xsl:apply-templates select="description"/>
          <xsl:for-each-group select="prop" group-by="true()">
             <group in-json="ARRAY" key="props">
@@ -4776,18 +3308,11 @@
                  priority="11"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-selection/description"
-             _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-selections/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4805,17 +3330,10 @@
                  priority="13"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -4826,42 +3344,11 @@
          </value>
       </field>
    </xsl:template>
-   <xsl:template match="assessment-plan/local-definitions/activity/step/reviewed-controls/control-selection/include-all"
-                 priority="12"
-                 xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
-      <xsl:param name="with-key" select="true()"/>
-      <assembly as-type="empty"
-                _step="include-all"
-                _key="include-all"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-selection/include-all"
-                _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-selections/include-all"
-                name="include-all"
-                key="include-all"
-                _using-name="include-all"
-                _in-xml-name="include-all"
-                _in-json-name="include-all"
-                gi="include-all">
-         <xsl:if test="$with-key">
-            <xsl:attribute name="key">include-all</xsl:attribute>
-         </xsl:if>
-      </assembly>
-   </xsl:template>
    <xsl:template match="assessment-plan/local-definitions/activity/step/reviewed-controls/control-selection/include-control"
                  priority="13"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-selection/include-control"
-                _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-selections/include-controls"
-                name="select-control-by-id"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-                _key-name="oscal-assessment-common:select-control-by-id"
-                _step="include-control"
-                _key="include-controls"
-                _key-ref="oscal-assessment-common:select-control-by-id"
-                _using-name="include-control"
-                _in-xml-name="include-control"
-                _in-json-name="include-controls"
-                gi="include-control">
+      <assembly name="select-control-by-id" gi="include-control">
          <xsl:apply-templates select="@control-id"/>
          <xsl:for-each-group select="statement-id" group-by="true()">
             <group in-json="ARRAY" key="statement-ids">
@@ -4876,16 +3363,9 @@
                  priority="15"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="statement-id"
-             _key="statement-ids"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/select-control-by-id/statement-id"
-             _metaschema-json-id="/assembly/oscal-assessment-common/select-control-by-id/statement-ids"
-             collapsible="no"
+      <field collapsible="no"
              as-type="token"
              name="statement-id"
-             _using-name="statement-id"
-             _in-xml-name="statement-id"
-             _in-json-name="statement-ids"
              gi="statement-id"
              in-json="SCALAR">
          <value as-type="token" in-json="string">
@@ -4897,18 +3377,7 @@
                  priority="12"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-selection/exclude-control"
-                _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-selections/exclude-controls"
-                name="select-control-by-id"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-                _key-name="oscal-assessment-common:select-control-by-id"
-                _step="exclude-control"
-                _key="exclude-controls"
-                _key-ref="oscal-assessment-common:select-control-by-id"
-                _using-name="exclude-control"
-                _in-xml-name="exclude-control"
-                _in-json-name="exclude-controls"
-                gi="exclude-control">
+      <assembly name="select-control-by-id" gi="exclude-control">
          <xsl:apply-templates select="@control-id"/>
          <xsl:for-each-group select="statement-id" group-by="true()">
             <group in-json="ARRAY" key="statement-ids">
@@ -4923,16 +3392,9 @@
                  priority="14"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="statement-id"
-             _key="statement-ids"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/select-control-by-id/statement-id"
-             _metaschema-json-id="/assembly/oscal-assessment-common/select-control-by-id/statement-ids"
-             collapsible="no"
+      <field collapsible="no"
              as-type="token"
              name="statement-id"
-             _using-name="statement-id"
-             _in-xml-name="statement-id"
-             _in-json-name="statement-ids"
              gi="statement-id"
              in-json="SCALAR">
          <value as-type="token" in-json="string">
@@ -4944,15 +3406,7 @@
                  priority="10"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _step="control-objective-selection"
-                _key="control-objective-selections"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-objective-selection"
-                _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-objective-selections"
-                name="control-objective-selection"
-                _using-name="control-objective-selection"
-                _in-xml-name="control-objective-selection"
-                _in-json-name="control-objective-selections"
-                gi="control-objective-selection">
+      <assembly name="control-objective-selection" gi="control-objective-selection">
          <xsl:apply-templates select="description"/>
          <xsl:for-each-group select="prop" group-by="true()">
             <group in-json="ARRAY" key="props">
@@ -4990,18 +3444,11 @@
                  priority="11"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-objective-selection/description"
-             _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-objective-selections/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -5019,17 +3466,10 @@
                  priority="13"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -5040,41 +3480,14 @@
          </value>
       </field>
    </xsl:template>
-   <xsl:template match="assessment-plan/local-definitions/activity/step/reviewed-controls/control-objective-selection/include-all"
-                 priority="12"
-                 xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
-      <xsl:param name="with-key" select="true()"/>
-      <assembly as-type="empty"
-                _step="include-all"
-                _key="include-all"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-objective-selection/include-all"
-                _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-objective-selections/include-all"
-                name="include-all"
-                key="include-all"
-                _using-name="include-all"
-                _in-xml-name="include-all"
-                _in-json-name="include-all"
-                gi="include-all">
-         <xsl:if test="$with-key">
-            <xsl:attribute name="key">include-all</xsl:attribute>
-         </xsl:if>
-      </assembly>
-   </xsl:template>
    <xsl:template match="assessment-plan/local-definitions/activity/step/responsible-role/link/text"
                  priority="12"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -5089,18 +3502,11 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/description"
-             _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -5118,17 +3524,10 @@
                  priority="9"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -5143,15 +3542,7 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _step="control-selection"
-                _key="control-selections"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-selection"
-                _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-selections"
-                name="control-selection"
-                _using-name="control-selection"
-                _in-xml-name="control-selection"
-                _in-json-name="control-selections"
-                gi="control-selection">
+      <assembly name="control-selection" gi="control-selection">
          <xsl:apply-templates select="description"/>
          <xsl:for-each-group select="prop" group-by="true()">
             <group in-json="ARRAY" key="props">
@@ -5189,18 +3580,11 @@
                  priority="9"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-selection/description"
-             _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-selections/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -5218,17 +3602,10 @@
                  priority="11"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -5239,42 +3616,11 @@
          </value>
       </field>
    </xsl:template>
-   <xsl:template match="assessment-plan/local-definitions/activity/related-controls/control-selection/include-all"
-                 priority="10"
-                 xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
-      <xsl:param name="with-key" select="true()"/>
-      <assembly as-type="empty"
-                _step="include-all"
-                _key="include-all"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-selection/include-all"
-                _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-selections/include-all"
-                name="include-all"
-                key="include-all"
-                _using-name="include-all"
-                _in-xml-name="include-all"
-                _in-json-name="include-all"
-                gi="include-all">
-         <xsl:if test="$with-key">
-            <xsl:attribute name="key">include-all</xsl:attribute>
-         </xsl:if>
-      </assembly>
-   </xsl:template>
    <xsl:template match="assessment-plan/local-definitions/activity/related-controls/control-selection/include-control"
                  priority="11"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-selection/include-control"
-                _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-selections/include-controls"
-                name="select-control-by-id"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-                _key-name="oscal-assessment-common:select-control-by-id"
-                _step="include-control"
-                _key="include-controls"
-                _key-ref="oscal-assessment-common:select-control-by-id"
-                _using-name="include-control"
-                _in-xml-name="include-control"
-                _in-json-name="include-controls"
-                gi="include-control">
+      <assembly name="select-control-by-id" gi="include-control">
          <xsl:apply-templates select="@control-id"/>
          <xsl:for-each-group select="statement-id" group-by="true()">
             <group in-json="ARRAY" key="statement-ids">
@@ -5289,16 +3635,9 @@
                  priority="13"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="statement-id"
-             _key="statement-ids"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/select-control-by-id/statement-id"
-             _metaschema-json-id="/assembly/oscal-assessment-common/select-control-by-id/statement-ids"
-             collapsible="no"
+      <field collapsible="no"
              as-type="token"
              name="statement-id"
-             _using-name="statement-id"
-             _in-xml-name="statement-id"
-             _in-json-name="statement-ids"
              gi="statement-id"
              in-json="SCALAR">
          <value as-type="token" in-json="string">
@@ -5310,18 +3649,7 @@
                  priority="10"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-selection/exclude-control"
-                _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-selections/exclude-controls"
-                name="select-control-by-id"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-                _key-name="oscal-assessment-common:select-control-by-id"
-                _step="exclude-control"
-                _key="exclude-controls"
-                _key-ref="oscal-assessment-common:select-control-by-id"
-                _using-name="exclude-control"
-                _in-xml-name="exclude-control"
-                _in-json-name="exclude-controls"
-                gi="exclude-control">
+      <assembly name="select-control-by-id" gi="exclude-control">
          <xsl:apply-templates select="@control-id"/>
          <xsl:for-each-group select="statement-id" group-by="true()">
             <group in-json="ARRAY" key="statement-ids">
@@ -5336,16 +3664,9 @@
                  priority="12"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="statement-id"
-             _key="statement-ids"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/select-control-by-id/statement-id"
-             _metaschema-json-id="/assembly/oscal-assessment-common/select-control-by-id/statement-ids"
-             collapsible="no"
+      <field collapsible="no"
              as-type="token"
              name="statement-id"
-             _using-name="statement-id"
-             _in-xml-name="statement-id"
-             _in-json-name="statement-ids"
              gi="statement-id"
              in-json="SCALAR">
          <value as-type="token" in-json="string">
@@ -5357,15 +3678,7 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _step="control-objective-selection"
-                _key="control-objective-selections"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-objective-selection"
-                _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-objective-selections"
-                name="control-objective-selection"
-                _using-name="control-objective-selection"
-                _in-xml-name="control-objective-selection"
-                _in-json-name="control-objective-selections"
-                gi="control-objective-selection">
+      <assembly name="control-objective-selection" gi="control-objective-selection">
          <xsl:apply-templates select="description"/>
          <xsl:for-each-group select="prop" group-by="true()">
             <group in-json="ARRAY" key="props">
@@ -5403,18 +3716,11 @@
                  priority="9"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-objective-selection/description"
-             _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-objective-selections/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -5432,17 +3738,10 @@
                  priority="11"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -5453,41 +3752,14 @@
          </value>
       </field>
    </xsl:template>
-   <xsl:template match="assessment-plan/local-definitions/activity/related-controls/control-objective-selection/include-all"
-                 priority="10"
-                 xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
-      <xsl:param name="with-key" select="true()"/>
-      <assembly as-type="empty"
-                _step="include-all"
-                _key="include-all"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-objective-selection/include-all"
-                _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-objective-selections/include-all"
-                name="include-all"
-                key="include-all"
-                _using-name="include-all"
-                _in-xml-name="include-all"
-                _in-json-name="include-all"
-                gi="include-all">
-         <xsl:if test="$with-key">
-            <xsl:attribute name="key">include-all</xsl:attribute>
-         </xsl:if>
-      </assembly>
-   </xsl:template>
    <xsl:template match="assessment-plan/local-definitions/activity/responsible-role/link/text"
                  priority="10"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -5502,15 +3774,8 @@
                  priority="3"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _step="terms-and-conditions"
-                _key="terms-and-conditions"
-                _metaschema-xml-id="/assembly/oscal-ap/assessment-plan/terms-and-conditions"
-                _metaschema-json-id="/assembly/oscal-ap/assessment-plan/terms-and-conditions"
-                name="terms-and-conditions"
+      <assembly name="terms-and-conditions"
                 key="terms-and-conditions"
-                _using-name="terms-and-conditions"
-                _in-xml-name="terms-and-conditions"
-                _in-json-name="terms-and-conditions"
                 gi="terms-and-conditions">
          <xsl:if test="$with-key">
             <xsl:attribute name="key">terms-and-conditions</xsl:attribute>
@@ -5528,17 +3793,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="title"
-             _key="title"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/assessment-part/title"
-             _metaschema-json-id="/assembly/oscal-assessment-common/assessment-part/title"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="title"
              key="title"
-             _using-name="title"
-             _in-xml-name="title"
-             _in-json-name="title"
              gi="title"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -5553,17 +3811,10 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -5578,18 +3829,11 @@
                  priority="4"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/description"
-             _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -5607,17 +3851,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -5632,15 +3869,7 @@
                  priority="5"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _step="control-selection"
-                _key="control-selections"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-selection"
-                _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-selections"
-                name="control-selection"
-                _using-name="control-selection"
-                _in-xml-name="control-selection"
-                _in-json-name="control-selections"
-                gi="control-selection">
+      <assembly name="control-selection" gi="control-selection">
          <xsl:apply-templates select="description"/>
          <xsl:for-each-group select="prop" group-by="true()">
             <group in-json="ARRAY" key="props">
@@ -5678,18 +3907,11 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-selection/description"
-             _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-selections/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -5707,17 +3929,10 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -5728,42 +3943,11 @@
          </value>
       </field>
    </xsl:template>
-   <xsl:template match="assessment-plan/reviewed-controls/control-selection/include-all"
-                 priority="7"
-                 xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
-      <xsl:param name="with-key" select="true()"/>
-      <assembly as-type="empty"
-                _step="include-all"
-                _key="include-all"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-selection/include-all"
-                _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-selections/include-all"
-                name="include-all"
-                key="include-all"
-                _using-name="include-all"
-                _in-xml-name="include-all"
-                _in-json-name="include-all"
-                gi="include-all">
-         <xsl:if test="$with-key">
-            <xsl:attribute name="key">include-all</xsl:attribute>
-         </xsl:if>
-      </assembly>
-   </xsl:template>
    <xsl:template match="assessment-plan/reviewed-controls/control-selection/include-control"
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-selection/include-control"
-                _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-selections/include-controls"
-                name="select-control-by-id"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-                _key-name="oscal-assessment-common:select-control-by-id"
-                _step="include-control"
-                _key="include-controls"
-                _key-ref="oscal-assessment-common:select-control-by-id"
-                _using-name="include-control"
-                _in-xml-name="include-control"
-                _in-json-name="include-controls"
-                gi="include-control">
+      <assembly name="select-control-by-id" gi="include-control">
          <xsl:apply-templates select="@control-id"/>
          <xsl:for-each-group select="statement-id" group-by="true()">
             <group in-json="ARRAY" key="statement-ids">
@@ -5778,16 +3962,9 @@
                  priority="10"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="statement-id"
-             _key="statement-ids"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/select-control-by-id/statement-id"
-             _metaschema-json-id="/assembly/oscal-assessment-common/select-control-by-id/statement-ids"
-             collapsible="no"
+      <field collapsible="no"
              as-type="token"
              name="statement-id"
-             _using-name="statement-id"
-             _in-xml-name="statement-id"
-             _in-json-name="statement-ids"
              gi="statement-id"
              in-json="SCALAR">
          <value as-type="token" in-json="string">
@@ -5799,18 +3976,7 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-selection/exclude-control"
-                _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-selections/exclude-controls"
-                name="select-control-by-id"
-                _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_assessment-common_metaschema.xml"
-                _key-name="oscal-assessment-common:select-control-by-id"
-                _step="exclude-control"
-                _key="exclude-controls"
-                _key-ref="oscal-assessment-common:select-control-by-id"
-                _using-name="exclude-control"
-                _in-xml-name="exclude-control"
-                _in-json-name="exclude-controls"
-                gi="exclude-control">
+      <assembly name="select-control-by-id" gi="exclude-control">
          <xsl:apply-templates select="@control-id"/>
          <xsl:for-each-group select="statement-id" group-by="true()">
             <group in-json="ARRAY" key="statement-ids">
@@ -5825,16 +3991,9 @@
                  priority="9"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="statement-id"
-             _key="statement-ids"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/select-control-by-id/statement-id"
-             _metaschema-json-id="/assembly/oscal-assessment-common/select-control-by-id/statement-ids"
-             collapsible="no"
+      <field collapsible="no"
              as-type="token"
              name="statement-id"
-             _using-name="statement-id"
-             _in-xml-name="statement-id"
-             _in-json-name="statement-ids"
              gi="statement-id"
              in-json="SCALAR">
          <value as-type="token" in-json="string">
@@ -5846,15 +4005,7 @@
                  priority="5"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _step="control-objective-selection"
-                _key="control-objective-selections"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-objective-selection"
-                _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-objective-selections"
-                name="control-objective-selection"
-                _using-name="control-objective-selection"
-                _in-xml-name="control-objective-selection"
-                _in-json-name="control-objective-selections"
-                gi="control-objective-selection">
+      <assembly name="control-objective-selection" gi="control-objective-selection">
          <xsl:apply-templates select="description"/>
          <xsl:for-each-group select="prop" group-by="true()">
             <group in-json="ARRAY" key="props">
@@ -5892,18 +4043,11 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-objective-selection/description"
-             _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-objective-selections/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -5921,17 +4065,10 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -5942,42 +4079,15 @@
          </value>
       </field>
    </xsl:template>
-   <xsl:template match="assessment-plan/reviewed-controls/control-objective-selection/include-all"
-                 priority="7"
-                 xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
-      <xsl:param name="with-key" select="true()"/>
-      <assembly as-type="empty"
-                _step="include-all"
-                _key="include-all"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/reviewed-controls/control-objective-selection/include-all"
-                _metaschema-json-id="/assembly/oscal-assessment-common/reviewed-controls/control-objective-selections/include-all"
-                name="include-all"
-                key="include-all"
-                _using-name="include-all"
-                _in-xml-name="include-all"
-                _in-json-name="include-all"
-                gi="include-all">
-         <xsl:if test="$with-key">
-            <xsl:attribute name="key">include-all</xsl:attribute>
-         </xsl:if>
-      </assembly>
-   </xsl:template>
    <xsl:template match="assessment-plan/assessment-subject/description"
                  priority="5"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/assessment-subject/description"
-             _metaschema-json-id="/assembly/oscal-assessment-common/assessment-subject/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -5995,17 +4105,10 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6016,41 +4119,14 @@
          </value>
       </field>
    </xsl:template>
-   <xsl:template match="assessment-plan/assessment-subject/include-all"
-                 priority="6"
-                 xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
-      <xsl:param name="with-key" select="true()"/>
-      <assembly as-type="empty"
-                _step="include-all"
-                _key="include-all"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/assessment-subject/include-all"
-                _metaschema-json-id="/assembly/oscal-assessment-common/assessment-subject/include-all"
-                name="include-all"
-                key="include-all"
-                _using-name="include-all"
-                _in-xml-name="include-all"
-                _in-json-name="include-all"
-                gi="include-all">
-         <xsl:if test="$with-key">
-            <xsl:attribute name="key">include-all</xsl:attribute>
-         </xsl:if>
-      </assembly>
-   </xsl:template>
    <xsl:template match="assessment-plan/assessment-subject/include-subject/link/text"
                  priority="10"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6065,17 +4141,10 @@
                  priority="9"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6090,17 +4159,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="title"
-             _key="title"
-             _metaschema-xml-id="/assembly/oscal-implementation-common/system-component/title"
-             _metaschema-json-id="/assembly/oscal-implementation-common/system-component/title"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="title"
              key="title"
-             _using-name="title"
-             _in-xml-name="title"
-             _in-json-name="title"
              gi="title"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6115,18 +4177,11 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-implementation-common/system-component/description"
-             _metaschema-json-id="/assembly/oscal-implementation-common/system-component/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6144,17 +4199,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="purpose"
-             _key="purpose"
-             _metaschema-xml-id="/assembly/oscal-implementation-common/system-component/purpose"
-             _metaschema-json-id="/assembly/oscal-implementation-common/system-component/purpose"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="purpose"
              key="purpose"
-             _using-name="purpose"
-             _in-xml-name="purpose"
-             _in-json-name="purpose"
              gi="purpose"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6169,17 +4217,10 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6194,16 +4235,7 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _step="status"
-                _key="status"
-                _metaschema-xml-id="/assembly/oscal-implementation-common/system-component/status"
-                _metaschema-json-id="/assembly/oscal-implementation-common/system-component/status"
-                name="status"
-                key="status"
-                _using-name="status"
-                _in-xml-name="status"
-                _in-json-name="status"
-                gi="status">
+      <assembly name="status" key="status" gi="status">
          <xsl:if test="$with-key">
             <xsl:attribute name="key">status</xsl:attribute>
          </xsl:if>
@@ -6215,17 +4247,10 @@
                  priority="10"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6240,17 +4265,10 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="title"
-             _key="title"
-             _metaschema-xml-id="/assembly/oscal-implementation-common/protocol/title"
-             _metaschema-json-id="/assembly/oscal-implementation-common/protocol/title"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="title"
              key="title"
-             _using-name="title"
-             _in-xml-name="title"
-             _in-json-name="title"
              gi="title"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6265,15 +4283,7 @@
                  priority="5"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _step="assessment-platform"
-                _key="assessment-platforms"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/assessment-assets/assessment-platform"
-                _metaschema-json-id="/assembly/oscal-assessment-common/assessment-assets/assessment-platforms"
-                name="assessment-platform"
-                _using-name="assessment-platform"
-                _in-xml-name="assessment-platform"
-                _in-json-name="assessment-platforms"
-                gi="assessment-platform">
+      <assembly name="assessment-platform" gi="assessment-platform">
          <xsl:apply-templates select="@uuid"/>
          <xsl:apply-templates select="title"/>
          <xsl:for-each-group select="prop" group-by="true()">
@@ -6304,17 +4314,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="title"
-             _key="title"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/assessment-assets/assessment-platform/title"
-             _metaschema-json-id="/assembly/oscal-assessment-common/assessment-assets/assessment-platforms/title"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="title"
              key="title"
-             _using-name="title"
-             _in-xml-name="title"
-             _in-json-name="title"
              gi="title"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6329,17 +4332,10 @@
                  priority="8"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6354,15 +4350,7 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _step="uses-component"
-                _key="uses-components"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/assessment-assets/assessment-platform/uses-component"
-                _metaschema-json-id="/assembly/oscal-assessment-common/assessment-assets/assessment-platforms/uses-components"
-                name="uses-component"
-                _using-name="uses-component"
-                _in-xml-name="uses-component"
-                _in-json-name="uses-components"
-                gi="uses-component">
+      <assembly name="uses-component" gi="uses-component">
          <xsl:apply-templates select="@component-uuid"/>
          <xsl:for-each-group select="prop" group-by="true()">
             <group in-json="ARRAY" key="props">
@@ -6392,17 +4380,10 @@
                  priority="10"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6417,17 +4398,10 @@
                  priority="12"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6442,17 +4416,10 @@
                  priority="5"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="title"
-             _key="title"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/task/title"
-             _metaschema-json-id="/assembly/oscal-assessment-common/task/title"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="title"
              key="title"
-             _using-name="title"
-             _in-xml-name="title"
-             _in-json-name="title"
              gi="title"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6467,18 +4434,11 @@
                  priority="5"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/task/description"
-             _metaschema-json-id="/assembly/oscal-assessment-common/task/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6496,17 +4456,10 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6521,16 +4474,7 @@
                  priority="5"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _step="timing"
-                _key="timing"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/task/timing"
-                _metaschema-json-id="/assembly/oscal-assessment-common/task/timing"
-                name="timing"
-                key="timing"
-                _using-name="timing"
-                _in-xml-name="timing"
-                _in-json-name="timing"
-                gi="timing">
+      <assembly name="timing" key="timing" gi="timing">
          <xsl:if test="$with-key">
             <xsl:attribute name="key">timing</xsl:attribute>
          </xsl:if>
@@ -6543,17 +4487,7 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly as-type="empty"
-                _step="on-date"
-                _key="on-date"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/task/timing/on-date"
-                _metaschema-json-id="/assembly/oscal-assessment-common/task/timing/on-date"
-                name="on-date"
-                key="on-date"
-                _using-name="on-date"
-                _in-xml-name="on-date"
-                _in-json-name="on-date"
-                gi="on-date">
+      <assembly as-type="empty" name="on-date" key="on-date" gi="on-date">
          <xsl:if test="$with-key">
             <xsl:attribute name="key">on-date</xsl:attribute>
          </xsl:if>
@@ -6565,15 +4499,8 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
       <assembly as-type="empty"
-                _step="within-date-range"
-                _key="within-date-range"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/task/timing/within-date-range"
-                _metaschema-json-id="/assembly/oscal-assessment-common/task/timing/within-date-range"
                 name="within-date-range"
                 key="within-date-range"
-                _using-name="within-date-range"
-                _in-xml-name="within-date-range"
-                _in-json-name="within-date-range"
                 gi="within-date-range">
          <xsl:if test="$with-key">
             <xsl:attribute name="key">within-date-range</xsl:attribute>
@@ -6587,15 +4514,8 @@
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
       <assembly as-type="empty"
-                _step="at-frequency"
-                _key="at-frequency"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/task/timing/at-frequency"
-                _metaschema-json-id="/assembly/oscal-assessment-common/task/timing/at-frequency"
                 name="at-frequency"
                 key="at-frequency"
-                _using-name="at-frequency"
-                _in-xml-name="at-frequency"
-                _in-json-name="at-frequency"
                 gi="at-frequency">
          <xsl:if test="$with-key">
             <xsl:attribute name="key">at-frequency</xsl:attribute>
@@ -6608,15 +4528,7 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _step="dependency"
-                _key="dependencies"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/task/dependency"
-                _metaschema-json-id="/assembly/oscal-assessment-common/task/dependencies"
-                name="dependency"
-                _using-name="dependency"
-                _in-xml-name="dependency"
-                _in-json-name="dependencies"
-                gi="dependency">
+      <assembly name="dependency" gi="dependency">
          <xsl:apply-templates select="@task-uuid"/>
          <xsl:apply-templates select="remarks"/>
       </assembly>
@@ -6625,15 +4537,7 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _step="associated-activity"
-                _key="associated-activities"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/task/associated-activity"
-                _metaschema-json-id="/assembly/oscal-assessment-common/task/associated-activities"
-                name="associated-activity"
-                _using-name="associated-activity"
-                _in-xml-name="associated-activity"
-                _in-json-name="associated-activities"
-                gi="associated-activity">
+      <assembly name="associated-activity" gi="associated-activity">
          <xsl:apply-templates select="@activity-uuid"/>
          <xsl:for-each-group select="prop" group-by="true()">
             <group in-json="ARRAY" key="props">
@@ -6670,17 +4574,10 @@
                  priority="9"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6695,17 +4592,10 @@
                  priority="11"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6720,18 +4610,11 @@
                  priority="9"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/assessment-subject/description"
-             _metaschema-json-id="/assembly/oscal-assessment-common/assessment-subject/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6749,17 +4632,10 @@
                  priority="11"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6770,41 +4646,14 @@
          </value>
       </field>
    </xsl:template>
-   <xsl:template match="assessment-plan//task/associated-activity/subject/include-all"
-                 priority="10"
-                 xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
-      <xsl:param name="with-key" select="true()"/>
-      <assembly as-type="empty"
-                _step="include-all"
-                _key="include-all"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/assessment-subject/include-all"
-                _metaschema-json-id="/assembly/oscal-assessment-common/assessment-subject/include-all"
-                name="include-all"
-                key="include-all"
-                _using-name="include-all"
-                _in-xml-name="include-all"
-                _in-json-name="include-all"
-                gi="include-all">
-         <xsl:if test="$with-key">
-            <xsl:attribute name="key">include-all</xsl:attribute>
-         </xsl:if>
-      </assembly>
-   </xsl:template>
    <xsl:template match="assessment-plan//task/associated-activity/subject/include-subject/link/text"
                  priority="14"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6819,17 +4668,10 @@
                  priority="13"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6844,18 +4686,11 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-assessment-common/assessment-subject/description"
-             _metaschema-json-id="/assembly/oscal-assessment-common/assessment-subject/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6873,17 +4708,10 @@
                  priority="9"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6894,41 +4722,14 @@
          </value>
       </field>
    </xsl:template>
-   <xsl:template match="assessment-plan//task/subject/include-all"
-                 priority="8"
-                 xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
-      <xsl:param name="with-key" select="true()"/>
-      <assembly as-type="empty"
-                _step="include-all"
-                _key="include-all"
-                _metaschema-xml-id="/assembly/oscal-assessment-common/assessment-subject/include-all"
-                _metaschema-json-id="/assembly/oscal-assessment-common/assessment-subject/include-all"
-                name="include-all"
-                key="include-all"
-                _using-name="include-all"
-                _in-xml-name="include-all"
-                _in-json-name="include-all"
-                gi="include-all">
-         <xsl:if test="$with-key">
-            <xsl:attribute name="key">include-all</xsl:attribute>
-         </xsl:if>
-      </assembly>
-   </xsl:template>
    <xsl:template match="assessment-plan//task/subject/include-subject/link/text"
                  priority="12"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6943,17 +4744,10 @@
                  priority="11"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6968,17 +4762,10 @@
                  priority="9"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -6993,15 +4780,7 @@
                  priority="5"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _step="resource"
-                _key="resources"
-                _metaschema-xml-id="/assembly/oscal-metadata/back-matter/resource"
-                _metaschema-json-id="/assembly/oscal-metadata/back-matter/resources"
-                name="resource"
-                _using-name="resource"
-                _in-xml-name="resource"
-                _in-json-name="resources"
-                gi="resource">
+      <assembly name="resource" gi="resource">
          <xsl:apply-templates select="@uuid"/>
          <xsl:apply-templates select="title"/>
          <xsl:apply-templates select="description"/>
@@ -7035,17 +4814,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="title"
-             _key="title"
-             _metaschema-xml-id="/assembly/oscal-metadata/back-matter/resource/title"
-             _metaschema-json-id="/assembly/oscal-metadata/back-matter/resources/title"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="title"
              key="title"
-             _using-name="title"
-             _in-xml-name="title"
-             _in-json-name="title"
              gi="title"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -7060,18 +4832,11 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="description"
-             _key="description"
-             _metaschema-xml-id="/assembly/oscal-metadata/back-matter/resource/description"
-             _metaschema-json-id="/assembly/oscal-metadata/back-matter/resources/description"
-             in-xml="WITH_WRAPPER"
+      <field in-xml="WITH_WRAPPER"
              collapsible="no"
              as-type="markup-multiline"
              name="description"
              key="description"
-             _using-name="description"
-             _in-xml-name="description"
-             _in-json-name="description"
              gi="description"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -7089,19 +4854,9 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _metaschema-xml-id="/assembly/oscal-metadata/back-matter/resource/document-id"
-             _metaschema-json-id="/assembly/oscal-metadata/back-matter/resources/document-ids"
-             collapsible="no"
+      <field collapsible="no"
              as-type="string"
              name="document-id"
-             _base-uri="file:/mnt/c/Users/davidwal/git/github/david-waltermire-nist/OSCAL/src/metaschema/oscal_metadata_metaschema.xml"
-             _key-name="oscal-metadata:document-id"
-             _step="document-id"
-             _key="document-ids"
-             _key-ref="oscal-metadata:document-id"
-             _using-name="document-id"
-             _in-xml-name="document-id"
-             _in-json-name="document-ids"
              gi="document-id">
          <xsl:apply-templates select="@scheme"/>
          <value as-type="string" key="identifier" in-json="string">
@@ -7113,16 +4868,7 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _step="citation"
-                _key="citation"
-                _metaschema-xml-id="/assembly/oscal-metadata/back-matter/resource/citation"
-                _metaschema-json-id="/assembly/oscal-metadata/back-matter/resources/citation"
-                name="citation"
-                key="citation"
-                _using-name="citation"
-                _in-xml-name="citation"
-                _in-json-name="citation"
-                gi="citation">
+      <assembly name="citation" key="citation" gi="citation">
          <xsl:if test="$with-key">
             <xsl:attribute name="key">citation</xsl:attribute>
          </xsl:if>
@@ -7147,17 +4893,10 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/back-matter/resource/citation/text"
-             _metaschema-json-id="/assembly/oscal-metadata/back-matter/resources/citation/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -7172,17 +4911,10 @@
                  priority="9"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="text"
-             _key="text"
-             _metaschema-xml-id="/assembly/oscal-metadata/link/text"
-             _metaschema-json-id="/assembly/oscal-metadata/link/text"
-             collapsible="no"
+      <field collapsible="no"
              as-type="markup-line"
              name="text"
              key="text"
-             _using-name="text"
-             _in-xml-name="text"
-             _in-json-name="text"
              gi="text"
              in-json="SCALAR">
          <xsl:if test="$with-key">
@@ -7197,15 +4929,7 @@
                  priority="7"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <assembly _step="rlink"
-                _key="rlinks"
-                _metaschema-xml-id="/assembly/oscal-metadata/back-matter/resource/rlink"
-                _metaschema-json-id="/assembly/oscal-metadata/back-matter/resources/rlinks"
-                name="rlink"
-                _using-name="rlink"
-                _in-xml-name="rlink"
-                _in-json-name="rlinks"
-                gi="rlink">
+      <assembly name="rlink" gi="rlink">
          <xsl:apply-templates select="@href"/>
          <xsl:apply-templates select="@media-type"/>
          <xsl:for-each-group select="hash" group-by="true()">
@@ -7221,17 +4945,10 @@
                  priority="6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/1.0">
       <xsl:param name="with-key" select="true()"/>
-      <field _step="base64"
-             _key="base64"
-             _metaschema-xml-id="/assembly/oscal-metadata/back-matter/resource/base64"
-             _metaschema-json-id="/assembly/oscal-metadata/back-matter/resources/base64"
-             collapsible="no"
+      <field collapsible="no"
              as-type="base64Binary"
              name="base64"
              key="base64"
-             _using-name="base64"
-             _in-xml-name="base64"
-             _in-json-name="base64"
              gi="base64">
          <xsl:if test="$with-key">
             <xsl:attribute name="key">base64</xsl:attribute>
@@ -7254,12 +4971,12 @@
    </xsl:template>
    <!-- XML to JSON conversion: Supermodel serialization as JSON
         including markdown production -->
-   <xsl:variable xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:variable xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  name="ns"
                  select="/*/@namespace"/>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  match="group"
                  mode="write-json"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7268,8 +4985,8 @@
          <xsl:apply-templates mode="#current"/>
       </array>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  match="group[@in-json='BY_KEY']"
                  mode="write-json"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7278,13 +4995,13 @@
          <xsl:apply-templates mode="#current"/>
       </map>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  match="flag[@key=../@json-key-flag]"
                  mode="write-json"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel"/>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  match="group[@in-json='SINGLETON_OR_ARRAY'][count(*)=1]"
                  mode="write-json"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7292,8 +5009,8 @@
          <xsl:with-param name="group-key" select="@key"/>
       </xsl:apply-templates>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  priority="2"
                  match="group/assembly | group/field"
                  mode="write-json"
@@ -7314,8 +5031,8 @@
          <xsl:apply-templates mode="#current"/>
       </map>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  priority="3"
                  match="group/field[@in-json='SCALAR']"
                  mode="write-json"
@@ -7327,8 +5044,8 @@
          <xsl:with-param name="use-key" select="flag[@key = $json-key-flag-name]"/>
       </xsl:apply-templates>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  match="/assembly"
                  mode="write-json"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7336,8 +5053,8 @@
          <xsl:next-match/>
       </map>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  match="assembly"
                  mode="write-json"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7345,8 +5062,8 @@
          <xsl:apply-templates mode="#current"/>
       </map>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  match="field"
                  mode="write-json"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7354,8 +5071,8 @@
          <xsl:apply-templates mode="#current"/>
       </map>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  match="field[@in-json='SCALAR']"
                  mode="write-json"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7367,13 +5084,13 @@
             <xsl:value-of select="value"/>
         </string> -->
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  match="flag[@key=../value/@key-flag]"
                  mode="write-json"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel"/>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  match="flag"
                  mode="write-json"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7383,8 +5100,8 @@
          <xsl:apply-templates mode="#current"/>
       </xsl:element>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  priority="2"
                  match="field[exists(@json-key-flag)]/value"
                  mode="write-json"
@@ -7395,8 +5112,8 @@
          <xsl:apply-templates mode="#current"/>
       </xsl:element>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  match="value"
                  mode="write-json"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7413,22 +5130,22 @@
          <xsl:apply-templates select="." mode="cast-data"/>
       </xsl:element>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  match="*"
                  mode="cast-data"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
       <xsl:value-of select="."/>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  match="value[@as-type='markup-line']"
                  mode="cast-data"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
       <xsl:apply-templates mode="md"/>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  match="value[@as-type='markup-multiline']"
                  mode="cast-data"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7437,16 +5154,16 @@
       </xsl:variable>
       <xsl:value-of select="$lines/self::* =&gt; string-join('&#xA;')"/>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  name="conditional-lf"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
       <xsl:if test="exists(preceding-sibling::*)">
          <string/>
       </xsl:if>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="md"
                  match="text()[empty(ancestor::pre)]"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7455,8 +5172,8 @@
       </xsl:variable>
       <xsl:value-of select="replace($escaped,'\s+',' ')"/>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="md"
                  match="text()"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7467,8 +5184,8 @@
       <xsl:value-of select="replace(., '([`~\^\*&#34;])', '\\$1')"/>
       <!--<xsl:value-of select="."/>-->
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="md"
                  match="p"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7477,8 +5194,8 @@
          <xsl:apply-templates mode="md"/>
       </string>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="md"
                  match="h1 | h2 | h3 | h4 | h5 | h6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7488,46 +5205,46 @@
          <xsl:apply-templates mode="md"/>
       </string>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="mark"
                  match="h1"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel"># </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="mark"
                  match="h2"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">## </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="mark"
                  match="h3"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">### </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="mark"
                  match="h4"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">#### </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="mark"
                  match="h5"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">##### </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="mark"
                  match="h6"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">###### </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="md"
                  match="table"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
       <xsl:call-template name="conditional-lf"/>
       <xsl:apply-templates select="*" mode="md"/>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="md"
                  match="tr"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7543,8 +5260,8 @@
          </string>
       </xsl:if>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="md"
                  match="th | td"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7553,8 +5270,8 @@
       <xsl:apply-templates mode="md"/>
       <xsl:text> |</xsl:text>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="md"
                  priority="1"
                  match="pre"
@@ -7566,8 +5283,8 @@
       </string>
       <string>```</string>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="md"
                  priority="1"
                  match="ul | ol"
@@ -7576,15 +5293,15 @@
       <xsl:apply-templates mode="md"/>
       <string/>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="md"
                  match="ul//ul | ol//ol | ol//ul | ul//ol"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
       <xsl:apply-templates mode="md"/>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="md"
                  match="li"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7596,8 +5313,8 @@
          <xsl:apply-templates mode="md"/>
       </string>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="md"
                  match="ol/li"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7609,8 +5326,8 @@
          <xsl:apply-templates mode="md"/>
       </string>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="md"
                  match="code | span[contains(@class, 'code')]"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7618,8 +5335,8 @@
       <xsl:apply-templates mode="md"/>
       <xsl:text>`</xsl:text>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="md"
                  match="em | i"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7627,8 +5344,8 @@
       <xsl:apply-templates mode="md"/>
       <xsl:text>*</xsl:text>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="md"
                  match="strong | b"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7636,8 +5353,8 @@
       <xsl:apply-templates mode="md"/>
       <xsl:text>**</xsl:text>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="md"
                  match="q"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7645,8 +5362,8 @@
       <xsl:apply-templates mode="md"/>
       <xsl:text>"</xsl:text>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="md"
                  match="insert"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7654,8 +5371,8 @@
       <xsl:value-of select="@type, @id-ref" separator=", "/>
       <xsl:text> }}</xsl:text>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="md"
                  match="a"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">
@@ -7666,8 +5383,8 @@
       <xsl:value-of select="@href"/>
       <xsl:text>)</xsl:text>
    </xsl:template>
-   <xsl:template xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-                 xmlns="http://www.w3.org/2005/xpath-functions"
+   <xsl:template xmlns="http://www.w3.org/2005/xpath-functions"
+                 xmlns:math="http://www.w3.org/2005/xpath-functions/math"
                  mode="md"
                  match="img"
                  xpath-default-namespace="http://csrc.nist.gov/ns/oscal/metaschema/1.0/supermodel">

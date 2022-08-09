@@ -31,6 +31,7 @@ params:
   header:
     project_shortname: "OSCAL"
     project_name: "OSCAL: the Open Security Controls Assessment Language"
+  page_repo_path: https://github.com/usnistgov/OSCAL/tree/main/docs/content
   # ** Change this on release ***
   contentRepoPath: https://github.com/usnistgov/oscal-content/tree/master
   searchAffiliate: oscal
@@ -47,12 +48,12 @@ module:
 #    target: content
   - source: static
     target: static
-  - source: ../xml
-    target: static/artifacts/xml
-  - source: ../json
-    target: static/artifacts/json
-  - source: ../content
-    target: static/artifacts/content
+#  - source: ../xml
+#    target: static/artifacts/xml
+#  - source: ../json
+#    target: static/artifacts/json
+#  - source: ../content
+#    target: static/artifacts/content
 #  - source: layouts
 #    target: layouts
 #  - source: data
@@ -61,5 +62,5 @@ module:
 #    target: assets
 #  - source: i18n
 #    target: i18n
-#  - source: archetypes
-#    target: archetypes
+  - source: archetypes
+    target: archetypes

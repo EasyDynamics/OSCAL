@@ -3,10 +3,17 @@ title: OSCAL Release Notes
 heading: Release Notes
 weight: 15
 suppressintopiclist: true
+sidenav:
+  title: Release Notes
 toc:
   enabled: true
   headingselectors: "h2, h3, h4, h5, h6"
 ---
+
+
+Detailed release notes are provided with each OSCAL [release](https://github.com/usnistgov/OSCAL/releases).
+
+The following are extra release notes for some older OSCAL releases.
 
 ## OSCAL 1.0.0 Release
 
@@ -34,7 +41,7 @@ The following general changes were made in this release.
   
 - In prior OSCAL releases, the data types used in the OSCAL XML and JSON schemas did not require that provided strings are non-empty (see issue [usnistgov/OSCAL#805](https://github.com/usnistgov/OSCAL/issues/805)), and leading and trailing whitespace was also allowed (see issue [usnistgov/OSCAL#805](https://github.com/usnistgov/OSCAL/issues/805)). Some XML parsers that are schema aware are capable of removing this extra whitespace based on the `whiteSpace="collapse"` schema facet. This only works if the parser is schema aware. To normalize this behavior across all parsers, the OSCAL string data types will now not allow leading and trailing whitespace.
 
-  This lead to updates to the string data types in XML and JSON. The `ncname` data type was also replaced by `token` (see issue [usnistgov/OSCAL#911](https://github.com/usnistgov/OSCAL/issues/911)).
+  This led to updates to the string data types in XML and JSON. The `ncname` data type was also replaced by `token` (see issue [usnistgov/OSCAL#911](https://github.com/usnistgov/OSCAL/issues/911)).
 
 ### Changes to Profile Model
 
@@ -47,7 +54,7 @@ In /profile/modify/alter ([JSON/YAML](/reference/latest/profile/json-reference/#
   - item-name -> by-item-name
   - ns-ref -> by-ns
 
-- The item remove ([JSON/YAML](/reference/latest/profile/json-reference/#/profile/modify/alters/adds), [XML](/reference/latest/profile/xml-reference/#/profile/modify/alter/add)) has had its child properties/attributes renamed as follows:
+- The item add ([JSON/YAML](/reference/latest/profile/json-reference/#/profile/modify/alters/adds), [XML](/reference/latest/profile/xml-reference/#/profile/modify/alter/add)) has had its child properties/attributes renamed as follows:
   - id-ref -> by-id
 
 ### Changes to System Security Plan Model
@@ -80,7 +87,7 @@ The following changes were made in OSCAL 1.0.0 Release Candidate (RC) 2 since OS
 
 ### Changes common to all models
 
-- "props" and "annotations" in JSON, and "prop" and "annotation in XML, have been merged into a single property that now allows an optional `remark` and `uuid`. Semantically, the optional `remark` and `uuid` were the only difference between a "prop" and an "annotation" in OSCAL. The resulting model is simpler with a single construct that will always allow a remark. Names and values that were allowed on annotations are now allowed on properties.
+- "props" and "annotations" in JSON, and "prop" and "annotation" in XML, have been merged into a single property that now allows an optional `remark` and `uuid`. Semantically, the optional `remark` and `uuid` were the only difference between a "prop" and an "annotation" in OSCAL. The resulting model is simpler with a single construct that will always allow a remark. Names and values that were allowed on annotations are now allowed on properties.
 - `latest-version`, `predecessor-version`, and `successor-version` link relations were added to allow an OSCAL document to link to latest, previous, and next document revisions.
 - Markup content may now contain data insertion points for data other than parameters. The `insert` object, which may appear in markup content strings, now supports a `type` which can be used to indicate the type of data to insert, and an `id-ref` that identifies the specific data object to take data from.
 

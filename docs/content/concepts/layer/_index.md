@@ -37,16 +37,19 @@ The following image depicts each layer and the corresponding model(s) for each l
   {{<area alt="Control Layer" title="Control Layer" href="control/" coords="0,300,896,400" shape="rect">}}
 {{</imagemap>}}
 
-Each OSCAL model is represented in multiple, machine readable *formats* (e.g., XML, JSON, YAML), which provide a serialization and encoding mechanism for representing and exchanging OSCAL data, also referred to as *OSCAL content*.
+Each OSCAL model is represented in multiple, machine-readable *formats* (e.g., XML, JSON, YAML), which provide a serialization and encoding mechanism for representing and exchanging OSCAL data, also referred to as *OSCAL content*.
 
 Individual layers are summarized below, with links to additional layer and model information. There is also an [introduction to the OSCAL models](overview/), as well as information related to the [terminology](../terminology/) used in describing each model.
 
 ## The OSCAL Layers
 
-The diagram above identifies the OSCAL layers from the bottom up because each higher layer relies on the layer beneath it. The following OSCAL layer discussion begins with the bottom layer in the diagram, addressing each in order moving toward the top of the diagram:
-- Control Layer Overview
-- Implementation Layer Overview
-- Assessment Layer Overview
+The diagram above identifies the OSCAL layers from the bottom up because each higher layer relies on the layer beneath it. The following OSCAL layer discussion begins with the bottom layer in the diagram, addressing each in order moving toward the top of the diagram.
+
+The OSCAL layers are:
+
+- [Control Layer](#control-layer-overview)
+- [Implementation Layer](#implementation-layer-overview)
+- [Assessment Layer](#assessment-layer-overview)
 
 ### Control Layer Overview
 
@@ -119,12 +122,16 @@ The OSCAL models above are in various states of readiness for release:
 
 The following is the release state of each model, along with download links for the latest versions of XML and JSON schema for each model. YAML is also supported through conversion between JSON and YAML. Since YAML is a superset of JSON, some YAML tooling allows JSON schema to be used for YAML validation. In this way, the provided JSON schema supports both JSON and YAML.
 
-| Layer | Model | Current State | Formats |
-|:--- |:--- |:--- |:--- |
-| [Control](control/) | [Catalog](control/catalog/) | Released | [XML](https://raw.githubusercontent.com/usnistgov/OSCAL/main/xml/schema/oscal_catalog_schema.xsd), [JSON](https://raw.githubusercontent.com/usnistgov/OSCAL/main/json/schema/oscal_catalog_schema.json), YAML |
-| [Control](control/) | [Profile](control/profile/) | Released | [XML](https://raw.githubusercontent.com/usnistgov/OSCAL/main/xml/schema/oscal_profile_schema.xsd), [JSON](https://raw.githubusercontent.com/usnistgov/OSCAL/main/json/schema/oscal_profile_schema.json), YAML |
-| [Implementation](implementation/) | [Component Definition](implementation/component-definition/) | Released | [XML](https://raw.githubusercontent.com/usnistgov/OSCAL/main/xml/schema/oscal_component_schema.xsd), [JSON](https://raw.githubusercontent.com/usnistgov/OSCAL/main/json/schema/oscal_component_schema.json), YAML |
-| [Implementation](implementation/) | [System Security Plan](implementation/ssp/) | Released | [XML](https://raw.githubusercontent.com/usnistgov/OSCAL/main/xml/schema/oscal_ssp_schema.xsd), [JSON](https://raw.githubusercontent.com/usnistgov/OSCAL/main/json/schema/oscal_ssp_schema.json), YAML |
-| [Assessment](assessment/) | [Assessment Plan](assessment/assessment-plan/) | Released | [XML](https://raw.githubusercontent.com/usnistgov/OSCAL/main/xml/schema/oscal_assessment-plan_schema.xsd), [JSON](https://raw.githubusercontent.com/usnistgov/OSCAL/main/json/schema/oscal_assessment-plan_schema.json), YAML |
-| [Assessment](assessment/) | [Assessment Results](assessment/assessment-results/) | Released | [XML](https://raw.githubusercontent.com/usnistgov/OSCAL/main/xml/schema/oscal_assessment-results_schema.xsd), [JSON](https://raw.githubusercontent.com/usnistgov/OSCAL/main/json/schema/oscal_assessment-results_schema.json), YAML |
-| [Assessment](assessment/) | [Plan of Action and Milestones](assessment/poam/) | Released | [XML](https://raw.githubusercontent.com/usnistgov/OSCAL/main/xml/schema/oscal_poam_schema.xsd), [JSON](https://raw.githubusercontent.com/usnistgov/OSCAL/main/json/schema/oscal_poam_schema.json), YAML |
+| Layer | Model | Current State | Reference | Schemas |
+|:--- |:--- |:--- |:--- |:--- |
+| [Control](control/) | [Catalog](control/catalog/) | Released | [XML, JSON, YAML](/reference/latest/catalog/) | [XML](https://raw.githubusercontent.com/usnistgov/OSCAL/main/xml/schema/oscal_catalog_schema.xsd), [JSON/YAML](https://raw.githubusercontent.com/usnistgov/OSCAL/main/json/schema/oscal_catalog_schema.json) |
+| [Control](control/) | [Profile](control/profile/) | Released | [XML, JSON, YAML](/reference/latest/profile/) | [XML](https://raw.githubusercontent.com/usnistgov/OSCAL/main/xml/schema/oscal_profile_schema.xsd), [JSON/YAML](https://raw.githubusercontent.com/usnistgov/OSCAL/main/json/schema/oscal_profile_schema.json) |
+| [Implementation](implementation/) | [Component Definition](implementation/component-definition/) | Released | [XML, JSON, YAML](/reference/latest/component-definition/) | [XML](https://raw.githubusercontent.com/usnistgov/OSCAL/main/xml/schema/oscal_component_schema.xsd), [JSON/YAML](https://raw.githubusercontent.com/usnistgov/OSCAL/main/json/schema/oscal_component_schema.json) |
+| [Implementation](implementation/) | [System Security Plan](implementation/ssp/) | Released | [XML, JSON, YAML](/reference/latest/system-security-plan/) | [XML](https://raw.githubusercontent.com/usnistgov/OSCAL/main/xml/schema/oscal_ssp_schema.xsd), [JSON/YAML](https://raw.githubusercontent.com/usnistgov/OSCAL/main/json/schema/oscal_ssp_schema.json) |
+| [Assessment](assessment/) | [Assessment Plan](assessment/assessment-plan/) | Released | [XML, JSON, YAML](/reference/latest/assessment-plan/) | [XML](https://raw.githubusercontent.com/usnistgov/OSCAL/main/xml/schema/oscal_assessment-plan_schema.xsd), [JSON/YAML](https://raw.githubusercontent.com/usnistgov/OSCAL/main/json/schema/oscal_assessment-plan_schema.json) |
+| [Assessment](assessment/) | [Assessment Results](assessment/assessment-results/) | Released | [XML, JSON, YAML](/reference/latest/assessment-results/) | [XML](https://raw.githubusercontent.com/usnistgov/OSCAL/main/xml/schema/oscal_assessment-results_schema.xsd), [JSON/YAML](https://raw.githubusercontent.com/usnistgov/OSCAL/main/json/schema/oscal_assessment-results_schema.json) |
+| [Assessment](assessment/) | [Plan of Action and Milestones](assessment/poam/) | Released | [XML, JSON, YAML](/reference/latest/plan-of-action-and-milestones/) | [XML](https://raw.githubusercontent.com/usnistgov/OSCAL/main/xml/schema/oscal_poam_schema.xsd), [JSON/YAML](https://raw.githubusercontent.com/usnistgov/OSCAL/main/json/schema/oscal_poam_schema.json) |
+
+## Well-formed Data and Valid OSCAL
+
+[Per our guidance](validation/), OSCAL-enabled tools must check OSCAL document instances to ensure they are well-formed and valid based upon the models in these layers. 

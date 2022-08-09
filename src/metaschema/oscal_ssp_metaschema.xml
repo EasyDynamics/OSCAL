@@ -6,14 +6,14 @@
 <!-- OSCAL Implementation Layer: System Security Plan (SSP) METASCHEMA -->
 <!-- validate with XSD and Schematron (linked) -->
 <!DOCTYPE METASCHEMA [
-   <!ENTITY allowed-values-responsible-roles-system SYSTEM "shared-constraints/allowed-values-responsible-roles-system.ent">
-<!ENTITY allowed-values-responsible-roles-operations SYSTEM "shared-constraints/allowed-values-responsible-roles-operations.ent">
-<!ENTITY allowed-values-responsible-roles-component-production SYSTEM "shared-constraints/allowed-values-responsible-roles-component-production.ent">
+  <!ENTITY allowed-values-responsible-roles-system SYSTEM "./shared-constraints/allowed-values-responsible-roles-system.ent">
+  <!ENTITY allowed-values-responsible-roles-operations SYSTEM "./shared-constraints/allowed-values-responsible-roles-operations.ent">
+  <!ENTITY allowed-values-responsible-roles-component-production SYSTEM "./shared-constraints/allowed-values-responsible-roles-component-production.ent">
 ]>
 <METASCHEMA xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://csrc.nist.gov/ns/oscal/metaschema/1.0" xsi:schemaLocation="http://csrc.nist.gov/ns/oscal/metaschema/1.0 ../../build/metaschema/toolchains/xslt-M4/validate/metaschema.xsd">
   <schema-name>OSCAL System Security Plan (SSP) Model</schema-name>
-  <schema-version>1.0.0</schema-version>
+  <schema-version>1.0.4</schema-version>
   <short-name>oscal-ssp</short-name>
   <namespace>http://csrc.nist.gov/ns/oscal/1.0</namespace>
   <json-base-uri>http://csrc.nist.gov/ns/oscal</json-base-uri>
@@ -34,7 +34,8 @@
     <root-name>system-security-plan</root-name>
     <define-flag name="uuid" as-type="uuid" required="yes">
       <formal-name>System Security Plan Universally Unique Identifier</formal-name>
-      <description>A globally unique identifier for this catalog instance. This UUID should be changed when this document is revised.</description>
+      <!-- Identifier Declaration -->
+      <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this system security plan (SSP) elsewhere in <a href="/concepts/identifier-use/#ssp-identifiers">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>SSP</code> can be used to reference the data item locally or globally (e.g., in an imported OSCAL instance).This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions of the document.</description>
     </define-flag>
     <model>
       <assembly ref="metadata" min-occurs="1"/>
@@ -54,13 +55,15 @@
     <description>Used to import the OSCAL profile representing the system's control baseline.</description>
     <define-flag name="href" as-type="uri-reference" required="yes">
       <formal-name>Profile Reference</formal-name>
-      <description>A resolvable URL reference to the profile to use as the system's control baseline.</description>
+      <description>A resolvable URL reference to the profile or catalog to use as the system's control baseline.</description>
       <remarks>
         <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment that points to a <code>back-matter</code>
           <code>resource</code> in the same document.</p>
         <!-- TODO: Add a link to "within the scope of the containing OSCAL document" to point to documentation of identification scopes" -->
-        <p>If a local reference using a fragment is used, this will be indicated by a fragment "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document.</p>
-        <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the referenced resource. A relative URI will be resolved relative to the location of the document containing the link.</p>
+        <p>If a local reference using a fragment is used, this will be indicated by a fragment "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document. The identified resource will be used instead as the target resource.</p>
+        <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the target resource. A relative URI will be resolved relative to the location of the document containing the link.</p>
+        <p>If the resource is an OSCAL profile, it is expected that a tool will resolve the profile according to the OSCAL [profile resolution specification](https://pages.nist.gov/OSCAL/concepts/processing/profile-resolution/) to produce a resolved profile for use when processing the containing system security plan. This allows a system security plan processor to use the baseline as a catalog of controls.</p>
+        <p>While it is possible to reference a previously resolved OSCAL profile as a catalog, this practice is discouraged since the unresolved form of the profile communicates more information about selections and changes to the underlying catalog. Furthermore, the underlying catalog can be maintained separately from the profile, which also has maintenance advantages for distinct maintainers, ensuring that the best available information is produced through profile resolution.</p>
       </remarks>
     </define-flag>
     <model>
@@ -126,7 +129,7 @@
         <enum value="federation-assurance-level">A value of 1, 2, or 3 as defined by <a href="https://doi.org/10.6028/NIST.SP.800-63-3">SP 800-63-3</a>.
         </enum>
       </allowed-values>
-      <allowed-values target="prop[@name=('identity-assurance-level','authenticator-assurance-level','federation-assurance-level')]/value()">
+      <allowed-values target="prop[@name=('identity-assurance-level','authenticator-assurance-level','federation-assurance-level')]/@value">
         <enum value="1">As defined by <a href="https://doi.org/10.6028/NIST.SP.800-63-3">SP 800-63-3</a>.
         </enum>
         <enum value="2">As defined by <a href="https://doi.org/10.6028/NIST.SP.800-63-3">SP 800-63-3</a>.
@@ -134,11 +137,11 @@
         <enum value="3">As defined by <a href="https://doi.org/10.6028/NIST.SP.800-63-3">SP 800-63-3</a>.
         </enum>
       </allowed-values>
-      <allowed-values target="property/@name" allow-other="yes">
+      <allowed-values target="prop/@name" allow-other="yes">
         <enum value="cloud-deployment-model">The associated value is one of: public-cloud, private-cloud, community-cloud, government-only-cloud, hybrid-cloud, or other.</enum>
         <enum value="cloud-service-model">The associated value is one of: saas, paas, iaas, or other.</enum>
       </allowed-values>
-      <allowed-values target="prop[@name='cloud-deployment-model']/value()">
+      <allowed-values target="prop[@name='cloud-deployment-model']/@value">
         <enum value="public-cloud">The public cloud deployment model as defined by <a href="https://doi.org/10.6028/NIST.SP.800-145">The NIST Definition of Cloud Computing</a>.
         </enum>
         <enum value="private-cloud">The private cloud deployment model as defined by <a href="https://doi.org/10.6028/NIST.SP.800-145">The NIST Definition of Cloud Computing</a>.
@@ -146,13 +149,13 @@
         <enum value="community-cloud">The community cloud deployment model as defined by <a href="https://doi.org/10.6028/NIST.SP.800-145">The NIST Definition of Cloud Computing</a>.
         </enum>
         <!-- TODO: consider generalizing this in a way that applies to other usage contexts. -->
-        <enum value="government-only-cloud">TODO: define</enum>
+        <enum value="government-only-cloud">A specific type of community-cloud for use only by government services.</enum>
         <enum value="other">Any other type of cloud deployment model that is exclusive to the other choices.</enum>
         <remarks>
           <p>The hybrid cloud deployment model, as defined by <a href="https://doi.org/10.6028/NIST.SP.800-145">The NIST Definition of Cloud Computing</a>, can be supported by selecting two or more of the existing deployment models.</p>
         </remarks>
       </allowed-values>
-      <allowed-values target="prop[@name='cloud-service-model']/value()">
+      <allowed-values target="prop[@name='cloud-service-model']/@value">
         <enum value="saas">Software as a service (SaaS) cloud service model as defined by <a href="https://doi.org/10.6028/NIST.SP.800-145">The NIST Definition of Cloud Computing</a>.
         </enum>
         <enum value="paas">Platform as a service (PaaS) cloud service model as defined by <a href="https://doi.org/10.6028/NIST.SP.800-145">The NIST Definition of Cloud Computing</a>.
@@ -161,7 +164,7 @@
         </enum>
         <enum value="other">Any other type of cloud service model that is exclusive to the other choices.</enum>
       </allowed-values>
-      <is-unique name="unique-ssp-system-characteristics-responsible-party" target="responsible-party">
+      <is-unique id="unique-ssp-system-characteristics-responsible-party" target="responsible-party">
         <key-field target="@role-id"/>
         <remarks>
           <p>Since <code>responsible-party</code> associates multiple <code>party-uuid</code> entries with a single <code>role-id</code>, each role-id must be referenced only once.</p>
@@ -190,7 +193,8 @@
         <group-as name="information-types" in-json="ARRAY"/>
         <define-flag name="uuid" as-type="uuid">
           <formal-name>Information Type Universally Unique Identifier</formal-name>
-          <description>A globally unique identifier that can be used to reference this information type entry elsewhere in an OSCAL document. A UUID should be consistently used for a given resource across revisions of the document.</description>
+          <!-- Identifier Declaration -->
+          <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this information type elsewhere in <a href="/concepts/identifier-use/#ssp-identifiers">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>information type</code> can be used to reference the data item locally or globally (e.g., in an imported OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions of the document.</description>
         </define-flag>
         <model>
           <define-field name="title" as-type="markup-line" min-occurs="1">
@@ -211,8 +215,7 @@
               <description>Specifies the information type identification system used.</description>
               <constraint>
                 <allowed-values allow-other="yes">
-                  <enum value="https://doi.org/10.6028/NIST.SP.800-60v2r1">Based on the section identifiers in NIST <a href="https://doi.org/10.6028/NIST.SP.800-60v2r1">Special Publication 800-60 Volume II Revision 1</a>.
-                  </enum>
+                  <enum value="http://doi.org/10.6028/NIST.SP.800-60v2r1">Based on the section identifiers in NIST <a href="https://doi.org/10.6028/NIST.SP.800-60v2r1">Special Publication 800-60 Volume II Revision 1</a>.</enum>
                 </allowed-values>
               </constraint>
             </define-flag>
@@ -220,7 +223,8 @@
               <define-field name="information-type-id" as-type="string" max-occurs="unbounded">
                 <!-- This is an id because the idenfier is assigned and managed externally by humans. -->
                 <formal-name>Information Type Systematized Identifier</formal-name>
-                <description>An identifier qualified by the given identification <code>system</code> used, such as NIST SP 800-60.</description>
+                <!-- Identifier Declaration -->
+                <description>A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier qualified by the given identification <code>system</code> used, such as NIST SP 800-60.  This identifier has <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope and can be used to reference this system elsewhere in <a href="/concepts/identifier-use/#ssp-identifiers">this or other OSCAL instances</a>. This id should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions of the document.</description>
                 <json-value-key>id</json-value-key>
                 <group-as name="information-type-ids" in-json="ARRAY"/>
               </define-field>
@@ -278,25 +282,30 @@
             </model>
           </define-assembly>
         </model>
+        <constraint>
+          <expect level="WARNING" target="." test="@uuid">
+            <message>It is a best practice to provide a UUID.</message>
+          </expect>
+        </constraint>
       </define-assembly>
     </model>
     <constraint>
       <allowed-values target="prop/@name" allow-other="yes">
         <enum value="privacy-designation">Is this a privacy sensitive system? yes or no</enum>
       </allowed-values>
-      <allowed-values target="prop[@name='privacy-designation']/value()">
+      <allowed-values target="prop[@name='privacy-designation']/@value">
         <enum value="yes">The system is privacy sensitive.</enum>
-        <enum value="no">The system isnot privacy sensitive.</enum>
+        <enum value="no">The system is not privacy sensitive.</enum>
       </allowed-values>
       <allowed-values target="link/@rel">
         <enum value="privacy-impact-assessment">A link to the privacy impact assessment.</enum>
       </allowed-values>
       <matches target="link[@rel='privacy-impact-assessment']/@href[starts-with(.,'#')]" datatype="uri-reference"/>
-      <index-has-key name="index-back-matter-resource" target="link[@rel='privacy-impact-assessment' and [starts-with(@href,'#')]]">
+      <index-has-key name="index-back-matter-resource" target="link[@rel='privacy-impact-assessment' and starts-with(@href,'#')]">
         <key-field target="@href" pattern="#(.*)"/>
       </index-has-key>
       <matches target="link[@rel='privacy-impact-assessment']/@href[not(starts-with(.,'#'))]" datatype="uri"/>
-      <allowed-values target="security-sensitivity-level|security-impact-level/(security-objective-confidentiality|security-objective-integrity|security-objective-availability)|system-information/information-type/(confidentiality-impact|integrity-impact|availability-impact)/(base|selected}">
+      <allowed-values target="information-type/(confidentiality-impact|integrity-impact|availability-impact)/(base|selected)">
         <enum value="fips-199-low">A 'low' sensitivity level as defined in <a href="https://doi.org/10.6028/NIST.FIPS.199">FIPS-199</a>.
         </enum>
         <enum value="fips-199-moderate">A 'moderate' sensitivity level as defined in <a href="https://doi.org/10.6028/NIST.FIPS.199">FIPS-199</a>.
@@ -390,13 +399,10 @@
           <p>A visual depiction of the system's authorization boundary.</p>
         </remarks>
       </assembly>
-      <define-field name="remarks" as-type="markup-multiline" in-xml="WITH_WRAPPER">
-        <formal-name>remarks field</formal-name>
-        <description>Commentary about the system's authorization boundary that enhances the diagram.</description>
-      </define-field>
+      <field ref="remarks" in-xml="WITH_WRAPPER"/>
     </model>
     <constraint>
-      <is-unique name="unique-ssp-authorization-boundary-diagram" target="diagram">
+      <is-unique id="unique-ssp-authorization-boundary-diagram" target="diagram">
         <key-field target="@uuid"/>
         <remarks>
           <p>A given <code>uuid</code> must be assigned only once to a diagram.</p>
@@ -409,7 +415,8 @@
     <description>A graphic that provides a visual representation the system, or some aspect of it.</description>
     <define-flag name="uuid" as-type="uuid" required="yes">
       <formal-name>Diagram ID</formal-name>
-      <description>The identifier for this diagram.</description>
+      <!-- Identifier Declaration -->
+      <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this diagram elsewhere in <a href="/concepts/identifier-use/#ssp-identifiers">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>diagram</code> can be used to reference the data item locally or globally (e.g., in an imported OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions of the document.</description>
     </define-flag>
     <model>
       <define-field name="description" as-type="markup-multiline" in-xml="WITH_WRAPPER">
@@ -430,17 +437,14 @@
         <formal-name>Caption</formal-name>
         <description>A brief caption to annotate the diagram.</description>
       </define-field>
-      <define-field name="remarks" as-type="markup-multiline" in-xml="WITH_WRAPPER">
-        <formal-name>remarks field</formal-name>
-        <description>Commentary about the diagram that enhances it.</description>
-      </define-field>
+      <field ref="remarks" in-xml="WITH_WRAPPER"/>
     </model>
     <constraint>
       <allowed-values target="link/@rel">
         <enum value="diagram">A reference to the diagram image.</enum>
       </allowed-values>
-      <matches target="link[@rel='diagramn']/@href[starts-with(.,'#')]" datatype="uri-reference"/>
-      <index-has-key name="index-back-matter-resource" target="link[@rel='diagram' and [starts-with(@href,'#')]]">
+      <matches target="link[@rel='diagram']/@href[starts-with(.,'#')]" datatype="uri-reference"/>
+      <index-has-key name="index-back-matter-resource" target="link[@rel='diagram' and starts-with(@href,'#')]">
         <key-field target="@href" pattern="#(.*)"/>
       </index-has-key>
       <matches target="link[@rel='diagram']/@href[not(starts-with(.,'#'))]" datatype="uri"/>
@@ -479,7 +483,7 @@
       <field ref="remarks" in-xml="WITH_WRAPPER"/>
     </model>
     <constraint>
-      <is-unique name="unique-ssp-network-architecture-diagram" target="diagram">
+      <is-unique id="unique-ssp-network-architecture-diagram" target="diagram">
         <key-field target="@uuid"/>
         <remarks>
           <p>A given <code>uuid</code> must be assigned only once to a diagram.</p>
@@ -509,7 +513,7 @@
       <field ref="remarks" in-xml="WITH_WRAPPER"/>
     </model>
     <constraint>
-      <is-unique name="unique-ssp-data-flow-diagram" target="diagram">
+      <is-unique id="unique-ssp-data-flow-diagram" target="diagram">
         <key-field target="@uuid"/>
         <remarks>
           <p>A given <code>uuid</code> must be assigned only once to a diagram.</p>
@@ -539,7 +543,8 @@
         <group-as name="leveraged-authorizations" in-json="ARRAY"/>
         <define-flag name="uuid" as-type="uuid" required="yes">
           <formal-name>Leveraged Authorization Universally Unique Identifier</formal-name>
-          <description>A globally unique identifier that can be used to reference this leveraged authorization entry elsewhere in an OSCAL document. A UUID should be consistently used for a given resource across revisions of the document.</description>
+          <!-- Identifier Declaration -->
+          <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope and can be used to reference this leveraged authorization elsewhere in <a href="/concepts/identifier-use/#ssp-identifiers">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>leveraged authorization</code> can be used to reference the data item locally or globally (e.g., in an imported OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions of the document.</description>
         </define-flag>
         <model>
           <define-field name="title" as-type="markup-line" min-occurs="1">
@@ -554,7 +559,8 @@
           </assembly>
           <define-field name="party-uuid" as-type="uuid" min-occurs="1">
             <formal-name>party-uuid field</formal-name>
-            <description>A reference to the party that manages the leveraged system.</description>
+            <!-- Identifier Reference -->
+            <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a> identifier reference to the  <code>party</code> that manages the leveraged system.</description>
           </define-field>
           <field ref="date-authorized" min-occurs="1"/>
           <field ref="remarks" in-xml="WITH_WRAPPER"/>
@@ -564,7 +570,7 @@
             <enum value="system-security-plan">A reference to the system security plan for the leveraged authorization.</enum>
           </allowed-values>
           <matches target="link[@rel='system-security-plan']/@href[starts-with(.,'#')]" datatype="uri-reference"/>
-          <index-has-key name="index-back-matter-resource" target="link[@rel='system-security-plan' and [starts-with(@href,'#')]]">
+          <index-has-key name="index-back-matter-resource" target="link[@rel='system-security-plan' and starts-with(@href,'#')]">
             <key-field target="@href" pattern="#(.*)"/>
           </index-has-key>
           <matches target="link[@rel='system-security-plan']/@href[not(starts-with(.,'#'))]" datatype="uri"/>
@@ -597,7 +603,7 @@
         <key-field target="@uuid"/>
       </index>
       <index-has-key name="index-system-implementation-leveraged-authorization-uuid" target="component/prop[@name='leveraged-authorization-uuid']">
-        <key-field target="value()"/>
+        <key-field target="@value"/>
       </index-has-key>
 
       <!-- References to components -->
@@ -642,7 +648,7 @@
 
       <!-- TODO: only allow a single "this-system" component -->
 
-      <is-unique name="unique-ssp-system-implementation-user" target="user">
+      <is-unique id="unique-ssp-system-implementation-user" target="user">
         <key-field target="@uuid"/>
         <remarks>
           <p>A given <code>uuid</code> must be assigned only once to a user.</p>
@@ -667,23 +673,27 @@
       </assembly>
     </model>
     <constraint>
-      <is-unique name="unique-ssp-control-implementation-set-parameter" target="set-parameter">
+      <is-unique id="unique-ssp-control-implementation-set-parameter" target="set-parameter">
         <key-field target="@param-id"/>
         <remarks>
           <p>Since multiple <code>set-parameter</code> entries can be provided, each parameter must be set only once.</p>
         </remarks>
       </is-unique>
+      <index name="by-component-export-provided-uuid" target="implemented-requirement/by-component/export/provided">
+        <key-field target="@uuid"/>
+      </index>
     </constraint>
     <remarks>
-      <p>Use of <code>set-parameter</code> in this context, sets the parameter for all related controls referenced in an <code>implemented-requirement</code>. If the same parameter is also set in a specific <code>implemented-requirement</code>, then the new value will override this value.</p>
+      <p>Use of <code>set-parameter</code> in this context, sets the parameter for all controls referenced by any <code>implemented-requirement</code> contained in this context. Any <code>set-parameter</code> defined in a child context will override this value. If not overridden by a child, this value applies in the child context.</p>
     </remarks>
   </define-assembly>
   <define-assembly name="implemented-requirement" scope="local">
     <formal-name>Control-based Requirement</formal-name>
-    <description>Describes how the system satisfies an individual control.</description>
+    <description>Describes how the system satisfies the requirements of an individual control.</description>
     <define-flag name="uuid" as-type="uuid" required="yes">
       <formal-name>Control Requirement Universally Unique Identifier</formal-name>
-      <description>A globally unique identifier that can be used to reference this control requirement entry elsewhere in an OSCAL document. A UUID should be consistently used for a given resource across revisions of the document.</description>
+      <!-- Identifier Declaration -->
+      <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this control requirement elsewhere in <a href="/concepts/identifier-use/#ssp-identifiers">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>control requirement</code> can be used to reference the data item locally or globally (e.g., in an imported OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions of the document.</description>
     </define-flag>
     <flag ref="control-id" required="yes"/>
     <model>
@@ -727,41 +737,44 @@
             &allowed-values-responsible-roles-operations;
       </allowed-values>
       <index-has-key name="index-metadata-role-id" target="responsible-role|statement/responsible-role|.//by-component//responsible-role">
-        <key-field target="@role-id"></key-field>
+        <key-field target="@role-id"/>
       </index-has-key>
       <index-has-key name="index-metadata-party-uuid" target="responsible-role|statement/responsible-role|.//by-component//responsible-role">
-        <key-field target="@party-uuid"></key-field>
+        <key-field target="party-uuid"/>
       </index-has-key>
       <has-cardinality target=".//by-component" min-occurs="1">
         <remarks>
           <p>Since all implementation statements are defined at the by-component level (e.g., type=this-system), there must be at least one by-component.</p>
         </remarks>
       </has-cardinality>
-      <is-unique name="unique-ssp-implemented-requirement-set-parameter" target="set-parameter">
+      <is-unique id="unique-ssp-implemented-requirement-set-parameter" target="set-parameter">
         <key-field target="@param-id"/>
         <remarks>
           <p>Since multiple <code>set-parameter</code> entries can be provided, each parameter must be set only once.</p>
         </remarks>
       </is-unique>
-      <is-unique name="unique-ssp-implemented-requirement-responsible-role" target="responsible-role">
+      <is-unique id="unique-ssp-implemented-requirement-responsible-role" target="responsible-role">
         <key-field target="@role-id"/>
         <remarks>
           <p>Since <code>responsible-role</code> associates multiple <code>party-uuid</code> entries with a single <code>role-id</code>, each role-id must be referenced only once.</p>
         </remarks>
       </is-unique>
-      <is-unique name="unique-ssp-implemented-requirement-statement" target="statement">
+      <is-unique id="unique-ssp-implemented-requirement-statement" target="statement">
         <key-field target="@statement-id"/>
         <remarks>
           <p>Since <code>statement</code> entries can be referenced using the statement's statement-id, each statement must be referenced only once.</p>
         </remarks>
       </is-unique>
-      <is-unique name="unique-ssp-implemented-requirement-by-component" target="by-component">
+      <is-unique id="unique-ssp-implemented-requirement-by-component" target="by-component">
         <key-field target="@component-uuid"/>
         <remarks>
           <p>Since <code>by-component</code> can reference <code>component</code> entries using the component's uuid, each component must be referenced only once. This ensures that all implementation statements are contained in the same <code>by-component</code> entry.</p>
         </remarks>
       </is-unique>
     </constraint>
+    <remarks>
+      <p>Use of <code>set-parameter</code> in this context, sets the parameter for the referenced control. Any <code>set-parameter</code> defined in a child context will override this value. If not overridden by a child, this value applies in the child context.</p>
+    </remarks>
   </define-assembly>
   <define-assembly name="statement" scope="local">
     <formal-name>Specific Control Statement</formal-name>
@@ -773,7 +786,8 @@
     </flag>
     <define-flag name="uuid" as-type="uuid" required="yes">
       <formal-name>Control Statement Reference Universally Unique Identifier</formal-name>
-      <description>A globally unique identifier that can be used to reference this control statement entry elsewhere in an OSCAL document. A UUID should be consistently used for a given resource across revisions of the document.</description>
+      <!-- Identifier Reference -->
+      <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this control statement elsewhere in <a href="/concepts/identifier-use/#ssp-identifiers">this or other OSCAL instances</a>. The <em>UUID</em> of the <code>control statement</code> in the source OSCAL instance is sufficient to reference the data item locally or globally (e.g., in an imported OSCAL instance).</description>
     </define-flag>
     <model>
       <assembly ref="property" max-occurs="unbounded">
@@ -794,13 +808,13 @@
       <allowed-values target="responsible-role/@role-id" allow-other="yes">
             &allowed-values-responsible-roles-operations;
       </allowed-values>
-      <is-unique name="unique-ssp-statement-responsible-role" target="responsible-role">
+      <is-unique id="unique-ssp-statement-responsible-role" target="responsible-role">
         <key-field target="@role-id"/>
         <remarks>
           <p>Since <code>responsible-role</code> associates multiple <code>party-uuid</code> entries with a single <code>role-id</code>, each role-id must be referenced only once.</p>
         </remarks>
       </is-unique>
-      <is-unique name="unique-ssp-implemented-requirement-statement-by-component" target="by-component">
+      <is-unique id="unique-ssp-implemented-requirement-statement-by-component" target="by-component">
         <key-field target="@component-uuid"/>
         <remarks>
           <p>Since <code>by-component</code> can reference <code>component</code> entries using the component's uuid, each component must be referenced only once. This ensures that all implementation statements are contained in the same <code>by-component</code> entry.</p>
@@ -815,11 +829,13 @@
     <description>Defines how the referenced component implements a set of controls.</description>
     <define-flag required="yes" name="component-uuid" as-type="uuid">
       <formal-name>Component Universally Unique Identifier Reference</formal-name>
-      <description>A reference to the component that is implementing a given control or control statement.</description>
+      <!-- Identifier Reference -->
+      <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a> identifier reference to the <code>component</code> that is implemeting a given control.</description>
     </define-flag>
     <define-flag name="uuid" as-type="uuid" required="yes">
       <formal-name>By-Component Universally Unique Identifier</formal-name>
-      <description>A globally unique identifier that can be used to reference this by-component entry elsewhere in an OSCAL document. A UUID should be consistently used for a given resource across revisions of the document.</description>
+      <!-- Identifier Declaration -->
+      <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this by-component entry elsewhere in <a href="/concepts/identifier-use/#ssp-identifiers">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>by-component</code> entry can be used to reference the data item locally or globally (e.g., in an imported OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions of the document.</description>
     </define-flag>
     <model>
       <define-field name="description" as-type="markup-multiline" min-occurs="1" in-xml="WITH_WRAPPER">
@@ -862,7 +878,8 @@
             <group-as name="provided" in-json="ARRAY"/>
             <define-flag name="uuid" as-type="uuid" required="yes">
               <formal-name>Provided Universally Unique Identifier</formal-name>
-              <description>A globally unique identifier that can be used to reference this provided entry elsewhere in an OSCAL document. A UUID should be consistently used for a given resource across revisions of the document.</description>
+              <!-- Identifier Declaration -->
+              <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this provided entry elsewhere in <a href="/concepts/identifier-use/#ssp-identifiers">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>provided</code> entry can be used to reference the data item locally or globally (e.g., in an imported OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions of the document.</description>
             </define-flag>
             <model>
               <define-field name="description" as-type="markup-multiline" min-occurs="1" in-xml="WITH_WRAPPER">
@@ -882,7 +899,7 @@
               <field ref="remarks" in-xml="WITH_WRAPPER"/>
             </model>
             <constraint>
-              <is-unique name="unique-provided-responsible-role" target="responsible-role">
+              <is-unique id="unique-provided-responsible-role" target="responsible-role">
                 <key-field target="@role-id"/>
                 <remarks>
                   <p>Since <code>responsible-role</code> associates multiple <code>party-uuid</code> entries with a single <code>role-id</code>, each role-id must be referenced only once.</p>
@@ -896,7 +913,8 @@
             <group-as name="responsibilities" in-json="ARRAY"/>
             <define-flag name="uuid" as-type="uuid" required="yes">
               <formal-name>Responsibility Universally Unique Identifier</formal-name>
-              <description>A globally unique identifier that can be used to reference this responsibility entry elsewhere in an OSCAL document. A UUID should be consistently used for a given resource across revisions of the document.</description>
+              <!-- Identifier Declaration -->
+              <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this responsibility elsewhere in <a href="/concepts/identifier-use/#ssp-identifiers">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>responsibility</code> can be used to reference the data item locally or globally (e.g., in an imported OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions of the document.</description>
             </define-flag>
             <flag ref="provided-uuid" required="no" />
             <model>
@@ -920,7 +938,7 @@
               <field ref="remarks" in-xml="WITH_WRAPPER"/>
             </model>
             <constraint>
-              <is-unique name="unique-responsibility-responsible-role" target="responsible-role">
+              <is-unique id="unique-responsibility-responsible-role" target="responsible-role">
                 <key-field target="@role-id"/>
                 <remarks>
                   <p>Since <code>responsible-role</code> associates multiple <code>party-uuid</code> entries with a single <code>role-id</code>, each role-id must be referenced only once.</p>
@@ -932,9 +950,6 @@
         </model>
         <constraint>
           <has-cardinality target="provided|responsibility" min-occurs="1"/>
-          <index name="by-component-export-provided-uuid" target="">
-            <key-field target="@uuid"/>
-          </index>
           <index-has-key name="by-component-export-provided-uuid" target="responsibility">
             <key-field target="@provided-uuid"/>
           </index-has-key>
@@ -947,7 +962,8 @@
         <group-as name="inherited" in-json="ARRAY"/>
         <define-flag name="uuid" as-type="uuid" required="yes">
           <formal-name>Inherited Universally Unique Identifier</formal-name>
-          <description>A globally unique identifier that can be used to reference this inherited entry elsewhere in an OSCAL document. A UUID should be consistently used for a given resource across revisions of the document.</description>
+          <!-- Identifier Declaration -->
+          <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this inherited entry elsewhere in <a href="/concepts/identifier-use/#ssp-identifiers">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>inherited control implementation</code> can be used to reference the data item locally or globally (e.g., in an imported OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions of the document.</description>
         </define-flag>
         <flag ref="provided-uuid" required="no" />
         <model>
@@ -967,7 +983,7 @@
           </assembly>
         </model>
         <constraint>
-          <is-unique name="unique-inherited-responsible-role" target="responsible-role">
+          <is-unique id="unique-inherited-responsible-role" target="responsible-role">
             <key-field target="@role-id"/>
             <remarks>
               <p>Since <code>responsible-role</code> associates multiple <code>party-uuid</code> entries with a single <code>role-id</code>, each role-id must be referenced only once.</p>
@@ -982,7 +998,8 @@
         <group-as name="satisfied" in-json="ARRAY"/>
         <define-flag name="uuid" as-type="uuid" required="yes">
           <formal-name>Satisfied Universally Unique Identifier</formal-name>
-          <description>A globally unique identifier that can be used to reference this satisfied entry elsewhere in an OSCAL document. A UUID should be consistently used for a given resource across revisions of the document.</description>
+          <!-- Identifier Declaration -->
+          <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this satisfied control implementation entry elsewhere in <a href="/concepts/identifier-use/#ssp-identifiers">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>control implementation</code> can be used to reference the data item locally or globally (e.g., in an imported OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions of the document.</description>
         </define-flag>
         <flag ref="responsibility-uuid" required="no" />
         <model>
@@ -1003,7 +1020,7 @@
           <field ref="remarks" in-xml="WITH_WRAPPER"/>
         </model>
         <constraint>
-          <is-unique name="unique-satisfied-responsible-role" target="responsible-role">
+          <is-unique id="unique-satisfied-responsible-role" target="responsible-role">
             <key-field target="@role-id"/>
             <remarks>
               <p>Since <code>responsible-role</code> associates multiple <code>party-uuid</code> entries with a single <code>role-id</code>, each role-id must be referenced only once.</p>
@@ -1022,22 +1039,27 @@
             &allowed-values-responsible-roles-operations;
             &allowed-values-responsible-roles-component-production;
       </allowed-values>
-      <is-unique name="unique-ssp-by-component-set-parameter" target="set-parameter">
+      <is-unique id="unique-ssp-by-component-set-parameter" target="set-parameter">
         <key-field target="@param-id"/>
         <remarks>
           <p>Since multiple <code>set-parameter</code> entries can be provided, each parameter must be set only once.</p>
         </remarks>
       </is-unique>
     </constraint>
+    <remarks>
+      <p>Use of <code>set-parameter</code> in this context, sets the parameter for the control referenced in the containing <code>implemented-requirement</code> applied to the referenced component. If the <code>by-component</code> is used as a child of a <code>statement</code>, then the parameter value also applies only in the context of the referenced statement. If the same parameter is also set in the <code>control-implementation</code> or a specific <code>implemented-requirement</code>, then this <code>by-component/set-parameter</code> value will override the other value(s) in the context of the referenced component, control, and statement (if parent).</p>
+    </remarks>
   </define-assembly>
 
   <define-flag name="provided-uuid" as-type="uuid" scope="local">
     <formal-name>Provided UUID</formal-name>
-    <description>Identifies a 'provided' assembly associated with this assembly.</description>
+    <!-- Identifier Reference -->
+    <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a> identifier reference to an inherited control implementation that a leveraging system is inheriting from a leveraged system.</description>
   </define-flag>
 
   <define-flag name="responsibility-uuid" as-type="uuid" scope="local">
-    <formal-name>Provided UUID</formal-name>
-    <description>Identifies a 'provided' assembly associated with this assembly.</description>
+    <formal-name>Responsibility UUID</formal-name>
+    <!-- Identifier Reference -->
+    <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a> identifier reference to a control implementation that satisfies a responsibility imposed by a leveraged system.</description>
   </define-flag>
 </METASCHEMA>
