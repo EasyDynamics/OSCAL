@@ -65,7 +65,7 @@ jobs:
         uses: untitaker/hyperlink@0.1.15
         with:
           args: ${{ env.OSCAL_WEBSITE_PATH }}/public/ --sources ${{ env.OSCAL_WEBSITE_PATH }}/content --check-anchors
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: website
           path: |

@@ -97,7 +97,7 @@ jobs:
       - name: Generate Schemas
         run: |
           bash "${OSCAL_CICD_PATH}/generate-schema.sh" -w "${OSCAL_WORKING_PATH}"
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: schemas
           path: |
@@ -108,7 +108,7 @@ jobs:
       - name: Generate Content Converters
         run: |
           bash "${OSCAL_CICD_PATH}/generate-content-converters.sh" -w "${OSCAL_WORKING_PATH}"
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: content-converters
           path: |
@@ -220,7 +220,7 @@ jobs:
       - name: Generate specification documentation
         run: |
           bash "${OSCAL_CICD_PATH}/generate-specification-documentation.sh"
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: specification-docs
           path: |
@@ -246,7 +246,7 @@ jobs:
           echo "Branch(4): ${BRANCH}"
           bash "../build/ci-cd/generate-model-documentation.sh" -b "${BRANCH}"
         working-directory: ${{ github.workspace }}/${{ env.OSCAL_HOME }}/docs
-#      - uses: actions/upload-artifact@v2
+#      - uses: actions/upload-artifact@v3
 #        with:
 #          name: model-docs
 #          path: |
@@ -256,7 +256,7 @@ jobs:
         run: |
             cd "${OSCAL_WEBSITE_PATH}"
             hugo -v --debug --minify
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: website
           path: |
