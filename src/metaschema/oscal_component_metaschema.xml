@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-model href="../../build/metaschema/toolchains/xslt-M4/validate/metaschema-check.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="../../build/metaschema/toolchains/xslt-M4/validate/metaschema-composition-check.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
 <!DOCTYPE METASCHEMA [
-   <!ENTITY allowed-values-responsible-roles-operations SYSTEM "shared-constraints/allowed-values-responsible-roles-operations.ent">
-<!ENTITY allowed-values-responsible-roles-component-production SYSTEM "shared-constraints/allowed-values-responsible-roles-component-production.ent">
-<!ENTITY allowed-values-property-name-asset-type-values SYSTEM "shared-constraints/allowed-values-property-name-asset-type-values.ent">
-<!ENTITY allowed-values-component_component_property-name SYSTEM "shared-constraints/allowed-values-component_component_property-name.ent">
-<!ENTITY allowed-values-component_component_software SYSTEM "shared-constraints/allowed-values-component_component_software.ent">
-<!ENTITY allowed-values-component_component_service SYSTEM "shared-constraints/allowed-values-component_component_service.ent">
-<!ENTITY allowed-values-component_inventory-item_property-name SYSTEM "shared-constraints/allowed-values-component_inventory-item_property-name.ent">
-<!ENTITY allowed-values-component_component_link-rel SYSTEM "shared-constraints/allowed-values-component_component_link-rel.ent">
-<!ENTITY allowed-values-component-type SYSTEM "shared-constraints/allowed-values-component-type.ent">
+  <!ENTITY allowed-values-responsible-roles-operations SYSTEM "./shared-constraints/allowed-values-responsible-roles-operations.ent">
+  <!ENTITY allowed-values-responsible-roles-component-production SYSTEM "./shared-constraints/allowed-values-responsible-roles-component-production.ent">
+  <!ENTITY allowed-values-property-name-asset-type-values SYSTEM "./shared-constraints/allowed-values-property-name-asset-type-values.ent">
+  <!ENTITY allowed-values-component_component_property-name SYSTEM "./shared-constraints/allowed-values-component_component_property-name.ent">
+  <!ENTITY allowed-values-component_component_software SYSTEM "./shared-constraints/allowed-values-component_component_software.ent">
+  <!ENTITY allowed-values-component_component_service SYSTEM "./shared-constraints/allowed-values-component_component_service.ent">
+  <!ENTITY allowed-values-component_inventory-item_property-name SYSTEM "./shared-constraints/allowed-values-component_inventory-item_property-name.ent">
+  <!ENTITY allowed-values-component_component_link-rel SYSTEM "./shared-constraints/allowed-values-component_component_link-rel.ent">
+  <!ENTITY allowed-values-component-type SYSTEM "./shared-constraints/allowed-values-component-type.ent">
 ]>
 <METASCHEMA xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://csrc.nist.gov/ns/oscal/metaschema/1.0" xsi:schemaLocation="http://csrc.nist.gov/ns/oscal/metaschema/1.0 ../../build/metaschema/toolchains/xslt-M4/validate/metaschema.xsd">
   <schema-name>OSCAL Component Definition Model</schema-name>
-  <schema-version>1.0.0</schema-version>
+  <schema-version>1.0.4</schema-version>
   <short-name>oscal-component-definition</short-name>
   <namespace>http://csrc.nist.gov/ns/oscal/1.0</namespace>
   <json-base-uri>http://csrc.nist.gov/ns/oscal</json-base-uri>
@@ -33,7 +33,8 @@
     <root-name>component-definition</root-name>
     <define-flag name="uuid" as-type="uuid" required="yes">
       <formal-name>Component Definition Universally Unique Identifier</formal-name>
-      <description>A globally unique identifier for this component definition instance. This UUID should be changed when this document is revised.</description>
+      <!-- Identifier Declaration -->
+      <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this component definition elsewhere in <a href="/concepts/identifier-use/#component-definition-identifiers">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>component definition</code> can be used to reference the data item locally or globally (e.g., in an imported OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions of the document.</description>
     </define-flag>
     <model>
       <assembly ref="metadata" min-occurs="1"/>
@@ -56,7 +57,7 @@
           <p>Since multiple <code>component</code> entries can be provided, each component must have a unique <code>uuid</code>.</p>
         </remarks>
       </index>
-      <is-unique name="unique-component-definition-capability" target="capability">
+      <is-unique id="unique-component-definition-capability" target="capability">
         <key-field target="@uuid"/>
         <remarks>
           <p>A given <code>component</code> must not be referenced more than once within the same <code>capability</code>.</p>
@@ -79,7 +80,8 @@
     <description>A defined component that can be part of an implemented system.</description>
     <define-flag name="uuid" as-type="uuid" required="yes">
       <formal-name>Component Identifier</formal-name>
-      <description>The unique identifier for the component.</description>
+      <!-- Identifier Declaration -->
+      <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this component elsewhere in <a href="/concepts/identifier-use/#component-definition-identifiers">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>component</code> can be used to reference the data item locally or globally (e.g., in an imported OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions of the document.</description>
     </define-flag>
     <flag ref="defined-component-type" required="yes">
       <use-name>type</use-name>
@@ -147,7 +149,7 @@
         <enum value="uses-network">This component uses the network provided by the identified network component.</enum>
       </allowed-values>
 
-      <allowed-values target="responsible-role/@role-id|control-implementation/implemented-requirement/responsible-role/@role-id||control-implementation/implemented-requirement/statement/responsible-role/@role-id" allow-other="yes">
+      <allowed-values target="responsible-role/@role-id|control-implementation/implemented-requirement/responsible-role/@role-id|control-implementation/implemented-requirement/statement/responsible-role/@role-id" allow-other="yes">
         <!-- ========================================================================================================== -->
         <!-- = Changes to the following values need to be synced with component in the SSP and component metaschemas. = -->
         <!-- CHANGED (BJR): Done -->
@@ -164,7 +166,7 @@
       <!-- = TODO: The following was copied from implementation-common as-is and should probably be setup with  = -->
       <!-- =       shared constraints; however, the values are highly static (yes/no, internal/external). -->
       <!-- =       Can be changed later with no breaking impact. -->
-      <allowed-values target="property[@name='allows-authenticated-scan']/@value">
+      <allowed-values target="prop[@name='allows-authenticated-scan']/@value">
         <enum value="yes">The component allows an authenticated scan.</enum>
         <enum value="no">The component does not allow an authenticated scan.</enum>
       </allowed-values>
@@ -180,7 +182,7 @@
       </allowed-values>
 
       <allowed-values target="prop[@name='implementation-point']/@value">
-        <enum value="inteneral">The component is implemented within the system boundary.</enum>
+        <enum value="internal">The component is implemented within the system boundary.</enum>
         <enum value="external">The component is implemented outside the system boundary.</enum>
       </allowed-values>
       <!-- ========================================================================================================== -->
@@ -211,7 +213,7 @@
             &allowed-values-component_component_service;
       </allowed-values>
 
-      <expect test="not(exists((.)[not(@type='service')]/protocol))"/>
+      <expect target="." test="not(exists((.)[not(@type='service')]/protocol))"/>
 
       <!-- ========================================================================================================== -->
       <!-- = TODO: Consider whether INTERCONNECTION constraints are appropriate here.      = -->
@@ -219,7 +221,7 @@
       <!-- =       If interconnection is not appropriate for component-defintion, we'll need different = -->
       <!-- =           component-type lists for the two models.                                        = -->
       <!-- ========================================================================================================== -->
-      <is-unique name="unique-defined-component-responsible-role" target="responsible-role">
+      <is-unique id="unique-defined-component-responsible-role" target="responsible-role">
         <key-field target="@role-id"/>
         <remarks>
           <p>Since <code>responsible-role</code> associates multiple <code>party-uuid</code> entries with a single <code>role-id</code>, each role-id must be referenced only once.</p>
@@ -249,7 +251,8 @@
     <description>A grouping of other components and/or capabilities.</description>
     <define-flag required="yes" name="uuid" as-type="uuid">
       <formal-name>Capability Identifier</formal-name>
-      <description>A unique identifier for a capability.</description>
+      <!-- Identifier Declaration -->
+      <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this capability elsewhere in <a href="/concepts/identifier-use/#component-definition-identifiers">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>capability</code> can be used to reference the data item locally or globally (e.g., in an imported OSCAL instance).This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions of the document.</description>
     </define-flag>
     <define-flag name="name" as-type="string" required="yes">
       <formal-name>Capability Name</formal-name>
@@ -275,7 +278,7 @@
       <field ref="remarks" in-xml="WITH_WRAPPER"/>
     </model>
     <constraint>
-      <is-unique name="unique-component-definition-capability-incorporates-component" target="incorporates-component">
+      <is-unique id="unique-component-definition-capability-incorporates-component" target="incorporates-component">
         <key-field target="@component-uuid"></key-field>
         <remarks>
           <p>A given <code>component</code> must not be referenced more than once within the same <code>capability</code>.</p>
@@ -289,7 +292,8 @@
     <description>TBD</description>
     <define-flag required="yes" name="component-uuid" as-type="uuid">
       <formal-name>Component Reference</formal-name>
-      <description>A reference to a component by its identifier</description>
+      <!-- Identifier Reference -->
+      <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a> identifier reference to a <code>component</code>.</description>
     </define-flag>
     <model>
       <define-field name="description" as-type="markup-multiline" min-occurs="1" in-xml="WITH_WRAPPER">
@@ -304,7 +308,8 @@
     <description>Defines how the component or capability supports a set of controls.</description>
     <define-flag name="uuid" as-type="uuid" required="yes">
       <formal-name>Control Implementation Set Identifier</formal-name>
-      <description>A unique identifier for the set of implemented controls.</description>
+      <!-- Identifier Declaration -->
+      <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference a set of implemented controls elsewhere in <a href="/concepts/identifier-use/#component-definition-identifiers">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>control implementation set</code> can be used to reference the data item locally or globally (e.g., in an imported OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions of the document.</description>
     </define-flag>
     <flag ref="source" required="yes">
       <remarks>
@@ -330,7 +335,7 @@
       </assembly>
     </model>
     <constraint>
-      <is-unique name="unique-component-definition-control-implementation-set-parameter" target="set-parameter">
+      <is-unique id="unique-component-definition-control-implementation-set-parameter" target="set-parameter">
         <key-field target="@param-id"/>
         <remarks>
           <p>Since multiple <code>set-parameter</code> entries can be provided, each parameter must be set only once.</p>
@@ -338,7 +343,7 @@
       </is-unique>
     </constraint>
     <remarks>
-      <p>Use of <code>set-parameter</code> in this context, sets the parameter for all related controls referenced in an <code>implemented-requirement</code>. If the same parameter is also set in a specific <code>implemented-requirement</code>, then the new value will override this value.</p>
+      <p>Use of <code>set-parameter</code> in this context, sets the parameter for all controls referenced by any <code>implemented-requirement</code> contained in this context. Any <code>set-parameter</code> defined in a child context will override this value. If not overridden by a child, this value applies in the child context.</p>
     </remarks>
   </define-assembly>
   <define-assembly name="implemented-requirement" scope="local">
@@ -346,13 +351,14 @@
     <description>Describes how the containing component or capability implements an individual control.</description>
     <define-flag name="uuid" as-type="uuid" required="yes">
       <formal-name>Control Implementation Identifier</formal-name>
-      <description>A unique identifier for a specific control implementation.</description>
+      <!-- Identifier Declaration -->
+      <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference a specific control implementation elsewhere in <a href="/concepts/identifier-use/#component-definition-identifiers">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>control implementation</code> can be used to reference the data item locally or globally (e.g., in an imported OSCAL instance).This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions of the document.</description>
     </define-flag>
     <flag ref="control-id" required="yes"/>
     <model>
       <define-field name="description" as-type="markup-multiline" min-occurs="1" in-xml="WITH_WRAPPER">
         <formal-name>Control Implementation Description</formal-name>
-        <description>A description of how the specified control is implemented for the containing component or capability.</description>
+        <description>A suggestion for how the specified control may be implemented if the containing component or capability is instantiated in a system security plan.</description>
       </define-field>
       <assembly ref="property" max-occurs="unbounded">
         <group-as name="props" in-json="ARRAY"/>
@@ -372,25 +378,29 @@
       <field ref="remarks" in-xml="WITH_WRAPPER"/>
     </model>
     <constraint>
-      <is-unique name="unique-component-definition-implemented-requirement-set-parameter" target="set-parameter">
+      <is-unique id="unique-component-definition-implemented-requirement-set-parameter" target="set-parameter">
         <key-field target="@param-id"/>
         <remarks>
           <p>Since multiple <code>set-parameter</code> entries can be provided, each parameter must be set only once.</p>
         </remarks>
       </is-unique>
-      <is-unique name="unique-component-definition-implemented-requirement-responsible-role" target="responsible-role">
+      <is-unique id="unique-component-definition-implemented-requirement-responsible-role" target="responsible-role">
         <key-field target="@role-id"/>
         <remarks>
           <p>Since <code>responsible-role</code> associates multiple <code>party-uuid</code> entries with a single <code>role-id</code>, each role-id must be referenced only once.</p>
         </remarks>
       </is-unique>
-      <is-unique name="unique-component-definition-implemented-requirement-statement" target="statement">
+      <is-unique id="unique-component-definition-implemented-requirement-statement" target="statement">
         <key-field target="@statement-id"/>
         <remarks>
           <p>Since <code>statement</code> entries can be referenced using the statement's statement-id, each statement must be referenced only once.</p>
         </remarks>
       </is-unique>
     </constraint>
+    <remarks>
+      <p>Implemented requirements within a component or capability in a component definition provide a means to suggest possible control implementation details, which may be used by a different party when authoring a system security plan. Thus, these requirements defined in a component definition are only a suggestion of how to implement, which may be adopted wholesale, changed, or ignored by a person defining an information system implementation.</p>
+      <p>Use of <code>set-parameter</code> in this context, sets the parameter for the referenced control and any associated statements.</p>
+    </remarks>
   </define-assembly>
   <define-assembly name="statement" scope="local">
     <formal-name>Control Statement Implementation</formal-name>
@@ -402,7 +412,8 @@
     </flag>
     <define-flag name="uuid" as-type="uuid" required="yes">
       <formal-name>Control Statement Reference Universally Unique Identifier</formal-name>
-      <description>A globally unique identifier that can be used to reference this control statement entry elsewhere in an OSCAL document. A UUID should be consistently used for a given resource across revisions of the document.</description>
+      <!-- Identifier Reference -->
+      <description>A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this control statement elsewhere in <a href="/concepts/identifier-use/#component-definition-identifiers">this or other OSCAL instances</a>. The <em>UUID</em> of the <code>control statement</code> in the source OSCAL instance is sufficient to reference the data item locally or globally (e.g., in an imported OSCAL instance).</description>
     </define-flag>
     <model>
       <define-field name="description" as-type="markup-multiline" min-occurs="1" in-xml="WITH_WRAPPER">
@@ -421,7 +432,7 @@
       <field ref="remarks" in-xml="WITH_WRAPPER"/>
     </model>
     <constraint>
-      <is-unique name="unique-component-definition-statement-responsible-role" target="responsible-role">
+      <is-unique id="unique-component-definition-statement-responsible-role" target="responsible-role">
         <key-field target="@role-id"/>
         <remarks>
           <p>Since <code>responsible-role</code> associates multiple <code>party-uuid</code> entries with a single <code>role-id</code>, each role-id must be referenced only once.</p>

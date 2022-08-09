@@ -1,15 +1,16 @@
 ---
 title: "OSCAL Profile Model Development Snapshot JSON Format Outline"
-heading: Profile Model Development Snapshot JSON Format Outline
+heading: "Profile Model Development Snapshot JSON Format Outline"
 custom_js:
   - "/js/oscal-metaschema-map-expander.js"
 weight: 10
+generateanchors: false
 sidenav:
   title: JSON Outline
 
 ---
 
-The following outline is a representation of the [JSON format](https://github.com/usnistgov/OSCAL/blob/develop/json/schema/oscal_profile_schema.json) for this model. For each property, the name links to the corresponding entry in the [JSON Format Reference](../json-reference/). The cardinality and data type are also provided for each property where appropriate.
+The following outline is a representation of the [JSON format](https://github.com/usnistgov/OSCAL/blob/develop/json/schema/oscal_profile_schema.json) for this [model](/concepts/layer/control/profile/). For each property, the name links to the corresponding entry in the [JSON Format Reference](../json-reference/). The cardinality and data type are also provided for each property where appropriate.
 
 <!-- DO NOT REMOVE. Generated text below -->
 {{< rawhtml >}}
@@ -55,7 +56,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                  <p class="OM-line"><a class="OM-name" href="../json-reference/#/profile/metadata/revisions/last-modified">last-modified</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#datetime-with-timezone">dateTime-with-timezone</a></span><span class="OM-lit">,</span></p>
                               </div>
                               <div class="OM-entry">
-                                 <p class="OM-line"><a class="OM-name" href="../json-reference/#/profile/metadata/revisions/version">version</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#string">string</a></span><span class="OM-lit">,</span></p>
+                                 <p class="OM-line"><a class="OM-name" href="../json-reference/#/profile/metadata/revisions/version">version</a> <span class="OM-cardinality">[1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#string">string</a></span><span class="OM-lit">,</span></p>
                               </div>
                               <div class="OM-entry">
                                  <p class="OM-line"><a class="OM-name" href="../json-reference/#/profile/metadata/revisions/oscal-version">oscal-version</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#string">string</a></span><span class="OM-lit">,</span></p>
@@ -535,7 +536,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                  <p><span class="OM-lit">], </span></p>
                               </details>
                               <div class="OM-choices">
-                                 <p class="OM-lit">A choice:</p>
+                                 <p class="OM-lit">A choice of:</p>
                                  <div class="OM-choice">
                                     <details class="OM-entry">
                                        <summary><span class="sq"><a class="OM-name" href="../json-reference/#/profile/metadata/parties/addresses">addresses</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-lit"> [ <span class="show-closed">… ], </span></span></span></summary>
@@ -701,7 +702,7 @@ The following outline is a representation of the [JSON format](https://github.co
                            <p class="OM-line"><a class="OM-name" href="../json-reference/#/profile/imports/href">href</a> <span class="OM-cardinality">[1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#uri-reference">uri-reference</a></span><span class="OM-lit">,</span></p>
                         </div>
                         <div class="OM-choices">
-                           <p class="OM-lit">A choice:</p>
+                           <p class="OM-lit">A choice of:</p>
                            <div class="OM-choice">
                               <details class="OM-entry">
                                  <summary><a class="OM-name" href="../json-reference/#/profile/imports/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -808,15 +809,21 @@ The following outline is a representation of the [JSON format](https://github.co
                      <p><span class="OM-lit"> }, </span></p>
                   </details>
                   <div class="OM-choices">
-                     <p class="OM-lit">A choice:</p>
+                     <p class="OM-lit">A choice of:</p>
+                     <div class="OM-choice">
+                        <details class="OM-entry">
+                           <summary><a class="OM-name" href="../json-reference/#/profile/merge/flat">flat</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
+                           <p><span class="OM-lit"> }, </span></p>
+                        </details>
+                     </div>
                      <div class="OM-choice">
                         <div class="OM-entry">
-                           <p class="OM-line"><a class="OM-name" href="../json-reference/#/profile/merge/as-is">as-is</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#boolean">boolean</a></span><span class="OM-lit">,</span></p>
+                           <p class="OM-line"><a class="OM-name" href="../json-reference/#/profile/merge/as-is">as-is</a> <span class="OM-cardinality">[1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#boolean">boolean</a></span><span class="OM-lit">,</span></p>
                         </div>
                      </div>
                      <div class="OM-choice">
                         <details class="OM-entry">
-                           <summary><a class="OM-name" href="../json-reference/#/profile/merge/custom">custom</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-lit">{<span class="show-closed"> … }</span></span></summary>
+                           <summary><a class="OM-name" href="../json-reference/#/profile/merge/custom">custom</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }</span></span></summary>
                            <div class="model-container object">
                               <details class="OM-entry">
                                  <summary><span class="sq"><a class="OM-name" href="../json-reference/#/profile/merge/custom/groups">groups</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-lit"> [ <span class="show-closed">… ], </span></span></span></summary>
@@ -957,7 +964,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                                          <p><span class="OM-lit">], </span></p>
                                                       </details>
                                                       <div class="OM-choices">
-                                                         <p class="OM-lit">A choice:</p>
+                                                         <p class="OM-lit">A choice of:</p>
                                                          <div class="OM-choice">
                                                             <details class="OM-entry">
                                                                <summary><span class="sq"><a class="OM-name" href="../json-reference/#/profile/merge/custom/groups/params/values">values</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-lit"> [ <span class="show-closed">… ], </span></span></span></summary>
@@ -1148,7 +1155,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                              <p><span class="OM-lit">], </span></p>
                                           </details>
                                           <div class="OM-choices">
-                                             <p class="OM-lit">A choice:</p>
+                                             <p class="OM-lit">A choice of:</p>
                                              <div class="OM-choice">
                                                 <details class="OM-entry">
                                                    <summary><span class="sq"><a class="OM-name" href="../json-reference/#/profile/merge/custom/groups/groups">groups</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-lit"> [ <span class="show-closed">… ], </span></span></span></summary>
@@ -1172,7 +1179,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                                                <p class="OM-line"><a class="OM-name" href="../json-reference/#/profile/merge/custom/groups/insert-controls/order">order</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#token">token</a></span><span class="OM-lit">,</span></p>
                                                             </div>
                                                             <div class="OM-choices">
-                                                               <p class="OM-lit">A choice:</p>
+                                                               <p class="OM-lit">A choice of:</p>
                                                                <div class="OM-choice">
                                                                   <details class="OM-entry">
                                                                      <summary><a class="OM-name" href="../json-reference/#/profile/merge/custom/groups/insert-controls/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -1284,7 +1291,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                              <p class="OM-line"><a class="OM-name" href="../json-reference/#/profile/merge/custom/insert-controls/order">order</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#token">token</a></span><span class="OM-lit">,</span></p>
                                           </div>
                                           <div class="OM-choices">
-                                             <p class="OM-lit">A choice:</p>
+                                             <p class="OM-lit">A choice of:</p>
                                              <div class="OM-choice">
                                                 <details class="OM-entry">
                                                    <summary><a class="OM-name" href="../json-reference/#/profile/merge/custom/insert-controls/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -1513,7 +1520,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                  <p><span class="OM-lit">], </span></p>
                               </details>
                               <div class="OM-choices">
-                                 <p class="OM-lit">A choice:</p>
+                                 <p class="OM-lit">A choice of:</p>
                                  <div class="OM-choice">
                                     <details class="OM-entry">
                                        <summary><span class="sq"><a class="OM-name" href="../json-reference/#/profile/modify/set-parameters/values">values</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-lit"> [ <span class="show-closed">… ], </span></span></span></summary>
@@ -1553,13 +1560,13 @@ The following outline is a representation of the [JSON format](https://github.co
                      <p><span class="OM-lit">], </span></p>
                   </details>
                   <details class="OM-entry">
-                     <summary><span class="sq"><a class="OM-name" href="../json-reference/#/profile/modify/alters">alters</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-lit"> [ <span class="show-closed">… ]</span></span></span></summary>
+                     <summary><span class="sq"><a class="OM-name" href="../json-reference/#/profile/modify/alters">alters</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-lit"> [ <span class="show-closed">… ], </span></span></span></summary>
                      <div class="model-container array">
                         <div class="OM-entry">
                            <p><span class="OM-lit">An array of <a class="OM-name" href="../json-reference/#/profile/modify/alters">alter</a> objects</span>  <span class="OM-cardinality">[1 to ∞]</span><span class="OM-lit"> { </span></p>
                            <div class="model-container object">
                               <div class="OM-entry">
-                                 <p class="OM-line"><a class="OM-name" href="../json-reference/#/profile/modify/alters/control-id">control-id</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#token">token</a></span><span class="OM-lit">,</span></p>
+                                 <p class="OM-line"><a class="OM-name" href="../json-reference/#/profile/modify/alters/control-id">control-id</a> <span class="OM-cardinality">[1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#token">token</a></span><span class="OM-lit">,</span></p>
                               </div>
                               <details class="OM-entry">
                                  <summary><span class="sq"><a class="OM-name" href="../json-reference/#/profile/modify/alters/removes">removes</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-lit"> [ <span class="show-closed">… ], </span></span></span></summary>
@@ -1727,7 +1734,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                                          <p><span class="OM-lit">], </span></p>
                                                       </details>
                                                       <div class="OM-choices">
-                                                         <p class="OM-lit">A choice:</p>
+                                                         <p class="OM-lit">A choice of:</p>
                                                          <div class="OM-choice">
                                                             <details class="OM-entry">
                                                                <summary><span class="sq"><a class="OM-name" href="../json-reference/#/profile/modify/alters/adds/params/values">values</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-lit"> [ <span class="show-closed">… ], </span></span></span></summary>
@@ -1927,7 +1934,7 @@ The following outline is a representation of the [JSON format](https://github.co
                            <p><span class="OM-lit"> }</span></p>
                         </div>
                      </div>
-                     <p><span class="OM-lit">]</span></p>
+                     <p><span class="OM-lit">], </span></p>
                   </details>
                </div>
                <p><span class="OM-lit"> }, </span></p>

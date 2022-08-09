@@ -2,6 +2,7 @@
 title: "OSCAL Component Definition Model Development Snapshot JSON Format Reference"
 heading: "Component Definition Model Development Snapshot JSON Format Reference"
 weight: 20
+generateanchors: false
 sidenav:
   title: JSON Reference
 toc:
@@ -10,16 +11,12 @@ toc:
 
 ---
 
-The following is the JSON format reference for this model, which is organized hierarchically. Each entry represents the corresponding JSON property in the model's JSON format, and provides details about the semantics and use of the property. The [JSON Format Outline](../json-outline/) provides a streamlined, hierarchical representation of this model's JSON format which can be used along with this reference to better understand the JSON representation of this model.
+The following is the JSON format reference for this [model](/concepts/layer/implementation/component-definition/), which is organized hierarchically. Each entry represents the corresponding JSON property in the model's JSON format, and provides details about the semantics and use of the property. The [JSON Format Outline](../json-outline/) provides a streamlined, hierarchical representation of this model's JSON format which can be used along with this reference to better understand the JSON representation of this model.
 
 <!-- DO NOT REMOVE. Generated text below -->
 {{< rawhtml >}}
 <div xmlns="http://www.w3.org/1999/xhtml" class="json-reference">
-   <p><span class="usa-tag">OSCAL model</span> OSCAL Component Definition Model</p>
-   <p><span class="usa-tag">Schema version:</span> 1.0.0</p>
    <p><span class="usa-tag">JSON Base URI</span> <code>http://csrc.nist.gov/ns/oscal</code></p>
-   <p><span class="usa-tag">JSON Schema</span> <a href="/artifacts/json/schema/oscal_component_schema.json">oscal_component_schema.json</a></p>
-   <p><span class="usa-tag">XML to JSON converter</span> <a href="/artifacts/json/convert/oscal_component_xml-to-json-converter.xsl">oscal_component_xml-to-json-converter.xsl</a> <a href="https://github.com/usnistgov/OSCAL/tree/main/json#converting-oscal-xml-content-to-json">(How do I use the converter to convert OSCAL XML to JSON?)</a></p>
    <div class="remarks">The OSCAL Component Definition Model can be used to describe the implementation of
       controls in a component or a set of components grouped as a capability. A component
       can be either a technical component, or a documentary component. A technical component
@@ -57,8 +54,9 @@ The following is the JSON format reference for this model, which is organized hi
                   <p class="formal-name">Component Definition Universally Unique Identifier</p>
                </div>
                <div class="body">
-                  <p class="description"><span class="usa-tag">Description</span> A globally unique identifier for this component definition instance. This UUID should
-                     be changed when this document is revised.</p>
+                  <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this component definition elsewhere in <a href="/concepts/identifier-use/#component-definition-identifiers">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>component definition</code> can be used to reference the data item locally or globally (e.g., in an imported
+                     OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
+                     of the document.</p>
                </div>
             </div>
             <div class="model-entry definition assembly">
@@ -72,7 +70,7 @@ The following is the JSON format reference for this model, which is organized hi
                <div class="body">
                   <p class="description"><span class="usa-tag">Description</span> Provides information about the publication and availability of the containing document.</p>
                   <details class="constraints" open="open">
-                     <summary>Constraints (12)</summary>
+                     <summary>Constraints (13)</summary>
                      <div class="constraint">
                         <p><span class="usa-tag">index</span>  for <code class="path">role</code> an index <code>index-metadata-role-ids</code> shall list values returned by targets <code>role</code> using keys constructed of key field(s) <code>@id</code></p>
                      </div>
@@ -83,7 +81,7 @@ The following is the JSON format reference for this model, which is organized hi
                         <p><span class="usa-tag">is unique</span>  for <code class="path">prop</code>: any target value must be unique (i.e., occur only once)</p>
                      </div>
                      <div class="constraint">
-                        <p><span class="usa-tag">index</span>  for <code class="path">.//prop</code> an index <code>index-metadata-property-id</code> shall list values returned by targets <code>.//prop</code> using keys constructed of key field(s) <code>@id</code></p>
+                        <p><span class="usa-tag">index</span>  for <code class="path">.//prop</code> an index <code>index-metadata-property-uuid</code> shall list values returned by targets <code>.//prop</code> using keys constructed of key field(s) <code>@uuid</code></p>
                      </div>
                      <div class="constraint">
                         <p><span class="usa-tag">is unique</span>  for <code class="path">link</code>: any target value must be unique (i.e., occur only once)</p>
@@ -108,11 +106,24 @@ The following is the JSON format reference for this model, which is organized hi
                         <p>The value <b>may be locally defined</b>, or one of the following:</p>
                         <ul>
                            
-                           <li><strong>prepared-by</strong>: Indicates the organization that created this content.</li>
+                           <li><strong>creator</strong>: Indicates the organization that created this content.</li>
+                           
+                           <li><strong>prepared-by</strong>: Indicates the organization that prepared this content.</li>
                            
                            <li><strong>prepared-for</strong>: Indicates the organization for which this content was created.</li>
                            
                            <li><strong>content-approver</strong>: Indicates the organization responsible for all content represented in the "document".</li>
+                           
+                           <li><strong>contact</strong>: Indicates the organization to contact for questions or support related to this content.</li>
+                           </ul>
+                     </div>
+                     <div class="constraint">
+                        <p><span class="usa-tag">allowed value</span>  for <code class="path">prop[has-oscal-namespace('http://csrc.nist.gov/ns/oscal')]/@name</code></p>
+                        <p>The value <b>must</b> be one of the following:</p>
+                        <ul>
+                           
+                           <li><strong>keywords</strong>: The value identifies a comma-seperated listing of keywords associated with this
+                              content. These keywords may be used as search terms for indexing and other applications.</li>
                            </ul>
                      </div>
                      <div class="constraint">
@@ -282,10 +293,7 @@ The following is the JSON format reference for this model, which is organized hi
                               </details>
                            </div>
                            <details class="constraints" open="open">
-                              <summary>Constraints (2)</summary>
-                              <div class="constraint">
-                                 <p><span class="usa-tag">has cardinality</span>  for <code class="path">published|last-modified|version|link[@rel='canonical']</code> the cardinality of  <code>published|last-modified|version|link[@rel='canonical']</code> is constrained: <b>1</b>; maximum <b>unbounded</b>.</p>
-                              </div>
+                              <summary>Constraint (1)</summary>
                               <div class="constraint">
                                  <p><span class="usa-tag">allowed values</span>  for <code class="path">link/@rel</code></p>
                                  <p>The value <b>may be locally defined</b>, or one of the following:</p>
@@ -379,7 +387,7 @@ The following is the JSON format reference for this model, which is organized hi
                                  <div class="instance-header">
                                     <h4 id="/component-definition/metadata/revisions/version" class="toc4 name">version</h4>
                                     <p class="type"><a href="/reference/datatypes/#string">string</a></p>
-                                    <p class="occurrence">[0 or 1]</p>
+                                    <p class="occurrence">[1]</p>
                                     <div class="crosslink"><a class="usa-button" href="../xml-reference/#/component-definition/metadata/revisions/revision/version">Switch to XML</a></div>
                                     <p class="formal-name">Document Version</p>
                                  </div>
@@ -495,8 +503,7 @@ The following is the JSON format reference for this model, which is organized hi
                                              <p class="formal-name">Property Universally Unique Identifier</p>
                                           </div>
                                           <div class="body">
-                                             <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this property elsewhere in an OSCAL
-                                                document. A UUID should be consistently used for a given location across revisions
+                                             <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                                                 of the document.</p>
                                           </div>
                                        </div>
@@ -514,14 +521,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
-                                                         names and associated values used in a property. This allows the semantics associated
-                                                         with a given name/value pair to be defined on an organization-by-organization basis.</p>
-                                                      <p>An organization MUST use a URI that they have control over. e.g., a domain registered
-                                                         to the organization in a URI, a registered uniform resource names (URN) namespace.</p>
-                                                      <p>When a <code>ns</code> is not provided, its value should be assumed to be <code>http://csrc.nist.gov/ns/oscal</code> and the name should be a name defined by the associated OSCAL model.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
                                                          names and associated values used in a property. This allows the semantics associated
@@ -560,10 +559,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
-                                                         a specific <code>class</code> value.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
                                                          a specific <code>class</code> value.</p>
@@ -615,13 +610,13 @@ The following is the JSON format reference for this model, which is organized hi
                                     <details class="constraints" open="open">
                                        <summary>Constraints (3)</summary>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
+                                          <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]/@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
                                        </div>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
+                                          <p><span class="usa-tag">index has key</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]</code>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
                                        </div>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
+                                          <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and not(starts-with(@href,'#'))]/@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
                                        </div>
                                     </details>
                                     <details class="properties" open="open">
@@ -639,15 +634,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
-                                                         that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
-                                                      <p>If a local reference using a fragment is used, this will be indicated by a fragment
-                                                         "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document.</p>
-                                                      <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the referenced
-                                                         resource. A relative URI will be resolved relative to the location of the document
-                                                         containing the link.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
                                                          that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
@@ -699,6 +685,11 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
+                                                   <div class="remarks">
+                                                      <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                         type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                         suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                                   </div>
                                                    <div class="remarks">
                                                       <p>The <code>media-type</code> provides a hint about the content model of the referenced resource. A valid entry
                                                          from the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a> SHOULD be used.</p>
@@ -752,10 +743,10 @@ The following is the JSON format reference for this model, which is organized hi
                            <p class="formal-name">Document Identifier</p>
                         </div>
                         <div class="body">
-                           <p class="description"><span class="usa-tag">Description</span> A document identifier qualified by an identifier <code>scheme</code>. A document identifier provides a globally unique identifier for a group of documents
-                              that are to be treated as different versions of the same document. If this element
-                              does not appear, or if the value of this element is empty, the value of "document-id"
-                              is equal to the value of the "uuid" flag of the top-level root element.</p>
+                           <p class="description"><span class="usa-tag">Description</span> A document identifier qualified by an identifier <code>scheme</code>. A document identifier provides a <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with a <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that is used for a group of documents that are to be treated as different versions
+                              of the same document. If this element does not appear, or if the value of this element
+                              is empty, the value of "document-id" is equal to the value of the "uuid" flag of the
+                              top-level root element.</p>
                            <div class="remarks-group usa-prose">
                               <details open="open">
                                  <summary class="subhead">Remarks</summary>
@@ -788,7 +779,7 @@ The following is the JSON format reference for this model, which is organized hi
                                           <p>The value <b>may be locally defined</b>, or the following:</p>
                                           <ul>
                                              
-                                             <li><strong>https://www.doi.org/</strong>: A Digital Object Identifier (DOI); use is preferred, since this allows for retrieval
+                                             <li><strong>http://www.doi.org/</strong>: A Digital Object Identifier (DOI); use is preferred, since this allows for retrieval
                                                 of a full bibliographic record.</li>
                                              </ul>
                                        </div>
@@ -800,7 +791,7 @@ The following is the JSON format reference for this model, which is organized hi
                                     <h4 id="/component-definition/metadata/document-ids/identifier" class="toc4 name">identifier</h4>
                                     <p class="type"><a href="/reference/datatypes/#string">string</a></p>
                                     <p class="occurrence">[0 or 1]</p>
-                                    <div class="crosslink"><a class="usa-button" href="../xml-reference/#/component-definition/metadata/document-id">Switch to XML</a></div>
+                                    <div class="crosslink"><a class="usa-button" href="../xml-reference/#/component-definition/metadata/document-id/_VALUE">Switch to XML</a></div>
                                  </div>
                               </div>
                            </details>
@@ -877,8 +868,7 @@ The following is the JSON format reference for this model, which is organized hi
                                     <p class="formal-name">Property Universally Unique Identifier</p>
                                  </div>
                                  <div class="body">
-                                    <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this property elsewhere in an OSCAL
-                                       document. A UUID should be consistently used for a given location across revisions
+                                    <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                                        of the document.</p>
                                  </div>
                               </div>
@@ -896,14 +886,6 @@ The following is the JSON format reference for this model, which is organized hi
                                     <div class="remarks-group usa-prose">
                                        <details open="open">
                                           <summary class="subhead">Remarks</summary>
-                                          <div class="remarks">
-                                             <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
-                                                names and associated values used in a property. This allows the semantics associated
-                                                with a given name/value pair to be defined on an organization-by-organization basis.</p>
-                                             <p>An organization MUST use a URI that they have control over. e.g., a domain registered
-                                                to the organization in a URI, a registered uniform resource names (URN) namespace.</p>
-                                             <p>When a <code>ns</code> is not provided, its value should be assumed to be <code>http://csrc.nist.gov/ns/oscal</code> and the name should be a name defined by the associated OSCAL model.</p>
-                                          </div>
                                           <div class="remarks">
                                              <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
                                                 names and associated values used in a property. This allows the semantics associated
@@ -942,10 +924,6 @@ The following is the JSON format reference for this model, which is organized hi
                                     <div class="remarks-group usa-prose">
                                        <details open="open">
                                           <summary class="subhead">Remarks</summary>
-                                          <div class="remarks">
-                                             <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
-                                                a specific <code>class</code> value.</p>
-                                          </div>
                                           <div class="remarks">
                                              <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
                                                 a specific <code>class</code> value.</p>
@@ -997,13 +975,13 @@ The following is the JSON format reference for this model, which is organized hi
                            <details class="constraints" open="open">
                               <summary>Constraints (3)</summary>
                               <div class="constraint">
-                                 <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
+                                 <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]/@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
                               </div>
                               <div class="constraint">
-                                 <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
+                                 <p><span class="usa-tag">index has key</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]</code>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
                               </div>
                               <div class="constraint">
-                                 <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
+                                 <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and not(starts-with(@href,'#'))]/@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
                               </div>
                            </details>
                            <details class="properties" open="open">
@@ -1021,15 +999,6 @@ The following is the JSON format reference for this model, which is organized hi
                                     <div class="remarks-group usa-prose">
                                        <details open="open">
                                           <summary class="subhead">Remarks</summary>
-                                          <div class="remarks">
-                                             <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
-                                                that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
-                                             <p>If a local reference using a fragment is used, this will be indicated by a fragment
-                                                "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document.</p>
-                                             <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the referenced
-                                                resource. A relative URI will be resolved relative to the location of the document
-                                                containing the link.</p>
-                                          </div>
                                           <div class="remarks">
                                              <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
                                                 that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
@@ -1082,6 +1051,11 @@ The following is the JSON format reference for this model, which is organized hi
                                        <details open="open">
                                           <summary class="subhead">Remarks</summary>
                                           <div class="remarks">
+                                             <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                          </div>
+                                          <div class="remarks">
                                              <p>The <code>media-type</code> provides a hint about the content model of the referenced resource. A valid entry
                                                 from the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a> SHOULD be used.</p>
                                           </div>
@@ -1126,6 +1100,11 @@ The following is the JSON format reference for this model, which is organized hi
                                  <div class="remarks">
                                     <p>Permissible values to be determined closer to the application (e.g. by a receiving
                                        authority).</p>
+                                    <p>OSCAL has defined a set of standardized roles for consistent use in OSCAL documents.
+                                       This allows tools consuming OSCAL content to infer specific semantics when these roles
+                                       are used. These roles are documented in the specific contexts of their use (e.g.,
+                                       responsible-party, responsible-role). When using such a role, it is necessary to define
+                                       these roles in this list, which will then allow such a role to be referenced.</p>
                                  </div>
                               </details>
                            </div>
@@ -1140,28 +1119,10 @@ The following is the JSON format reference for this model, which is organized hi
                                     <p class="formal-name">Role Identifier</p>
                                  </div>
                                  <div class="body">
-                                    <p class="description"><span class="usa-tag">Description</span> A unique identifier for a specific role instance. This identifier's uniqueness is
-                                       document scoped and is intended to be consistent for the same role across minor revisions
+                                    <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a>, <a href="/concepts/identifier-use/#locally-unique">locally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined role elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. When referenced from another OSCAL instance, the locally defined <em>ID</em> of the <code>Role</code> from the imported OSCAL instance must be referenced in the context of the containing
+                                       resource (e.g., import, import-component-definition, import-profile, import-ssp or
+                                       import-ap). This ID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                                        of the document.</p>
-                                    <div class="remarks-group usa-prose">
-                                       <details open="open">
-                                          <summary class="subhead">Remarks</summary>
-                                          <div class="remarks">
-                                             <p>OSCAL has defined a set of standardized roles for consistent use in OSCAL documents.
-                                                This allows tools consuming OSCAL content to infer specific semantics when these roles
-                                                are used. These roles are documented in the specific contexts of their use (e.g.,
-                                                responsible-party, responsible-role). When using such a role, it is necessary to define
-                                                these roles in this list, which will then allow such a role to be referenced.</p>
-                                          </div>
-                                          <div class="remarks">
-                                             <p>OSCAL has defined a set of standardized roles for consistent use in OSCAL documents.
-                                                This allows tools consuming OSCAL content to infer specific semantics when these roles
-                                                are used. These roles are documented in the specific contexts of their use (e.g.,
-                                                responsible-party, responsible-role). When using such a role, it is necessary to define
-                                                these roles in this list, which will then allow such a role to be referenced.</p>
-                                          </div>
-                                       </details>
-                                    </div>
                                  </div>
                               </div>
                               <div class="model-entry definition assembly">
@@ -1271,8 +1232,7 @@ The following is the JSON format reference for this model, which is organized hi
                                              <p class="formal-name">Property Universally Unique Identifier</p>
                                           </div>
                                           <div class="body">
-                                             <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this property elsewhere in an OSCAL
-                                                document. A UUID should be consistently used for a given location across revisions
+                                             <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                                                 of the document.</p>
                                           </div>
                                        </div>
@@ -1290,14 +1250,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
-                                                         names and associated values used in a property. This allows the semantics associated
-                                                         with a given name/value pair to be defined on an organization-by-organization basis.</p>
-                                                      <p>An organization MUST use a URI that they have control over. e.g., a domain registered
-                                                         to the organization in a URI, a registered uniform resource names (URN) namespace.</p>
-                                                      <p>When a <code>ns</code> is not provided, its value should be assumed to be <code>http://csrc.nist.gov/ns/oscal</code> and the name should be a name defined by the associated OSCAL model.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
                                                          names and associated values used in a property. This allows the semantics associated
@@ -1336,10 +1288,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
-                                                         a specific <code>class</code> value.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
                                                          a specific <code>class</code> value.</p>
@@ -1391,13 +1339,13 @@ The following is the JSON format reference for this model, which is organized hi
                                     <details class="constraints" open="open">
                                        <summary>Constraints (3)</summary>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
+                                          <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]/@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
                                        </div>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
+                                          <p><span class="usa-tag">index has key</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]</code>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
                                        </div>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
+                                          <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and not(starts-with(@href,'#'))]/@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
                                        </div>
                                     </details>
                                     <details class="properties" open="open">
@@ -1415,15 +1363,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
-                                                         that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
-                                                      <p>If a local reference using a fragment is used, this will be indicated by a fragment
-                                                         "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document.</p>
-                                                      <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the referenced
-                                                         resource. A relative URI will be resolved relative to the location of the document
-                                                         containing the link.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
                                                          that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
@@ -1475,6 +1414,11 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
+                                                   <div class="remarks">
+                                                      <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                         type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                         suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                                   </div>
                                                    <div class="remarks">
                                                       <p>The <code>media-type</code> provides a hint about the content model of the referenced resource. A valid entry
                                                          from the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a> SHOULD be used.</p>
@@ -1544,8 +1488,8 @@ The following is the JSON format reference for this model, which is organized hi
                                  <p>The value <b>may be locally defined</b>, or the following:</p>
                                  <ul>
                                     
-                                    <li><strong>data-center</strong>: A location that contains computing assets. A class can be used to indicate a subclass
-                                       of data-center.</li>
+                                    <li><strong>data-center</strong>: A location that contains computing assets. A class can be used to indicate the sub-type
+                                       of data-center as primary or alternate.</li>
                                     </ul>
                               </div>
                               <div class="constraint">
@@ -1570,9 +1514,9 @@ The following is the JSON format reference for this model, which is organized hi
                                     <p class="formal-name">Location Universally Unique Identifier</p>
                                  </div>
                                  <div class="body">
-                                    <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this defined location elsewhere
-                                       in an OSCAL document. A UUID should be consistently used for a given location across
-                                       revisions of the document.</p>
+                                    <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined location elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>location</code> can be used to reference the data item locally or globally (e.g., from an importing
+                                       OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
+                                       of the document.</p>
                                  </div>
                               </div>
                               <div class="model-entry definition assembly">
@@ -1600,7 +1544,7 @@ The following is the JSON format reference for this model, which is organized hi
                                     <div class="remarks-group usa-prose">
                                        <details open="open">
                                           <summary class="subhead">Remarks</summary>
-                                          <div class="remarks in-use">
+                                          <div class="remarks">
                                              <p>Typically, the physical address of the location will be used here. If this information
                                                 is sensitive, then a mailing address can be used instead.</p>
                                           </div>
@@ -1699,7 +1643,7 @@ The following is the JSON format reference for this model, which is organized hi
                                              <details class="constraints" open="open">
                                                 <summary>Constraint (1)</summary>
                                                 <div class="constraint">
-                                                   <p><span class="usa-tag">matches</span>: a target (value) must match the regular expression '[A-Z](2)'.</p>
+                                                   <p><span class="usa-tag">matches</span>: a target (value) must match the regular expression '[A-Z]{2}'.</p>
                                                 </div>
                                              </details>
                                           </div>
@@ -1725,7 +1669,7 @@ The following is the JSON format reference for this model, which is organized hi
                                     <div class="remarks-group usa-prose">
                                        <details open="open">
                                           <summary class="subhead">Remarks</summary>
-                                          <div class="remarks in-use">
+                                          <div class="remarks">
                                              <p>This is a contact email associated with the location.</p>
                                           </div>
                                        </details>
@@ -1750,7 +1694,7 @@ The following is the JSON format reference for this model, which is organized hi
                                     <div class="remarks-group usa-prose">
                                        <details open="open">
                                           <summary class="subhead">Remarks</summary>
-                                          <div class="remarks in-use">
+                                          <div class="remarks">
                                              <p>A phone number used to contact the location.</p>
                                           </div>
                                        </details>
@@ -1789,7 +1733,7 @@ The following is the JSON format reference for this model, which is organized hi
                                              <h5 id="/component-definition/metadata/locations/telephone-numbers/number" class="toc5 name">number</h5>
                                              <p class="type"><a href="/reference/datatypes/#string">string</a></p>
                                              <p class="occurrence">[0 or 1]</p>
-                                             <div class="crosslink"><a class="usa-button" href="../xml-reference/#/component-definition/metadata/location/telephone-number">Switch to XML</a></div>
+                                             <div class="crosslink"><a class="usa-button" href="../xml-reference/#/component-definition/metadata/location/telephone-number/_VALUE">Switch to XML</a></div>
                                           </div>
                                        </div>
                                     </details>
@@ -1884,8 +1828,7 @@ The following is the JSON format reference for this model, which is organized hi
                                              <p class="formal-name">Property Universally Unique Identifier</p>
                                           </div>
                                           <div class="body">
-                                             <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this property elsewhere in an OSCAL
-                                                document. A UUID should be consistently used for a given location across revisions
+                                             <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                                                 of the document.</p>
                                           </div>
                                        </div>
@@ -1903,14 +1846,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
-                                                         names and associated values used in a property. This allows the semantics associated
-                                                         with a given name/value pair to be defined on an organization-by-organization basis.</p>
-                                                      <p>An organization MUST use a URI that they have control over. e.g., a domain registered
-                                                         to the organization in a URI, a registered uniform resource names (URN) namespace.</p>
-                                                      <p>When a <code>ns</code> is not provided, its value should be assumed to be <code>http://csrc.nist.gov/ns/oscal</code> and the name should be a name defined by the associated OSCAL model.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
                                                          names and associated values used in a property. This allows the semantics associated
@@ -1949,10 +1884,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
-                                                         a specific <code>class</code> value.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
                                                          a specific <code>class</code> value.</p>
@@ -2004,13 +1935,13 @@ The following is the JSON format reference for this model, which is organized hi
                                     <details class="constraints" open="open">
                                        <summary>Constraints (3)</summary>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
+                                          <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]/@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
                                        </div>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
+                                          <p><span class="usa-tag">index has key</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]</code>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
                                        </div>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
+                                          <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and not(starts-with(@href,'#'))]/@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
                                        </div>
                                     </details>
                                     <details class="properties" open="open">
@@ -2028,15 +1959,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
-                                                         that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
-                                                      <p>If a local reference using a fragment is used, this will be indicated by a fragment
-                                                         "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document.</p>
-                                                      <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the referenced
-                                                         resource. A relative URI will be resolved relative to the location of the document
-                                                         containing the link.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
                                                          that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
@@ -2088,6 +2010,11 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
+                                                   <div class="remarks">
+                                                      <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                         type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                         suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                                   </div>
                                                    <div class="remarks">
                                                       <p>The <code>media-type</code> provides a hint about the content model of the referenced resource. A valid entry
                                                          from the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a> SHOULD be used.</p>
@@ -2168,9 +2095,9 @@ The following is the JSON format reference for this model, which is organized hi
                                     <p class="formal-name">Party Universally Unique Identifier</p>
                                  </div>
                                  <div class="body">
-                                    <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this defined location elsewhere
-                                       in an OSCAL document. A UUID should be consistently used for a given party across
-                                       revisions of the document.</p>
+                                    <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined party elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>party</code> can be used to reference the data item locally or globally (e.g., from an importing
+                                       OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
+                                       of the document.</p>
                                  </div>
                               </div>
                               <div class="model-entry definition assembly">
@@ -2258,7 +2185,7 @@ The following is the JSON format reference for this model, which is organized hi
                                                    <p>The value <b>may be locally defined</b>, or the following:</p>
                                                    <ul>
                                                       
-                                                      <li><strong>https://orcid.org/</strong>: The identifier is Open Researcher and Contributor ID (ORCID).</li>
+                                                      <li><strong>http://orcid.org/</strong>: The identifier is Open Researcher and Contributor ID (ORCID).</li>
                                                       </ul>
                                                 </div>
                                              </details>
@@ -2269,7 +2196,7 @@ The following is the JSON format reference for this model, which is organized hi
                                              <h5 id="/component-definition/metadata/parties/external-ids/id" class="toc5 name">id</h5>
                                              <p class="type"><a href="/reference/datatypes/#string">string</a></p>
                                              <p class="occurrence">[0 or 1]</p>
-                                             <div class="crosslink"><a class="usa-button" href="../xml-reference/#/component-definition/metadata/party/external-id">Switch to XML</a></div>
+                                             <div class="crosslink"><a class="usa-button" href="../xml-reference/#/component-definition/metadata/party/external-id/_VALUE">Switch to XML</a></div>
                                           </div>
                                        </div>
                                     </details>
@@ -2346,8 +2273,7 @@ The following is the JSON format reference for this model, which is organized hi
                                              <p class="formal-name">Property Universally Unique Identifier</p>
                                           </div>
                                           <div class="body">
-                                             <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this property elsewhere in an OSCAL
-                                                document. A UUID should be consistently used for a given location across revisions
+                                             <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                                                 of the document.</p>
                                           </div>
                                        </div>
@@ -2365,14 +2291,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
-                                                         names and associated values used in a property. This allows the semantics associated
-                                                         with a given name/value pair to be defined on an organization-by-organization basis.</p>
-                                                      <p>An organization MUST use a URI that they have control over. e.g., a domain registered
-                                                         to the organization in a URI, a registered uniform resource names (URN) namespace.</p>
-                                                      <p>When a <code>ns</code> is not provided, its value should be assumed to be <code>http://csrc.nist.gov/ns/oscal</code> and the name should be a name defined by the associated OSCAL model.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
                                                          names and associated values used in a property. This allows the semantics associated
@@ -2411,10 +2329,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
-                                                         a specific <code>class</code> value.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
                                                          a specific <code>class</code> value.</p>
@@ -2466,13 +2380,13 @@ The following is the JSON format reference for this model, which is organized hi
                                     <details class="constraints" open="open">
                                        <summary>Constraints (3)</summary>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
+                                          <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]/@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
                                        </div>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
+                                          <p><span class="usa-tag">index has key</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]</code>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
                                        </div>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
+                                          <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and not(starts-with(@href,'#'))]/@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
                                        </div>
                                     </details>
                                     <details class="properties" open="open">
@@ -2490,15 +2404,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
-                                                         that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
-                                                      <p>If a local reference using a fragment is used, this will be indicated by a fragment
-                                                         "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document.</p>
-                                                      <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the referenced
-                                                         resource. A relative URI will be resolved relative to the location of the document
-                                                         containing the link.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
                                                          that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
@@ -2551,6 +2456,11 @@ The following is the JSON format reference for this model, which is organized hi
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
                                                    <div class="remarks">
+                                                      <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                         type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                         suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                                   </div>
+                                                   <div class="remarks">
                                                       <p>The <code>media-type</code> provides a hint about the content model of the referenced resource. A valid entry
                                                          from the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a> SHOULD be used.</p>
                                                    </div>
@@ -2592,7 +2502,7 @@ The following is the JSON format reference for this model, which is organized hi
                                     <div class="remarks-group usa-prose">
                                        <details open="open">
                                           <summary class="subhead">Remarks</summary>
-                                          <div class="remarks in-use">
+                                          <div class="remarks">
                                              <p>This is a contact email associated with the party.</p>
                                           </div>
                                        </details>
@@ -2617,7 +2527,7 @@ The following is the JSON format reference for this model, which is organized hi
                                     <div class="remarks-group usa-prose">
                                        <details open="open">
                                           <summary class="subhead">Remarks</summary>
-                                          <div class="remarks in-use">
+                                          <div class="remarks">
                                              <p>A phone number used to contact the party.</p>
                                           </div>
                                        </details>
@@ -2656,7 +2566,7 @@ The following is the JSON format reference for this model, which is organized hi
                                              <h5 id="/component-definition/metadata/parties/telephone-numbers/number" class="toc5 name">number</h5>
                                              <p class="type"><a href="/reference/datatypes/#string">string</a></p>
                                              <p class="occurrence">[0 or 1]</p>
-                                             <div class="crosslink"><a class="usa-button" href="../xml-reference/#/component-definition/metadata/party/telephone-number">Switch to XML</a></div>
+                                             <div class="crosslink"><a class="usa-button" href="../xml-reference/#/component-definition/metadata/party/telephone-number/_VALUE">Switch to XML</a></div>
                                           </div>
                                        </div>
                                     </details>
@@ -2772,7 +2682,7 @@ The following is the JSON format reference for this model, which is organized hi
                                                 <details class="constraints" open="open">
                                                    <summary>Constraint (1)</summary>
                                                    <div class="constraint">
-                                                      <p><span class="usa-tag">matches</span>: a target (value) must match the regular expression '[A-Z](2)'.</p>
+                                                      <p><span class="usa-tag">matches</span>: a target (value) must match the regular expression '[A-Z]{2}'.</p>
                                                    </div>
                                                 </details>
                                              </div>
@@ -2794,11 +2704,20 @@ The following is the JSON format reference for this model, which is organized hi
                                        <p class="formal-name">Location Reference</p>
                                     </div>
                                     <div class="body">
-                                       <p class="description"><span class="usa-tag">Description</span> References a <code>location</code> defined in <code>metadata</code>. </p>
+                                       <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a> identifier reference to a <code>location</code> defined in the <code>metadata</code> section of this or another OSCAL instance. The <em>UUID</em> of the <code>location</code> in the source OSCAL instance is sufficient to reference the data item locally or
+                                          globally (e.g., in an imported OSCAL instance). </p>
+                                       <div class="remarks-group usa-prose">
+                                          <details open="open">
+                                             <summary class="subhead">Remarks</summary>
+                                             <div class="remarks">
+                                                <p>See the <a href="/concepts/identifier-use/#scope">Concepts - Identifier Use</a> page for additional information about the referenced identifier's scope.</p>
+                                             </div>
+                                          </details>
+                                       </div>
                                        <details class="constraints" open="open">
                                           <summary>Constraint (1)</summary>
                                           <div class="constraint">
-                                             <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-location-uuid</code> using a key constructed of key field(s) <code>value()</code></p>
+                                             <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-location-uuid</code> using a key constructed of key field(s) <code>.</code></p>
                                           </div>
                                        </details>
                                     </div>
@@ -2818,23 +2737,20 @@ The following is the JSON format reference for this model, which is organized hi
                                     <p class="formal-name">Organizational Affiliation</p>
                                  </div>
                                  <div class="body">
-                                    <p class="description"><span class="usa-tag">Description</span> Identifies that the party object is a member of the organization associated with
-                                       the provided UUID.</p>
+                                    <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a> identifier reference to another <code>party</code> (<code>person</code> or <code>organization</code>) that this subject is associated with. The <em>UUID</em> of the <code>party</code> in the source OSCAL instance is sufficient to reference the data item locally or
+                                       globally (e.g., in an imported OSCAL instance). </p>
                                     <div class="remarks-group usa-prose">
                                        <details open="open">
                                           <summary class="subhead">Remarks</summary>
                                           <div class="remarks">
-                                             <p>Parties of both the <code>person</code> or <code>organization</code> type can be associated with an organization using the <code>member-of-organization</code>. </p>
-                                          </div>
-                                          <div class="remarks">
-                                             <p>Parties of both the <code>person</code> or <code>organization</code> type can be associated with an organization using the <code>member-of-organization</code>. </p>
+                                             <p>Parties of both the <code>person</code> or <code>organization</code> type can be associated with an organization using the <code>member-of-organization</code>.</p>
                                           </div>
                                        </details>
                                     </div>
                                     <details class="constraints" open="open">
                                        <summary>Constraint (1)</summary>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-party-organizations-uuid</code> using a key constructed of key field(s) <code>value()</code></p>
+                                          <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-party-organizations-uuid</code> using a key constructed of key field(s) <code>.</code></p>
                                        </div>
                                     </details>
                                  </div>
@@ -2876,7 +2792,7 @@ The following is the JSON format reference for this model, which is organized hi
                                  <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-role-id</code> using a key constructed of key field(s) <code>@role-id</code></p>
                               </div>
                               <div class="constraint">
-                                 <p><span class="usa-tag">index has key</span>  for <code class="path">party-uuid</code>this value must correspond to a listing in the index <code>index-metadata-party-uuid</code> using a key constructed of key field(s) <code>value()</code></p>
+                                 <p><span class="usa-tag">index has key</span>  for <code class="path">party-uuid</code>this value must correspond to a listing in the index <code>index-metadata-party-uuid</code> using a key constructed of key field(s) <code>.</code></p>
                               </div>
                            </details>
                            <details class="properties" open="open">
@@ -2890,7 +2806,7 @@ The following is the JSON format reference for this model, which is organized hi
                                     <p class="formal-name">Responsible Role</p>
                                  </div>
                                  <div class="body">
-                                    <p class="description"><span class="usa-tag">Description</span> The role that the party is responsible for.</p>
+                                    <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a> identifier reference to <code>roles</code> served by the user.</p>
                                  </div>
                               </div>
                               <div class="model-entry definition assembly">
@@ -2907,11 +2823,15 @@ The following is the JSON format reference for this model, which is organized hi
                                     <p class="formal-name">Party Reference</p>
                                  </div>
                                  <div class="body">
-                                    <p class="description"><span class="usa-tag">Description</span> References a <code>party</code> defined in <code>metadata</code>. </p>
+                                    <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a> identifier reference to another <code>party</code> defined in <code>metadata</code>. The <em>UUID</em> of the <code>party</code> in the source OSCAL instance is sufficient to reference the data item locally or
+                                       globally (e.g., in an imported OSCAL instance). </p>
                                     <div class="remarks-group usa-prose">
                                        <details open="open">
                                           <summary class="subhead">Remarks</summary>
-                                          <div class="remarks in-use">
+                                          <div class="remarks">
+                                             <p>See the <a href="/concepts/identifier-use/#scope">Concepts - Identifier Use</a> page for additional information about the referenced identifier's scope.</p>
+                                          </div>
+                                          <div class="remarks">
                                              <p>Specifies one or more parties that are responsible for performing the associated <code>role</code>. </p>
                                           </div>
                                        </details>
@@ -2919,7 +2839,7 @@ The following is the JSON format reference for this model, which is organized hi
                                     <details class="constraints" open="open">
                                        <summary>Constraint (1)</summary>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-party-uuid</code> using a key constructed of key field(s) <code>value()</code></p>
+                                          <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-party-uuid</code> using a key constructed of key field(s) <code>.</code></p>
                                        </div>
                                     </details>
                                  </div>
@@ -2995,8 +2915,7 @@ The following is the JSON format reference for this model, which is organized hi
                                              <p class="formal-name">Property Universally Unique Identifier</p>
                                           </div>
                                           <div class="body">
-                                             <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this property elsewhere in an OSCAL
-                                                document. A UUID should be consistently used for a given location across revisions
+                                             <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                                                 of the document.</p>
                                           </div>
                                        </div>
@@ -3014,14 +2933,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
-                                                         names and associated values used in a property. This allows the semantics associated
-                                                         with a given name/value pair to be defined on an organization-by-organization basis.</p>
-                                                      <p>An organization MUST use a URI that they have control over. e.g., a domain registered
-                                                         to the organization in a URI, a registered uniform resource names (URN) namespace.</p>
-                                                      <p>When a <code>ns</code> is not provided, its value should be assumed to be <code>http://csrc.nist.gov/ns/oscal</code> and the name should be a name defined by the associated OSCAL model.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
                                                          names and associated values used in a property. This allows the semantics associated
@@ -3060,10 +2971,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
-                                                         a specific <code>class</code> value.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
                                                          a specific <code>class</code> value.</p>
@@ -3115,13 +3022,13 @@ The following is the JSON format reference for this model, which is organized hi
                                     <details class="constraints" open="open">
                                        <summary>Constraints (3)</summary>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
+                                          <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]/@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
                                        </div>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
+                                          <p><span class="usa-tag">index has key</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]</code>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
                                        </div>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
+                                          <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and not(starts-with(@href,'#'))]/@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
                                        </div>
                                     </details>
                                     <details class="properties" open="open">
@@ -3139,15 +3046,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
-                                                         that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
-                                                      <p>If a local reference using a fragment is used, this will be indicated by a fragment
-                                                         "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document.</p>
-                                                      <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the referenced
-                                                         resource. A relative URI will be resolved relative to the location of the document
-                                                         containing the link.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
                                                          that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
@@ -3199,6 +3097,11 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
+                                                   <div class="remarks">
+                                                      <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                         type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                         suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                                   </div>
                                                    <div class="remarks">
                                                       <p>The <code>media-type</code> provides a hint about the content model of the referenced resource. A valid entry
                                                          from the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a> SHOULD be used.</p>
@@ -3404,7 +3307,7 @@ The following is the JSON format reference for this model, which is organized hi
                            </ul>
                      </div>
                      <div class="constraint">
-                        <p><span class="usa-tag">allowed values</span>  for <code class="path">responsible-role/@role-id|control-implementation/implemented-requirement/responsible-role/@role-id||control-implementation/implemented-requirement/statement/responsible-role/@role-id</code></p>
+                        <p><span class="usa-tag">allowed values</span>  for <code class="path">responsible-role/@role-id|control-implementation/implemented-requirement/responsible-role/@role-id|control-implementation/implemented-requirement/statement/responsible-role/@role-id</code></p>
                         <p>The value <b>may be locally defined</b>, or one of the following:</p>
                         <ul>
                            
@@ -3482,7 +3385,7 @@ The following is the JSON format reference for this model, which is organized hi
                            </ul>
                      </div>
                      <div class="constraint">
-                        <p><span class="usa-tag">allowed values</span>  for <code class="path">property[@name='allows-authenticated-scan']/@value</code></p>
+                        <p><span class="usa-tag">allowed values</span>  for <code class="path">prop[@name='allows-authenticated-scan']/@value</code></p>
                         <p>The value <b>must</b> be one of the following:</p>
                         <ul>
                            
@@ -3516,7 +3419,7 @@ The following is the JSON format reference for this model, which is organized hi
                         <p>The value <b>must</b> be one of the following:</p>
                         <ul>
                            
-                           <li><strong>inteneral</strong>: The component is implemented within the system boundary.</li>
+                           <li><strong>internal</strong>: The component is implemented within the system boundary.</li>
                            
                            <li><strong>external</strong>: The component is implemented outside the system boundary.</li>
                            </ul>
@@ -3567,7 +3470,9 @@ The following is the JSON format reference for this model, which is organized hi
                            <p class="formal-name">Component Identifier</p>
                         </div>
                         <div class="body">
-                           <p class="description"><span class="usa-tag">Description</span> The unique identifier for the component.</p>
+                           <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this component elsewhere in <a href="/concepts/identifier-use/#component-definition-identifiers">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>component</code> can be used to reference the data item locally or globally (e.g., in an imported
+                              OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
+                              of the document.</p>
                         </div>
                      </div>
                      <div class="model-entry definition assembly">
@@ -3723,8 +3628,7 @@ The following is the JSON format reference for this model, which is organized hi
                                     <p class="formal-name">Property Universally Unique Identifier</p>
                                  </div>
                                  <div class="body">
-                                    <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this property elsewhere in an OSCAL
-                                       document. A UUID should be consistently used for a given location across revisions
+                                    <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                                        of the document.</p>
                                  </div>
                               </div>
@@ -3742,14 +3646,6 @@ The following is the JSON format reference for this model, which is organized hi
                                     <div class="remarks-group usa-prose">
                                        <details open="open">
                                           <summary class="subhead">Remarks</summary>
-                                          <div class="remarks">
-                                             <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
-                                                names and associated values used in a property. This allows the semantics associated
-                                                with a given name/value pair to be defined on an organization-by-organization basis.</p>
-                                             <p>An organization MUST use a URI that they have control over. e.g., a domain registered
-                                                to the organization in a URI, a registered uniform resource names (URN) namespace.</p>
-                                             <p>When a <code>ns</code> is not provided, its value should be assumed to be <code>http://csrc.nist.gov/ns/oscal</code> and the name should be a name defined by the associated OSCAL model.</p>
-                                          </div>
                                           <div class="remarks">
                                              <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
                                                 names and associated values used in a property. This allows the semantics associated
@@ -3788,10 +3684,6 @@ The following is the JSON format reference for this model, which is organized hi
                                     <div class="remarks-group usa-prose">
                                        <details open="open">
                                           <summary class="subhead">Remarks</summary>
-                                          <div class="remarks">
-                                             <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
-                                                a specific <code>class</code> value.</p>
-                                          </div>
                                           <div class="remarks">
                                              <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
                                                 a specific <code>class</code> value.</p>
@@ -3843,13 +3735,13 @@ The following is the JSON format reference for this model, which is organized hi
                            <details class="constraints" open="open">
                               <summary>Constraints (3)</summary>
                               <div class="constraint">
-                                 <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
+                                 <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]/@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
                               </div>
                               <div class="constraint">
-                                 <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
+                                 <p><span class="usa-tag">index has key</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]</code>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
                               </div>
                               <div class="constraint">
-                                 <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
+                                 <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and not(starts-with(@href,'#'))]/@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
                               </div>
                            </details>
                            <details class="properties" open="open">
@@ -3867,15 +3759,6 @@ The following is the JSON format reference for this model, which is organized hi
                                     <div class="remarks-group usa-prose">
                                        <details open="open">
                                           <summary class="subhead">Remarks</summary>
-                                          <div class="remarks">
-                                             <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
-                                                that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
-                                             <p>If a local reference using a fragment is used, this will be indicated by a fragment
-                                                "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document.</p>
-                                             <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the referenced
-                                                resource. A relative URI will be resolved relative to the location of the document
-                                                containing the link.</p>
-                                          </div>
                                           <div class="remarks">
                                              <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
                                                 that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
@@ -3928,6 +3811,11 @@ The following is the JSON format reference for this model, which is organized hi
                                        <details open="open">
                                           <summary class="subhead">Remarks</summary>
                                           <div class="remarks">
+                                             <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                          </div>
+                                          <div class="remarks">
                                              <p>The <code>media-type</code> provides a hint about the content model of the referenced resource. A valid entry
                                                 from the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a> SHOULD be used.</p>
                                           </div>
@@ -3978,7 +3866,7 @@ The following is the JSON format reference for this model, which is organized hi
                                     <p class="formal-name">Responsible Role ID</p>
                                  </div>
                                  <div class="body">
-                                    <p class="description"><span class="usa-tag">Description</span> The role that is responsible for the business function.</p>
+                                    <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a> identifier reference to <code>roles</code> responsible for the business function.</p>
                                  </div>
                               </div>
                               <div class="model-entry definition assembly">
@@ -4052,8 +3940,7 @@ The following is the JSON format reference for this model, which is organized hi
                                              <p class="formal-name">Property Universally Unique Identifier</p>
                                           </div>
                                           <div class="body">
-                                             <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this property elsewhere in an OSCAL
-                                                document. A UUID should be consistently used for a given location across revisions
+                                             <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                                                 of the document.</p>
                                           </div>
                                        </div>
@@ -4071,14 +3958,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
-                                                         names and associated values used in a property. This allows the semantics associated
-                                                         with a given name/value pair to be defined on an organization-by-organization basis.</p>
-                                                      <p>An organization MUST use a URI that they have control over. e.g., a domain registered
-                                                         to the organization in a URI, a registered uniform resource names (URN) namespace.</p>
-                                                      <p>When a <code>ns</code> is not provided, its value should be assumed to be <code>http://csrc.nist.gov/ns/oscal</code> and the name should be a name defined by the associated OSCAL model.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
                                                          names and associated values used in a property. This allows the semantics associated
@@ -4117,10 +3996,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
-                                                         a specific <code>class</code> value.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
                                                          a specific <code>class</code> value.</p>
@@ -4172,13 +4047,13 @@ The following is the JSON format reference for this model, which is organized hi
                                     <details class="constraints" open="open">
                                        <summary>Constraints (3)</summary>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
+                                          <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]/@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
                                        </div>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
+                                          <p><span class="usa-tag">index has key</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]</code>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
                                        </div>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
+                                          <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and not(starts-with(@href,'#'))]/@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
                                        </div>
                                     </details>
                                     <details class="properties" open="open">
@@ -4196,15 +4071,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
-                                                         that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
-                                                      <p>If a local reference using a fragment is used, this will be indicated by a fragment
-                                                         "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document.</p>
-                                                      <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the referenced
-                                                         resource. A relative URI will be resolved relative to the location of the document
-                                                         containing the link.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
                                                          that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
@@ -4257,6 +4123,11 @@ The following is the JSON format reference for this model, which is organized hi
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
                                                    <div class="remarks">
+                                                      <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                         type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                         suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                                   </div>
+                                                   <div class="remarks">
                                                       <p>The <code>media-type</code> provides a hint about the content model of the referenced resource. A valid entry
                                                          from the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a> SHOULD be used.</p>
                                                    </div>
@@ -4294,11 +4165,20 @@ The following is the JSON format reference for this model, which is organized hi
                                     <p class="formal-name">Party Reference</p>
                                  </div>
                                  <div class="body">
-                                    <p class="description"><span class="usa-tag">Description</span> References a <code>party</code> defined in <code>metadata</code>. </p>
+                                    <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a> identifier reference to another <code>party</code> defined in <code>metadata</code>. The <em>UUID</em> of the <code>party</code> in the source OSCAL instance is sufficient to reference the data item locally or
+                                       globally (e.g., in an imported OSCAL instance). </p>
+                                    <div class="remarks-group usa-prose">
+                                       <details open="open">
+                                          <summary class="subhead">Remarks</summary>
+                                          <div class="remarks">
+                                             <p>See the <a href="/concepts/identifier-use/#scope">Concepts - Identifier Use</a> page for additional information about the referenced identifier's scope.</p>
+                                          </div>
+                                       </details>
+                                    </div>
                                     <details class="constraints" open="open">
                                        <summary>Constraint (1)</summary>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-party-uuid</code> using a key constructed of key field(s) <code>value()</code></p>
+                                          <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-party-uuid</code> using a key constructed of key field(s) <code>.</code></p>
                                        </div>
                                     </details>
                                  </div>
@@ -4336,7 +4216,7 @@ The following is the JSON format reference for this model, which is organized hi
                            <div class="remarks-group usa-prose">
                               <details open="open">
                                  <summary class="subhead">Remarks</summary>
-                                 <div class="remarks in-use">
+                                 <div class="remarks">
                                     <p>Used for <code>service</code> components to define the protocols supported by the service.</p>
                                  </div>
                               </details>
@@ -4352,9 +4232,10 @@ The following is the JSON format reference for this model, which is organized hi
                                     <p class="formal-name">Service Protocol Information Universally Unique Identifier</p>
                                  </div>
                                  <div class="body">
-                                    <p class="description"><span class="usa-tag">Description</span> A globally unique identifier that can be used to reference this service protocol
-                                       entry elsewhere in an OSCAL document. A UUID should be consistently used for a given
-                                       resource across revisions of the document.</p>
+                                    <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this service protocol information elsewhere in
+                                       <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>service protocol</code> can be used to reference the data item locally or globally (e.g., in an imported
+                                       OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
+                                       of the document.</p>
                                  </div>
                               </div>
                               <div class="model-entry definition assembly">
@@ -4371,9 +4252,6 @@ The following is the JSON format reference for this model, which is organized hi
                                     <div class="remarks-group usa-prose">
                                        <details open="open">
                                           <summary class="subhead">Remarks</summary>
-                                          <div class="remarks">
-                                             <p>The short name of the protocol (e.g., https).</p>
-                                          </div>
                                           <div class="remarks">
                                              <p>The short name of the protocol (e.g., https).</p>
                                           </div>
@@ -4435,9 +4313,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                    <div class="remarks">
                                                       <p>Should be a number within a permitted range</p>
                                                    </div>
-                                                   <div class="remarks">
-                                                      <p>Should be a number within a permitted range</p>
-                                                   </div>
                                                 </details>
                                              </div>
                                           </div>
@@ -4455,9 +4330,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>Should be a number within a permitted range</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>Should be a number within a permitted range</p>
                                                    </div>
@@ -4515,7 +4387,8 @@ The following is the JSON format reference for this model, which is organized hi
                               <details open="open">
                                  <summary class="subhead">Remarks</summary>
                                  <div class="remarks">
-                                    <p>Use of <code>set-parameter</code> in this context, sets the parameter for all related controls referenced in an <code>implemented-requirement</code>. If the same parameter is also set in a specific <code>implemented-requirement</code>, then the new value will override this value.</p>
+                                    <p>Use of <code>set-parameter</code> in this context, sets the parameter for all controls referenced by any <code>implemented-requirement</code> contained in this context. Any <code>set-parameter</code> defined in a child context will override this value. If not overridden by a child,
+                                       this value applies in the child context.</p>
                                  </div>
                               </details>
                            </div>
@@ -4536,7 +4409,9 @@ The following is the JSON format reference for this model, which is organized hi
                                     <p class="formal-name">Control Implementation Set Identifier</p>
                                  </div>
                                  <div class="body">
-                                    <p class="description"><span class="usa-tag">Description</span> A unique identifier for the set of implemented controls.</p>
+                                    <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference a set of implemented controls elsewhere in <a href="/concepts/identifier-use/#component-definition-identifiers">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>control implementation set</code> can be used to reference the data item locally or globally (e.g., in an imported
+                                       OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
+                                       of the document.</p>
                                  </div>
                               </div>
                               <div class="model-entry definition assembly">
@@ -4645,8 +4520,7 @@ The following is the JSON format reference for this model, which is organized hi
                                              <p class="formal-name">Property Universally Unique Identifier</p>
                                           </div>
                                           <div class="body">
-                                             <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this property elsewhere in an OSCAL
-                                                document. A UUID should be consistently used for a given location across revisions
+                                             <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                                                 of the document.</p>
                                           </div>
                                        </div>
@@ -4664,14 +4538,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
-                                                         names and associated values used in a property. This allows the semantics associated
-                                                         with a given name/value pair to be defined on an organization-by-organization basis.</p>
-                                                      <p>An organization MUST use a URI that they have control over. e.g., a domain registered
-                                                         to the organization in a URI, a registered uniform resource names (URN) namespace.</p>
-                                                      <p>When a <code>ns</code> is not provided, its value should be assumed to be <code>http://csrc.nist.gov/ns/oscal</code> and the name should be a name defined by the associated OSCAL model.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
                                                          names and associated values used in a property. This allows the semantics associated
@@ -4710,10 +4576,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
-                                                         a specific <code>class</code> value.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
                                                          a specific <code>class</code> value.</p>
@@ -4765,13 +4627,13 @@ The following is the JSON format reference for this model, which is organized hi
                                     <details class="constraints" open="open">
                                        <summary>Constraints (3)</summary>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
+                                          <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]/@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
                                        </div>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
+                                          <p><span class="usa-tag">index has key</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]</code>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
                                        </div>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
+                                          <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and not(starts-with(@href,'#'))]/@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
                                        </div>
                                     </details>
                                     <details class="properties" open="open">
@@ -4789,15 +4651,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
-                                                         that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
-                                                      <p>If a local reference using a fragment is used, this will be indicated by a fragment
-                                                         "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document.</p>
-                                                      <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the referenced
-                                                         resource. A relative URI will be resolved relative to the location of the document
-                                                         containing the link.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
                                                          that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
@@ -4850,6 +4703,11 @@ The following is the JSON format reference for this model, which is organized hi
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
                                                    <div class="remarks">
+                                                      <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                         type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                         suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                                   </div>
+                                                   <div class="remarks">
                                                       <p>The <code>media-type</code> provides a hint about the content model of the referenced resource. A valid entry
                                                          from the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a> SHOULD be used.</p>
                                                    </div>
@@ -4899,8 +4757,8 @@ The following is the JSON format reference for this model, which is organized hi
                                              <p class="formal-name">Parameter ID</p>
                                           </div>
                                           <div class="body">
-                                             <p class="description"><span class="usa-tag">Description</span> A reference to a parameter within a control, who's catalog has been imported into
-                                                the current implementation context.</p>
+                                             <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a> reference to a <code>parameter</code> within a control, who's catalog has been imported into the current implementation
+                                                context.</p>
                                           </div>
                                        </div>
                                        <div class="model-entry definition assembly">
@@ -4950,6 +4808,21 @@ The following is the JSON format reference for this model, which is organized hi
                                  </div>
                                  <div class="body">
                                     <p class="description"><span class="usa-tag">Description</span> Describes how the containing component or capability implements an individual control.</p>
+                                    <div class="remarks-group usa-prose">
+                                       <details open="open">
+                                          <summary class="subhead">Remarks</summary>
+                                          <div class="remarks">
+                                             <p>Implemented requirements within a component or capability in a component definition
+                                                provide a means to suggest possible control implementation details, which may be used
+                                                by a different party when authoring a system security plan. Thus, these requirements
+                                                defined in a component definition are only a suggestion of how to implement, which
+                                                may be adopted wholesale, changed, or ignored by a person defining an information
+                                                system implementation.</p>
+                                             <p>Use of <code>set-parameter</code> in this context, sets the parameter for the referenced control and any associated
+                                                statements.</p>
+                                          </div>
+                                       </details>
+                                    </div>
                                     <details class="constraints" open="open">
                                        <summary>Constraints (3)</summary>
                                        <div class="constraint">
@@ -4973,7 +4846,10 @@ The following is the JSON format reference for this model, which is organized hi
                                              <p class="formal-name">Control Implementation Identifier</p>
                                           </div>
                                           <div class="body">
-                                             <p class="description"><span class="usa-tag">Description</span> A unique identifier for a specific control implementation.</p>
+                                             <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference a specific control implementation elsewhere in
+                                                <a href="/concepts/identifier-use/#component-definition-identifiers">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>control implementation</code> can be used to reference the data item locally or globally (e.g., in an imported
+                                                OSCAL instance).This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
+                                                of the document.</p>
                                           </div>
                                        </div>
                                        <div class="model-entry definition assembly">
@@ -4985,7 +4861,7 @@ The following is the JSON format reference for this model, which is organized hi
                                              <p class="formal-name">Control Identifier Reference</p>
                                           </div>
                                           <div class="body">
-                                             <p class="description"><span class="usa-tag">Description</span> A reference to a control with a corresponding <code>id</code> value.</p>
+                                             <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a> identifier reference to a control with a corresponding <code>id</code> value. When referencing an externally defined <code>control</code>, the <code>Control Identifier Reference</code> must be used in the context of the external / imported OSCAL instance (e.g., uri-reference).</p>
                                           </div>
                                        </div>
                                        <div class="model-entry definition assembly">
@@ -4997,8 +4873,8 @@ The following is the JSON format reference for this model, which is organized hi
                                              <p class="formal-name">Control Implementation Description</p>
                                           </div>
                                           <div class="body">
-                                             <p class="description"><span class="usa-tag">Description</span> A description of how the specified control is implemented for the containing component
-                                                or capability.</p>
+                                             <p class="description"><span class="usa-tag">Description</span> A suggestion for how the specified control may be implemented if the containing component
+                                                or capability is instantiated in a system security plan.</p>
                                           </div>
                                        </div>
                                        <div class="model-entry definition assembly">
@@ -5072,8 +4948,7 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <p class="formal-name">Property Universally Unique Identifier</p>
                                                    </div>
                                                    <div class="body">
-                                                      <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this property elsewhere in an OSCAL
-                                                         document. A UUID should be consistently used for a given location across revisions
+                                                      <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                                                          of the document.</p>
                                                    </div>
                                                 </div>
@@ -5091,14 +4966,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <div class="remarks-group usa-prose">
                                                          <details open="open">
                                                             <summary class="subhead">Remarks</summary>
-                                                            <div class="remarks">
-                                                               <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
-                                                                  names and associated values used in a property. This allows the semantics associated
-                                                                  with a given name/value pair to be defined on an organization-by-organization basis.</p>
-                                                               <p>An organization MUST use a URI that they have control over. e.g., a domain registered
-                                                                  to the organization in a URI, a registered uniform resource names (URN) namespace.</p>
-                                                               <p>When a <code>ns</code> is not provided, its value should be assumed to be <code>http://csrc.nist.gov/ns/oscal</code> and the name should be a name defined by the associated OSCAL model.</p>
-                                                            </div>
                                                             <div class="remarks">
                                                                <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
                                                                   names and associated values used in a property. This allows the semantics associated
@@ -5137,10 +5004,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <div class="remarks-group usa-prose">
                                                          <details open="open">
                                                             <summary class="subhead">Remarks</summary>
-                                                            <div class="remarks">
-                                                               <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
-                                                                  a specific <code>class</code> value.</p>
-                                                            </div>
                                                             <div class="remarks">
                                                                <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
                                                                   a specific <code>class</code> value.</p>
@@ -5192,13 +5055,13 @@ The following is the JSON format reference for this model, which is organized hi
                                              <details class="constraints" open="open">
                                                 <summary>Constraints (3)</summary>
                                                 <div class="constraint">
-                                                   <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
+                                                   <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]/@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
                                                 </div>
                                                 <div class="constraint">
-                                                   <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
+                                                   <p><span class="usa-tag">index has key</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]</code>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
                                                 </div>
                                                 <div class="constraint">
-                                                   <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
+                                                   <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and not(starts-with(@href,'#'))]/@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
                                                 </div>
                                              </details>
                                              <details class="properties" open="open">
@@ -5216,15 +5079,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <div class="remarks-group usa-prose">
                                                          <details open="open">
                                                             <summary class="subhead">Remarks</summary>
-                                                            <div class="remarks">
-                                                               <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
-                                                                  that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
-                                                               <p>If a local reference using a fragment is used, this will be indicated by a fragment
-                                                                  "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document.</p>
-                                                               <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the referenced
-                                                                  resource. A relative URI will be resolved relative to the location of the document
-                                                                  containing the link.</p>
-                                                            </div>
                                                             <div class="remarks">
                                                                <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
                                                                   that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
@@ -5277,6 +5131,11 @@ The following is the JSON format reference for this model, which is organized hi
                                                          <details open="open">
                                                             <summary class="subhead">Remarks</summary>
                                                             <div class="remarks">
+                                                               <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                                  type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                                  suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                                            </div>
+                                                            <div class="remarks">
                                                                <p>The <code>media-type</code> provides a hint about the content model of the referenced resource. A valid entry
                                                                   from the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a> SHOULD be used.</p>
                                                             </div>
@@ -5326,8 +5185,8 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <p class="formal-name">Parameter ID</p>
                                                    </div>
                                                    <div class="body">
-                                                      <p class="description"><span class="usa-tag">Description</span> A reference to a parameter within a control, who's catalog has been imported into
-                                                         the current implementation context.</p>
+                                                      <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a> reference to a <code>parameter</code> within a control, who's catalog has been imported into the current implementation
+                                                         context.</p>
                                                    </div>
                                                 </div>
                                                 <div class="model-entry definition assembly">
@@ -5389,7 +5248,7 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <p class="formal-name">Responsible Role ID</p>
                                                    </div>
                                                    <div class="body">
-                                                      <p class="description"><span class="usa-tag">Description</span> The role that is responsible for the business function.</p>
+                                                      <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a> identifier reference to <code>roles</code> responsible for the business function.</p>
                                                    </div>
                                                 </div>
                                                 <div class="model-entry definition assembly">
@@ -5463,8 +5322,7 @@ The following is the JSON format reference for this model, which is organized hi
                                                                <p class="formal-name">Property Universally Unique Identifier</p>
                                                             </div>
                                                             <div class="body">
-                                                               <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this property elsewhere in an OSCAL
-                                                                  document. A UUID should be consistently used for a given location across revisions
+                                                               <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                                                                   of the document.</p>
                                                             </div>
                                                          </div>
@@ -5482,14 +5340,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                                <div class="remarks-group usa-prose">
                                                                   <details open="open">
                                                                      <summary class="subhead">Remarks</summary>
-                                                                     <div class="remarks">
-                                                                        <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
-                                                                           names and associated values used in a property. This allows the semantics associated
-                                                                           with a given name/value pair to be defined on an organization-by-organization basis.</p>
-                                                                        <p>An organization MUST use a URI that they have control over. e.g., a domain registered
-                                                                           to the organization in a URI, a registered uniform resource names (URN) namespace.</p>
-                                                                        <p>When a <code>ns</code> is not provided, its value should be assumed to be <code>http://csrc.nist.gov/ns/oscal</code> and the name should be a name defined by the associated OSCAL model.</p>
-                                                                     </div>
                                                                      <div class="remarks">
                                                                         <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
                                                                            names and associated values used in a property. This allows the semantics associated
@@ -5528,10 +5378,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                                <div class="remarks-group usa-prose">
                                                                   <details open="open">
                                                                      <summary class="subhead">Remarks</summary>
-                                                                     <div class="remarks">
-                                                                        <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
-                                                                           a specific <code>class</code> value.</p>
-                                                                     </div>
                                                                      <div class="remarks">
                                                                         <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
                                                                            a specific <code>class</code> value.</p>
@@ -5583,13 +5429,13 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <details class="constraints" open="open">
                                                          <summary>Constraints (3)</summary>
                                                          <div class="constraint">
-                                                            <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
+                                                            <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]/@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
                                                          </div>
                                                          <div class="constraint">
-                                                            <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
+                                                            <p><span class="usa-tag">index has key</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]</code>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
                                                          </div>
                                                          <div class="constraint">
-                                                            <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
+                                                            <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and not(starts-with(@href,'#'))]/@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
                                                          </div>
                                                       </details>
                                                       <details class="properties" open="open">
@@ -5607,15 +5453,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                                <div class="remarks-group usa-prose">
                                                                   <details open="open">
                                                                      <summary class="subhead">Remarks</summary>
-                                                                     <div class="remarks">
-                                                                        <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
-                                                                           that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
-                                                                        <p>If a local reference using a fragment is used, this will be indicated by a fragment
-                                                                           "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document.</p>
-                                                                        <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the referenced
-                                                                           resource. A relative URI will be resolved relative to the location of the document
-                                                                           containing the link.</p>
-                                                                     </div>
                                                                      <div class="remarks">
                                                                         <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
                                                                            that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
@@ -5668,6 +5505,11 @@ The following is the JSON format reference for this model, which is organized hi
                                                                   <details open="open">
                                                                      <summary class="subhead">Remarks</summary>
                                                                      <div class="remarks">
+                                                                        <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                                           type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                                           suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                                                     </div>
+                                                                     <div class="remarks">
                                                                         <p>The <code>media-type</code> provides a hint about the content model of the referenced resource. A valid entry
                                                                            from the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a> SHOULD be used.</p>
                                                                      </div>
@@ -5705,11 +5547,20 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <p class="formal-name">Party Reference</p>
                                                    </div>
                                                    <div class="body">
-                                                      <p class="description"><span class="usa-tag">Description</span> References a <code>party</code> defined in <code>metadata</code>. </p>
+                                                      <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a> identifier reference to another <code>party</code> defined in <code>metadata</code>. The <em>UUID</em> of the <code>party</code> in the source OSCAL instance is sufficient to reference the data item locally or
+                                                         globally (e.g., in an imported OSCAL instance). </p>
+                                                      <div class="remarks-group usa-prose">
+                                                         <details open="open">
+                                                            <summary class="subhead">Remarks</summary>
+                                                            <div class="remarks">
+                                                               <p>See the <a href="/concepts/identifier-use/#scope">Concepts - Identifier Use</a> page for additional information about the referenced identifier's scope.</p>
+                                                            </div>
+                                                         </details>
+                                                      </div>
                                                       <details class="constraints" open="open">
                                                          <summary>Constraint (1)</summary>
                                                          <div class="constraint">
-                                                            <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-party-uuid</code> using a key constructed of key field(s) <code>value()</code></p>
+                                                            <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-party-uuid</code> using a key constructed of key field(s) <code>.</code></p>
                                                          </div>
                                                       </details>
                                                    </div>
@@ -5761,7 +5612,7 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <p class="formal-name">Control Statement Reference</p>
                                                    </div>
                                                    <div class="body">
-                                                      <p class="description"><span class="usa-tag">Description</span> A reference to a control statement by its identifier</p>
+                                                      <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a> identifier reference to a <code>control statement</code>.</p>
                                                       <div class="remarks-group usa-prose">
                                                          <details open="open">
                                                             <summary class="subhead">Remarks</summary>
@@ -5781,9 +5632,8 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <p class="formal-name">Control Statement Reference Universally Unique Identifier</p>
                                                    </div>
                                                    <div class="body">
-                                                      <p class="description"><span class="usa-tag">Description</span> A globally unique identifier that can be used to reference this control statement
-                                                         entry elsewhere in an OSCAL document. A UUID should be consistently used for a given
-                                                         resource across revisions of the document.</p>
+                                                      <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this control statement elsewhere in <a href="/concepts/identifier-use/#component-definition-identifiers">this or other OSCAL instances</a>. The <em>UUID</em> of the <code>control statement</code> in the source OSCAL instance is sufficient to reference the data item locally or
+                                                         globally (e.g., in an imported OSCAL instance).</p>
                                                    </div>
                                                 </div>
                                                 <div class="model-entry definition assembly">
@@ -5870,8 +5720,7 @@ The following is the JSON format reference for this model, which is organized hi
                                                                <p class="formal-name">Property Universally Unique Identifier</p>
                                                             </div>
                                                             <div class="body">
-                                                               <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this property elsewhere in an OSCAL
-                                                                  document. A UUID should be consistently used for a given location across revisions
+                                                               <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                                                                   of the document.</p>
                                                             </div>
                                                          </div>
@@ -5889,14 +5738,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                                <div class="remarks-group usa-prose">
                                                                   <details open="open">
                                                                      <summary class="subhead">Remarks</summary>
-                                                                     <div class="remarks">
-                                                                        <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
-                                                                           names and associated values used in a property. This allows the semantics associated
-                                                                           with a given name/value pair to be defined on an organization-by-organization basis.</p>
-                                                                        <p>An organization MUST use a URI that they have control over. e.g., a domain registered
-                                                                           to the organization in a URI, a registered uniform resource names (URN) namespace.</p>
-                                                                        <p>When a <code>ns</code> is not provided, its value should be assumed to be <code>http://csrc.nist.gov/ns/oscal</code> and the name should be a name defined by the associated OSCAL model.</p>
-                                                                     </div>
                                                                      <div class="remarks">
                                                                         <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
                                                                            names and associated values used in a property. This allows the semantics associated
@@ -5935,10 +5776,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                                <div class="remarks-group usa-prose">
                                                                   <details open="open">
                                                                      <summary class="subhead">Remarks</summary>
-                                                                     <div class="remarks">
-                                                                        <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
-                                                                           a specific <code>class</code> value.</p>
-                                                                     </div>
                                                                      <div class="remarks">
                                                                         <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
                                                                            a specific <code>class</code> value.</p>
@@ -5990,13 +5827,13 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <details class="constraints" open="open">
                                                          <summary>Constraints (3)</summary>
                                                          <div class="constraint">
-                                                            <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
+                                                            <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]/@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
                                                          </div>
                                                          <div class="constraint">
-                                                            <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
+                                                            <p><span class="usa-tag">index has key</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]</code>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
                                                          </div>
                                                          <div class="constraint">
-                                                            <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
+                                                            <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and not(starts-with(@href,'#'))]/@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
                                                          </div>
                                                       </details>
                                                       <details class="properties" open="open">
@@ -6014,15 +5851,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                                <div class="remarks-group usa-prose">
                                                                   <details open="open">
                                                                      <summary class="subhead">Remarks</summary>
-                                                                     <div class="remarks">
-                                                                        <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
-                                                                           that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
-                                                                        <p>If a local reference using a fragment is used, this will be indicated by a fragment
-                                                                           "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document.</p>
-                                                                        <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the referenced
-                                                                           resource. A relative URI will be resolved relative to the location of the document
-                                                                           containing the link.</p>
-                                                                     </div>
                                                                      <div class="remarks">
                                                                         <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
                                                                            that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
@@ -6075,6 +5903,11 @@ The following is the JSON format reference for this model, which is organized hi
                                                                   <details open="open">
                                                                      <summary class="subhead">Remarks</summary>
                                                                      <div class="remarks">
+                                                                        <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                                           type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                                           suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                                                     </div>
+                                                                     <div class="remarks">
                                                                         <p>The <code>media-type</code> provides a hint about the content model of the referenced resource. A valid entry
                                                                            from the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a> SHOULD be used.</p>
                                                                      </div>
@@ -6125,7 +5958,7 @@ The following is the JSON format reference for this model, which is organized hi
                                                                <p class="formal-name">Responsible Role ID</p>
                                                             </div>
                                                             <div class="body">
-                                                               <p class="description"><span class="usa-tag">Description</span> The role that is responsible for the business function.</p>
+                                                               <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a> identifier reference to <code>roles</code> responsible for the business function.</p>
                                                             </div>
                                                          </div>
                                                          <div class="model-entry definition assembly">
@@ -6199,8 +6032,7 @@ The following is the JSON format reference for this model, which is organized hi
                                                                         <p class="formal-name">Property Universally Unique Identifier</p>
                                                                      </div>
                                                                      <div class="body">
-                                                                        <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this property elsewhere in an OSCAL
-                                                                           document. A UUID should be consistently used for a given location across revisions
+                                                                        <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                                                                            of the document.</p>
                                                                      </div>
                                                                   </div>
@@ -6218,14 +6050,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                                         <div class="remarks-group usa-prose">
                                                                            <details open="open">
                                                                               <summary class="subhead">Remarks</summary>
-                                                                              <div class="remarks">
-                                                                                 <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
-                                                                                    names and associated values used in a property. This allows the semantics associated
-                                                                                    with a given name/value pair to be defined on an organization-by-organization basis.</p>
-                                                                                 <p>An organization MUST use a URI that they have control over. e.g., a domain registered
-                                                                                    to the organization in a URI, a registered uniform resource names (URN) namespace.</p>
-                                                                                 <p>When a <code>ns</code> is not provided, its value should be assumed to be <code>http://csrc.nist.gov/ns/oscal</code> and the name should be a name defined by the associated OSCAL model.</p>
-                                                                              </div>
                                                                               <div class="remarks">
                                                                                  <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
                                                                                     names and associated values used in a property. This allows the semantics associated
@@ -6264,10 +6088,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                                         <div class="remarks-group usa-prose">
                                                                            <details open="open">
                                                                               <summary class="subhead">Remarks</summary>
-                                                                              <div class="remarks">
-                                                                                 <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
-                                                                                    a specific <code>class</code> value.</p>
-                                                                              </div>
                                                                               <div class="remarks">
                                                                                  <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
                                                                                     a specific <code>class</code> value.</p>
@@ -6319,13 +6139,13 @@ The following is the JSON format reference for this model, which is organized hi
                                                                <details class="constraints" open="open">
                                                                   <summary>Constraints (3)</summary>
                                                                   <div class="constraint">
-                                                                     <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
+                                                                     <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]/@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
                                                                   </div>
                                                                   <div class="constraint">
-                                                                     <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
+                                                                     <p><span class="usa-tag">index has key</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]</code>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
                                                                   </div>
                                                                   <div class="constraint">
-                                                                     <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
+                                                                     <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and not(starts-with(@href,'#'))]/@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
                                                                   </div>
                                                                </details>
                                                                <details class="properties" open="open">
@@ -6343,15 +6163,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                                         <div class="remarks-group usa-prose">
                                                                            <details open="open">
                                                                               <summary class="subhead">Remarks</summary>
-                                                                              <div class="remarks">
-                                                                                 <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
-                                                                                    that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
-                                                                                 <p>If a local reference using a fragment is used, this will be indicated by a fragment
-                                                                                    "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document.</p>
-                                                                                 <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the referenced
-                                                                                    resource. A relative URI will be resolved relative to the location of the document
-                                                                                    containing the link.</p>
-                                                                              </div>
                                                                               <div class="remarks">
                                                                                  <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
                                                                                     that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
@@ -6404,6 +6215,11 @@ The following is the JSON format reference for this model, which is organized hi
                                                                            <details open="open">
                                                                               <summary class="subhead">Remarks</summary>
                                                                               <div class="remarks">
+                                                                                 <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                                                    type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                                                    suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                                                              </div>
+                                                                              <div class="remarks">
                                                                                  <p>The <code>media-type</code> provides a hint about the content model of the referenced resource. A valid entry
                                                                                     from the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a> SHOULD be used.</p>
                                                                               </div>
@@ -6441,11 +6257,20 @@ The following is the JSON format reference for this model, which is organized hi
                                                                <p class="formal-name">Party Reference</p>
                                                             </div>
                                                             <div class="body">
-                                                               <p class="description"><span class="usa-tag">Description</span> References a <code>party</code> defined in <code>metadata</code>. </p>
+                                                               <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a> identifier reference to another <code>party</code> defined in <code>metadata</code>. The <em>UUID</em> of the <code>party</code> in the source OSCAL instance is sufficient to reference the data item locally or
+                                                                  globally (e.g., in an imported OSCAL instance). </p>
+                                                               <div class="remarks-group usa-prose">
+                                                                  <details open="open">
+                                                                     <summary class="subhead">Remarks</summary>
+                                                                     <div class="remarks">
+                                                                        <p>See the <a href="/concepts/identifier-use/#scope">Concepts - Identifier Use</a> page for additional information about the referenced identifier's scope.</p>
+                                                                     </div>
+                                                                  </details>
+                                                               </div>
                                                                <details class="constraints" open="open">
                                                                   <summary>Constraint (1)</summary>
                                                                   <div class="constraint">
-                                                                     <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-party-uuid</code> using a key constructed of key field(s) <code>value()</code></p>
+                                                                     <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-party-uuid</code> using a key constructed of key field(s) <code>.</code></p>
                                                                   </div>
                                                                </details>
                                                             </div>
@@ -6545,7 +6370,9 @@ The following is the JSON format reference for this model, which is organized hi
                            <p class="formal-name">Capability Identifier</p>
                         </div>
                         <div class="body">
-                           <p class="description"><span class="usa-tag">Description</span> A unique identifier for a capability.</p>
+                           <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this capability elsewhere in <a href="/concepts/identifier-use/#component-definition-identifiers">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>capability</code> can be used to reference the data item locally or globally (e.g., in an imported
+                              OSCAL instance).This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
+                              of the document.</p>
                         </div>
                      </div>
                      <div class="model-entry definition assembly">
@@ -6643,8 +6470,7 @@ The following is the JSON format reference for this model, which is organized hi
                                     <p class="formal-name">Property Universally Unique Identifier</p>
                                  </div>
                                  <div class="body">
-                                    <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this property elsewhere in an OSCAL
-                                       document. A UUID should be consistently used for a given location across revisions
+                                    <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                                        of the document.</p>
                                  </div>
                               </div>
@@ -6662,14 +6488,6 @@ The following is the JSON format reference for this model, which is organized hi
                                     <div class="remarks-group usa-prose">
                                        <details open="open">
                                           <summary class="subhead">Remarks</summary>
-                                          <div class="remarks">
-                                             <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
-                                                names and associated values used in a property. This allows the semantics associated
-                                                with a given name/value pair to be defined on an organization-by-organization basis.</p>
-                                             <p>An organization MUST use a URI that they have control over. e.g., a domain registered
-                                                to the organization in a URI, a registered uniform resource names (URN) namespace.</p>
-                                             <p>When a <code>ns</code> is not provided, its value should be assumed to be <code>http://csrc.nist.gov/ns/oscal</code> and the name should be a name defined by the associated OSCAL model.</p>
-                                          </div>
                                           <div class="remarks">
                                              <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
                                                 names and associated values used in a property. This allows the semantics associated
@@ -6708,10 +6526,6 @@ The following is the JSON format reference for this model, which is organized hi
                                     <div class="remarks-group usa-prose">
                                        <details open="open">
                                           <summary class="subhead">Remarks</summary>
-                                          <div class="remarks">
-                                             <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
-                                                a specific <code>class</code> value.</p>
-                                          </div>
                                           <div class="remarks">
                                              <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
                                                 a specific <code>class</code> value.</p>
@@ -6763,13 +6577,13 @@ The following is the JSON format reference for this model, which is organized hi
                            <details class="constraints" open="open">
                               <summary>Constraints (3)</summary>
                               <div class="constraint">
-                                 <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
+                                 <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]/@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
                               </div>
                               <div class="constraint">
-                                 <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
+                                 <p><span class="usa-tag">index has key</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]</code>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
                               </div>
                               <div class="constraint">
-                                 <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
+                                 <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and not(starts-with(@href,'#'))]/@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
                               </div>
                            </details>
                            <details class="properties" open="open">
@@ -6787,15 +6601,6 @@ The following is the JSON format reference for this model, which is organized hi
                                     <div class="remarks-group usa-prose">
                                        <details open="open">
                                           <summary class="subhead">Remarks</summary>
-                                          <div class="remarks">
-                                             <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
-                                                that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
-                                             <p>If a local reference using a fragment is used, this will be indicated by a fragment
-                                                "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document.</p>
-                                             <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the referenced
-                                                resource. A relative URI will be resolved relative to the location of the document
-                                                containing the link.</p>
-                                          </div>
                                           <div class="remarks">
                                              <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
                                                 that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
@@ -6848,6 +6653,11 @@ The following is the JSON format reference for this model, which is organized hi
                                        <details open="open">
                                           <summary class="subhead">Remarks</summary>
                                           <div class="remarks">
+                                             <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                          </div>
+                                          <div class="remarks">
                                              <p>The <code>media-type</code> provides a hint about the content model of the referenced resource. A valid entry
                                                 from the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a> SHOULD be used.</p>
                                           </div>
@@ -6897,7 +6707,7 @@ The following is the JSON format reference for this model, which is organized hi
                                     <p class="formal-name">Component Reference</p>
                                  </div>
                                  <div class="body">
-                                    <p class="description"><span class="usa-tag">Description</span> A reference to a component by its identifier</p>
+                                    <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a> identifier reference to a <code>component</code>.</p>
                                  </div>
                               </div>
                               <div class="model-entry definition assembly">
@@ -6934,7 +6744,8 @@ The following is the JSON format reference for this model, which is organized hi
                               <details open="open">
                                  <summary class="subhead">Remarks</summary>
                                  <div class="remarks">
-                                    <p>Use of <code>set-parameter</code> in this context, sets the parameter for all related controls referenced in an <code>implemented-requirement</code>. If the same parameter is also set in a specific <code>implemented-requirement</code>, then the new value will override this value.</p>
+                                    <p>Use of <code>set-parameter</code> in this context, sets the parameter for all controls referenced by any <code>implemented-requirement</code> contained in this context. Any <code>set-parameter</code> defined in a child context will override this value. If not overridden by a child,
+                                       this value applies in the child context.</p>
                                  </div>
                               </details>
                            </div>
@@ -6955,7 +6766,9 @@ The following is the JSON format reference for this model, which is organized hi
                                     <p class="formal-name">Control Implementation Set Identifier</p>
                                  </div>
                                  <div class="body">
-                                    <p class="description"><span class="usa-tag">Description</span> A unique identifier for the set of implemented controls.</p>
+                                    <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference a set of implemented controls elsewhere in <a href="/concepts/identifier-use/#component-definition-identifiers">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>control implementation set</code> can be used to reference the data item locally or globally (e.g., in an imported
+                                       OSCAL instance). This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
+                                       of the document.</p>
                                  </div>
                               </div>
                               <div class="model-entry definition assembly">
@@ -7064,8 +6877,7 @@ The following is the JSON format reference for this model, which is organized hi
                                              <p class="formal-name">Property Universally Unique Identifier</p>
                                           </div>
                                           <div class="body">
-                                             <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this property elsewhere in an OSCAL
-                                                document. A UUID should be consistently used for a given location across revisions
+                                             <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                                                 of the document.</p>
                                           </div>
                                        </div>
@@ -7083,14 +6895,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
-                                                         names and associated values used in a property. This allows the semantics associated
-                                                         with a given name/value pair to be defined on an organization-by-organization basis.</p>
-                                                      <p>An organization MUST use a URI that they have control over. e.g., a domain registered
-                                                         to the organization in a URI, a registered uniform resource names (URN) namespace.</p>
-                                                      <p>When a <code>ns</code> is not provided, its value should be assumed to be <code>http://csrc.nist.gov/ns/oscal</code> and the name should be a name defined by the associated OSCAL model.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
                                                          names and associated values used in a property. This allows the semantics associated
@@ -7129,10 +6933,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
-                                                         a specific <code>class</code> value.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
                                                          a specific <code>class</code> value.</p>
@@ -7184,13 +6984,13 @@ The following is the JSON format reference for this model, which is organized hi
                                     <details class="constraints" open="open">
                                        <summary>Constraints (3)</summary>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
+                                          <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]/@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
                                        </div>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
+                                          <p><span class="usa-tag">index has key</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]</code>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
                                        </div>
                                        <div class="constraint">
-                                          <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
+                                          <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and not(starts-with(@href,'#'))]/@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
                                        </div>
                                     </details>
                                     <details class="properties" open="open">
@@ -7208,15 +7008,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
-                                                         that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
-                                                      <p>If a local reference using a fragment is used, this will be indicated by a fragment
-                                                         "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document.</p>
-                                                      <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the referenced
-                                                         resource. A relative URI will be resolved relative to the location of the document
-                                                         containing the link.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
                                                          that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
@@ -7269,6 +7060,11 @@ The following is the JSON format reference for this model, which is organized hi
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
                                                    <div class="remarks">
+                                                      <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                         type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                         suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                                   </div>
+                                                   <div class="remarks">
                                                       <p>The <code>media-type</code> provides a hint about the content model of the referenced resource. A valid entry
                                                          from the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a> SHOULD be used.</p>
                                                    </div>
@@ -7318,8 +7114,8 @@ The following is the JSON format reference for this model, which is organized hi
                                              <p class="formal-name">Parameter ID</p>
                                           </div>
                                           <div class="body">
-                                             <p class="description"><span class="usa-tag">Description</span> A reference to a parameter within a control, who's catalog has been imported into
-                                                the current implementation context.</p>
+                                             <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a> reference to a <code>parameter</code> within a control, who's catalog has been imported into the current implementation
+                                                context.</p>
                                           </div>
                                        </div>
                                        <div class="model-entry definition assembly">
@@ -7369,6 +7165,21 @@ The following is the JSON format reference for this model, which is organized hi
                                  </div>
                                  <div class="body">
                                     <p class="description"><span class="usa-tag">Description</span> Describes how the containing component or capability implements an individual control.</p>
+                                    <div class="remarks-group usa-prose">
+                                       <details open="open">
+                                          <summary class="subhead">Remarks</summary>
+                                          <div class="remarks">
+                                             <p>Implemented requirements within a component or capability in a component definition
+                                                provide a means to suggest possible control implementation details, which may be used
+                                                by a different party when authoring a system security plan. Thus, these requirements
+                                                defined in a component definition are only a suggestion of how to implement, which
+                                                may be adopted wholesale, changed, or ignored by a person defining an information
+                                                system implementation.</p>
+                                             <p>Use of <code>set-parameter</code> in this context, sets the parameter for the referenced control and any associated
+                                                statements.</p>
+                                          </div>
+                                       </details>
+                                    </div>
                                     <details class="constraints" open="open">
                                        <summary>Constraints (3)</summary>
                                        <div class="constraint">
@@ -7392,7 +7203,10 @@ The following is the JSON format reference for this model, which is organized hi
                                              <p class="formal-name">Control Implementation Identifier</p>
                                           </div>
                                           <div class="body">
-                                             <p class="description"><span class="usa-tag">Description</span> A unique identifier for a specific control implementation.</p>
+                                             <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference a specific control implementation elsewhere in
+                                                <a href="/concepts/identifier-use/#component-definition-identifiers">this or other OSCAL instances</a>. The locally defined <em>UUID</em> of the <code>control implementation</code> can be used to reference the data item locally or globally (e.g., in an imported
+                                                OSCAL instance).This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
+                                                of the document.</p>
                                           </div>
                                        </div>
                                        <div class="model-entry definition assembly">
@@ -7404,7 +7218,7 @@ The following is the JSON format reference for this model, which is organized hi
                                              <p class="formal-name">Control Identifier Reference</p>
                                           </div>
                                           <div class="body">
-                                             <p class="description"><span class="usa-tag">Description</span> A reference to a control with a corresponding <code>id</code> value.</p>
+                                             <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a> identifier reference to a control with a corresponding <code>id</code> value. When referencing an externally defined <code>control</code>, the <code>Control Identifier Reference</code> must be used in the context of the external / imported OSCAL instance (e.g., uri-reference).</p>
                                           </div>
                                        </div>
                                        <div class="model-entry definition assembly">
@@ -7416,8 +7230,8 @@ The following is the JSON format reference for this model, which is organized hi
                                              <p class="formal-name">Control Implementation Description</p>
                                           </div>
                                           <div class="body">
-                                             <p class="description"><span class="usa-tag">Description</span> A description of how the specified control is implemented for the containing component
-                                                or capability.</p>
+                                             <p class="description"><span class="usa-tag">Description</span> A suggestion for how the specified control may be implemented if the containing component
+                                                or capability is instantiated in a system security plan.</p>
                                           </div>
                                        </div>
                                        <div class="model-entry definition assembly">
@@ -7491,8 +7305,7 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <p class="formal-name">Property Universally Unique Identifier</p>
                                                    </div>
                                                    <div class="body">
-                                                      <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this property elsewhere in an OSCAL
-                                                         document. A UUID should be consistently used for a given location across revisions
+                                                      <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                                                          of the document.</p>
                                                    </div>
                                                 </div>
@@ -7510,14 +7323,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <div class="remarks-group usa-prose">
                                                          <details open="open">
                                                             <summary class="subhead">Remarks</summary>
-                                                            <div class="remarks">
-                                                               <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
-                                                                  names and associated values used in a property. This allows the semantics associated
-                                                                  with a given name/value pair to be defined on an organization-by-organization basis.</p>
-                                                               <p>An organization MUST use a URI that they have control over. e.g., a domain registered
-                                                                  to the organization in a URI, a registered uniform resource names (URN) namespace.</p>
-                                                               <p>When a <code>ns</code> is not provided, its value should be assumed to be <code>http://csrc.nist.gov/ns/oscal</code> and the name should be a name defined by the associated OSCAL model.</p>
-                                                            </div>
                                                             <div class="remarks">
                                                                <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
                                                                   names and associated values used in a property. This allows the semantics associated
@@ -7556,10 +7361,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <div class="remarks-group usa-prose">
                                                          <details open="open">
                                                             <summary class="subhead">Remarks</summary>
-                                                            <div class="remarks">
-                                                               <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
-                                                                  a specific <code>class</code> value.</p>
-                                                            </div>
                                                             <div class="remarks">
                                                                <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
                                                                   a specific <code>class</code> value.</p>
@@ -7611,13 +7412,13 @@ The following is the JSON format reference for this model, which is organized hi
                                              <details class="constraints" open="open">
                                                 <summary>Constraints (3)</summary>
                                                 <div class="constraint">
-                                                   <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
+                                                   <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]/@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
                                                 </div>
                                                 <div class="constraint">
-                                                   <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
+                                                   <p><span class="usa-tag">index has key</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]</code>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
                                                 </div>
                                                 <div class="constraint">
-                                                   <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
+                                                   <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and not(starts-with(@href,'#'))]/@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
                                                 </div>
                                              </details>
                                              <details class="properties" open="open">
@@ -7635,15 +7436,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <div class="remarks-group usa-prose">
                                                          <details open="open">
                                                             <summary class="subhead">Remarks</summary>
-                                                            <div class="remarks">
-                                                               <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
-                                                                  that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
-                                                               <p>If a local reference using a fragment is used, this will be indicated by a fragment
-                                                                  "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document.</p>
-                                                               <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the referenced
-                                                                  resource. A relative URI will be resolved relative to the location of the document
-                                                                  containing the link.</p>
-                                                            </div>
                                                             <div class="remarks">
                                                                <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
                                                                   that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
@@ -7696,6 +7488,11 @@ The following is the JSON format reference for this model, which is organized hi
                                                          <details open="open">
                                                             <summary class="subhead">Remarks</summary>
                                                             <div class="remarks">
+                                                               <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                                  type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                                  suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                                            </div>
+                                                            <div class="remarks">
                                                                <p>The <code>media-type</code> provides a hint about the content model of the referenced resource. A valid entry
                                                                   from the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a> SHOULD be used.</p>
                                                             </div>
@@ -7745,8 +7542,8 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <p class="formal-name">Parameter ID</p>
                                                    </div>
                                                    <div class="body">
-                                                      <p class="description"><span class="usa-tag">Description</span> A reference to a parameter within a control, who's catalog has been imported into
-                                                         the current implementation context.</p>
+                                                      <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a> reference to a <code>parameter</code> within a control, who's catalog has been imported into the current implementation
+                                                         context.</p>
                                                    </div>
                                                 </div>
                                                 <div class="model-entry definition assembly">
@@ -7808,7 +7605,7 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <p class="formal-name">Responsible Role ID</p>
                                                    </div>
                                                    <div class="body">
-                                                      <p class="description"><span class="usa-tag">Description</span> The role that is responsible for the business function.</p>
+                                                      <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a> identifier reference to <code>roles</code> responsible for the business function.</p>
                                                    </div>
                                                 </div>
                                                 <div class="model-entry definition assembly">
@@ -7882,8 +7679,7 @@ The following is the JSON format reference for this model, which is organized hi
                                                                <p class="formal-name">Property Universally Unique Identifier</p>
                                                             </div>
                                                             <div class="body">
-                                                               <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this property elsewhere in an OSCAL
-                                                                  document. A UUID should be consistently used for a given location across revisions
+                                                               <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                                                                   of the document.</p>
                                                             </div>
                                                          </div>
@@ -7901,14 +7697,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                                <div class="remarks-group usa-prose">
                                                                   <details open="open">
                                                                      <summary class="subhead">Remarks</summary>
-                                                                     <div class="remarks">
-                                                                        <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
-                                                                           names and associated values used in a property. This allows the semantics associated
-                                                                           with a given name/value pair to be defined on an organization-by-organization basis.</p>
-                                                                        <p>An organization MUST use a URI that they have control over. e.g., a domain registered
-                                                                           to the organization in a URI, a registered uniform resource names (URN) namespace.</p>
-                                                                        <p>When a <code>ns</code> is not provided, its value should be assumed to be <code>http://csrc.nist.gov/ns/oscal</code> and the name should be a name defined by the associated OSCAL model.</p>
-                                                                     </div>
                                                                      <div class="remarks">
                                                                         <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
                                                                            names and associated values used in a property. This allows the semantics associated
@@ -7947,10 +7735,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                                <div class="remarks-group usa-prose">
                                                                   <details open="open">
                                                                      <summary class="subhead">Remarks</summary>
-                                                                     <div class="remarks">
-                                                                        <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
-                                                                           a specific <code>class</code> value.</p>
-                                                                     </div>
                                                                      <div class="remarks">
                                                                         <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
                                                                            a specific <code>class</code> value.</p>
@@ -8002,13 +7786,13 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <details class="constraints" open="open">
                                                          <summary>Constraints (3)</summary>
                                                          <div class="constraint">
-                                                            <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
+                                                            <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]/@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
                                                          </div>
                                                          <div class="constraint">
-                                                            <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
+                                                            <p><span class="usa-tag">index has key</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]</code>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
                                                          </div>
                                                          <div class="constraint">
-                                                            <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
+                                                            <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and not(starts-with(@href,'#'))]/@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
                                                          </div>
                                                       </details>
                                                       <details class="properties" open="open">
@@ -8026,15 +7810,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                                <div class="remarks-group usa-prose">
                                                                   <details open="open">
                                                                      <summary class="subhead">Remarks</summary>
-                                                                     <div class="remarks">
-                                                                        <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
-                                                                           that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
-                                                                        <p>If a local reference using a fragment is used, this will be indicated by a fragment
-                                                                           "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document.</p>
-                                                                        <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the referenced
-                                                                           resource. A relative URI will be resolved relative to the location of the document
-                                                                           containing the link.</p>
-                                                                     </div>
                                                                      <div class="remarks">
                                                                         <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
                                                                            that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
@@ -8087,6 +7862,11 @@ The following is the JSON format reference for this model, which is organized hi
                                                                   <details open="open">
                                                                      <summary class="subhead">Remarks</summary>
                                                                      <div class="remarks">
+                                                                        <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                                           type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                                           suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                                                     </div>
+                                                                     <div class="remarks">
                                                                         <p>The <code>media-type</code> provides a hint about the content model of the referenced resource. A valid entry
                                                                            from the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a> SHOULD be used.</p>
                                                                      </div>
@@ -8124,11 +7904,20 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <p class="formal-name">Party Reference</p>
                                                    </div>
                                                    <div class="body">
-                                                      <p class="description"><span class="usa-tag">Description</span> References a <code>party</code> defined in <code>metadata</code>. </p>
+                                                      <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a> identifier reference to another <code>party</code> defined in <code>metadata</code>. The <em>UUID</em> of the <code>party</code> in the source OSCAL instance is sufficient to reference the data item locally or
+                                                         globally (e.g., in an imported OSCAL instance). </p>
+                                                      <div class="remarks-group usa-prose">
+                                                         <details open="open">
+                                                            <summary class="subhead">Remarks</summary>
+                                                            <div class="remarks">
+                                                               <p>See the <a href="/concepts/identifier-use/#scope">Concepts - Identifier Use</a> page for additional information about the referenced identifier's scope.</p>
+                                                            </div>
+                                                         </details>
+                                                      </div>
                                                       <details class="constraints" open="open">
                                                          <summary>Constraint (1)</summary>
                                                          <div class="constraint">
-                                                            <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-party-uuid</code> using a key constructed of key field(s) <code>value()</code></p>
+                                                            <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-party-uuid</code> using a key constructed of key field(s) <code>.</code></p>
                                                          </div>
                                                       </details>
                                                    </div>
@@ -8180,7 +7969,7 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <p class="formal-name">Control Statement Reference</p>
                                                    </div>
                                                    <div class="body">
-                                                      <p class="description"><span class="usa-tag">Description</span> A reference to a control statement by its identifier</p>
+                                                      <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a> identifier reference to a <code>control statement</code>.</p>
                                                       <div class="remarks-group usa-prose">
                                                          <details open="open">
                                                             <summary class="subhead">Remarks</summary>
@@ -8200,9 +7989,8 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <p class="formal-name">Control Statement Reference Universally Unique Identifier</p>
                                                    </div>
                                                    <div class="body">
-                                                      <p class="description"><span class="usa-tag">Description</span> A globally unique identifier that can be used to reference this control statement
-                                                         entry elsewhere in an OSCAL document. A UUID should be consistently used for a given
-                                                         resource across revisions of the document.</p>
+                                                      <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this control statement elsewhere in <a href="/concepts/identifier-use/#component-definition-identifiers">this or other OSCAL instances</a>. The <em>UUID</em> of the <code>control statement</code> in the source OSCAL instance is sufficient to reference the data item locally or
+                                                         globally (e.g., in an imported OSCAL instance).</p>
                                                    </div>
                                                 </div>
                                                 <div class="model-entry definition assembly">
@@ -8289,8 +8077,7 @@ The following is the JSON format reference for this model, which is organized hi
                                                                <p class="formal-name">Property Universally Unique Identifier</p>
                                                             </div>
                                                             <div class="body">
-                                                               <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this property elsewhere in an OSCAL
-                                                                  document. A UUID should be consistently used for a given location across revisions
+                                                               <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                                                                   of the document.</p>
                                                             </div>
                                                          </div>
@@ -8308,14 +8095,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                                <div class="remarks-group usa-prose">
                                                                   <details open="open">
                                                                      <summary class="subhead">Remarks</summary>
-                                                                     <div class="remarks">
-                                                                        <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
-                                                                           names and associated values used in a property. This allows the semantics associated
-                                                                           with a given name/value pair to be defined on an organization-by-organization basis.</p>
-                                                                        <p>An organization MUST use a URI that they have control over. e.g., a domain registered
-                                                                           to the organization in a URI, a registered uniform resource names (URN) namespace.</p>
-                                                                        <p>When a <code>ns</code> is not provided, its value should be assumed to be <code>http://csrc.nist.gov/ns/oscal</code> and the name should be a name defined by the associated OSCAL model.</p>
-                                                                     </div>
                                                                      <div class="remarks">
                                                                         <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
                                                                            names and associated values used in a property. This allows the semantics associated
@@ -8354,10 +8133,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                                <div class="remarks-group usa-prose">
                                                                   <details open="open">
                                                                      <summary class="subhead">Remarks</summary>
-                                                                     <div class="remarks">
-                                                                        <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
-                                                                           a specific <code>class</code> value.</p>
-                                                                     </div>
                                                                      <div class="remarks">
                                                                         <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
                                                                            a specific <code>class</code> value.</p>
@@ -8409,13 +8184,13 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <details class="constraints" open="open">
                                                          <summary>Constraints (3)</summary>
                                                          <div class="constraint">
-                                                            <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
+                                                            <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]/@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
                                                          </div>
                                                          <div class="constraint">
-                                                            <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
+                                                            <p><span class="usa-tag">index has key</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]</code>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
                                                          </div>
                                                          <div class="constraint">
-                                                            <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
+                                                            <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and not(starts-with(@href,'#'))]/@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
                                                          </div>
                                                       </details>
                                                       <details class="properties" open="open">
@@ -8433,15 +8208,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                                <div class="remarks-group usa-prose">
                                                                   <details open="open">
                                                                      <summary class="subhead">Remarks</summary>
-                                                                     <div class="remarks">
-                                                                        <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
-                                                                           that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
-                                                                        <p>If a local reference using a fragment is used, this will be indicated by a fragment
-                                                                           "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document.</p>
-                                                                        <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the referenced
-                                                                           resource. A relative URI will be resolved relative to the location of the document
-                                                                           containing the link.</p>
-                                                                     </div>
                                                                      <div class="remarks">
                                                                         <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
                                                                            that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
@@ -8494,6 +8260,11 @@ The following is the JSON format reference for this model, which is organized hi
                                                                   <details open="open">
                                                                      <summary class="subhead">Remarks</summary>
                                                                      <div class="remarks">
+                                                                        <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                                           type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                                           suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                                                     </div>
+                                                                     <div class="remarks">
                                                                         <p>The <code>media-type</code> provides a hint about the content model of the referenced resource. A valid entry
                                                                            from the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a> SHOULD be used.</p>
                                                                      </div>
@@ -8544,7 +8315,7 @@ The following is the JSON format reference for this model, which is organized hi
                                                                <p class="formal-name">Responsible Role ID</p>
                                                             </div>
                                                             <div class="body">
-                                                               <p class="description"><span class="usa-tag">Description</span> The role that is responsible for the business function.</p>
+                                                               <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#human-oriented">human-oriented</a> identifier reference to <code>roles</code> responsible for the business function.</p>
                                                             </div>
                                                          </div>
                                                          <div class="model-entry definition assembly">
@@ -8618,8 +8389,7 @@ The following is the JSON format reference for this model, which is organized hi
                                                                         <p class="formal-name">Property Universally Unique Identifier</p>
                                                                      </div>
                                                                      <div class="body">
-                                                                        <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this property elsewhere in an OSCAL
-                                                                           document. A UUID should be consistently used for a given location across revisions
+                                                                        <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                                                                            of the document.</p>
                                                                      </div>
                                                                   </div>
@@ -8637,14 +8407,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                                         <div class="remarks-group usa-prose">
                                                                            <details open="open">
                                                                               <summary class="subhead">Remarks</summary>
-                                                                              <div class="remarks">
-                                                                                 <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
-                                                                                    names and associated values used in a property. This allows the semantics associated
-                                                                                    with a given name/value pair to be defined on an organization-by-organization basis.</p>
-                                                                                 <p>An organization MUST use a URI that they have control over. e.g., a domain registered
-                                                                                    to the organization in a URI, a registered uniform resource names (URN) namespace.</p>
-                                                                                 <p>When a <code>ns</code> is not provided, its value should be assumed to be <code>http://csrc.nist.gov/ns/oscal</code> and the name should be a name defined by the associated OSCAL model.</p>
-                                                                              </div>
                                                                               <div class="remarks">
                                                                                  <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
                                                                                     names and associated values used in a property. This allows the semantics associated
@@ -8683,10 +8445,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                                         <div class="remarks-group usa-prose">
                                                                            <details open="open">
                                                                               <summary class="subhead">Remarks</summary>
-                                                                              <div class="remarks">
-                                                                                 <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
-                                                                                    a specific <code>class</code> value.</p>
-                                                                              </div>
                                                                               <div class="remarks">
                                                                                  <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
                                                                                     a specific <code>class</code> value.</p>
@@ -8738,13 +8496,13 @@ The following is the JSON format reference for this model, which is organized hi
                                                                <details class="constraints" open="open">
                                                                   <summary>Constraints (3)</summary>
                                                                   <div class="constraint">
-                                                                     <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
+                                                                     <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]/@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
                                                                   </div>
                                                                   <div class="constraint">
-                                                                     <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
+                                                                     <p><span class="usa-tag">index has key</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]</code>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
                                                                   </div>
                                                                   <div class="constraint">
-                                                                     <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
+                                                                     <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and not(starts-with(@href,'#'))]/@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
                                                                   </div>
                                                                </details>
                                                                <details class="properties" open="open">
@@ -8762,15 +8520,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                                         <div class="remarks-group usa-prose">
                                                                            <details open="open">
                                                                               <summary class="subhead">Remarks</summary>
-                                                                              <div class="remarks">
-                                                                                 <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
-                                                                                    that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
-                                                                                 <p>If a local reference using a fragment is used, this will be indicated by a fragment
-                                                                                    "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document.</p>
-                                                                                 <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the referenced
-                                                                                    resource. A relative URI will be resolved relative to the location of the document
-                                                                                    containing the link.</p>
-                                                                              </div>
                                                                               <div class="remarks">
                                                                                  <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
                                                                                     that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
@@ -8823,6 +8572,11 @@ The following is the JSON format reference for this model, which is organized hi
                                                                            <details open="open">
                                                                               <summary class="subhead">Remarks</summary>
                                                                               <div class="remarks">
+                                                                                 <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                                                    type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                                                    suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                                                              </div>
+                                                                              <div class="remarks">
                                                                                  <p>The <code>media-type</code> provides a hint about the content model of the referenced resource. A valid entry
                                                                                     from the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a> SHOULD be used.</p>
                                                                               </div>
@@ -8860,11 +8614,20 @@ The following is the JSON format reference for this model, which is organized hi
                                                                <p class="formal-name">Party Reference</p>
                                                             </div>
                                                             <div class="body">
-                                                               <p class="description"><span class="usa-tag">Description</span> References a <code>party</code> defined in <code>metadata</code>. </p>
+                                                               <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a> identifier reference to another <code>party</code> defined in <code>metadata</code>. The <em>UUID</em> of the <code>party</code> in the source OSCAL instance is sufficient to reference the data item locally or
+                                                                  globally (e.g., in an imported OSCAL instance). </p>
+                                                               <div class="remarks-group usa-prose">
+                                                                  <details open="open">
+                                                                     <summary class="subhead">Remarks</summary>
+                                                                     <div class="remarks">
+                                                                        <p>See the <a href="/concepts/identifier-use/#scope">Concepts - Identifier Use</a> page for additional information about the referenced identifier's scope.</p>
+                                                                     </div>
+                                                                  </details>
+                                                               </div>
                                                                <details class="constraints" open="open">
                                                                   <summary>Constraint (1)</summary>
                                                                   <div class="constraint">
-                                                                     <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-party-uuid</code> using a key constructed of key field(s) <code>value()</code></p>
+                                                                     <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-metadata-party-uuid</code> using a key constructed of key field(s) <code>.</code></p>
                                                                   </div>
                                                                </details>
                                                             </div>
@@ -8991,21 +8754,10 @@ The following is the JSON format reference for this model, which is organized hi
                                        from any of the available formats indicated by the items.</p>
                                     <p>When a resource includes a citation, then the <code>title</code> and <code>citation</code> properties must both be included.</p>
                                  </div>
-                                 <div class="remarks">
-                                    <p>A resource can be used in two ways. 1) it may point to an specific retrievable network
-                                       resource using a <code>rlink</code>, or 2) it may be included as an attachment using a <code>base64</code>. A resource may contain multiple <code>rlink</code> and <code>base64</code> entries that represent alternative download locations (rlink) and attachments (base64)
-                                       for the same resource. Both rlink and base64 allow for a <code>media-type</code> to be specified, which is used to distinguish between different representations of
-                                       the same resource (e.g., Microsoft Word, PDF). When multiple <code>rlink</code> and <code>base64</code> items are included for a given resource, all items must contain equivalent information.
-                                       This allows the document consumer to choose a preferred item to process based on a
-                                       the selected item's <code>media-type</code>. This is extremely important when the items represent OSCAL content that is represented
-                                       in alternate formats (i.e., XML, JSON, YAML), allowing the same OSCAL data to be processed
-                                       from any of the available formats indicated by the items.</p>
-                                    <p>When a resource includes a citation, then the <code>title</code> and <code>citation</code> properties must both be included.</p>
-                                 </div>
                               </details>
                            </div>
                            <details class="constraints" open="open">
-                              <summary>Constraints (7)</summary>
+                              <summary>Constraints (6)</summary>
                               <div class="constraint">
                                  <p><span class="usa-tag">allowed values</span>  for <code class="path">prop/@name</code></p>
                                  <p>The value <b>must</b> be one of the following:</p>
@@ -9021,7 +8773,7 @@ The following is the JSON format reference for this model, which is organized hi
                                     </ul>
                               </div>
                               <div class="constraint">
-                                 <p><span class="usa-tag">matches</span>  for <code class="path">prop[(not(exists(@ns)) or @ns='http://csrc.nist.gov/ns/oscal') and @name='published']/@value</code>: the target value must match the lexical form of the 'dateTime' data type.</p>
+                                 <p><span class="usa-tag">matches</span>  for <code class="path">prop[has-oscal-namespace('http://csrc.nist.gov/ns/oscal') and @name='published']/@value</code>: the target value must match the lexical form of the 'dateTime' data type.</p>
                               </div>
                               <div class="constraint">
                                  <p><span class="usa-tag">allowed values</span>  for <code class="path">prop[@name='type']/@value</code></p>
@@ -9092,9 +8844,6 @@ The following is the JSON format reference for this model, which is organized hi
                               <div class="constraint">
                                  <p><span class="usa-tag">is unique</span>  for <code class="path">base64</code>: any target value must be unique (i.e., occur only once)</p>
                               </div>
-                              <div class="constraint">
-                                 <p><span class="usa-tag">has cardinality</span>  for <code class="path">title</code> the cardinality of  <code>title</code> is constrained: <b>1</b>; maximum <b>unbounded</b>.</p>
-                              </div>
                            </details>
                            <details class="properties" open="open">
                               <summary>Properties (9)</summary>
@@ -9107,9 +8856,8 @@ The following is the JSON format reference for this model, which is organized hi
                                     <p class="formal-name">Resource Universally Unique Identifier</p>
                                  </div>
                                  <div class="body">
-                                    <p class="description"><span class="usa-tag">Description</span> A globally unique identifier that can be used to reference this defined resource
-                                       elsewhere in an OSCAL document. A UUID should be consistently used for a given resource
-                                       across revisions of the document.</p>
+                                    <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined resource elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
+                                       of the document.</p>
                                  </div>
                               </div>
                               <div class="model-entry definition assembly">
@@ -9207,8 +8955,7 @@ The following is the JSON format reference for this model, which is organized hi
                                              <p class="formal-name">Property Universally Unique Identifier</p>
                                           </div>
                                           <div class="body">
-                                             <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this property elsewhere in an OSCAL
-                                                document. A UUID should be consistently used for a given location across revisions
+                                             <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                                                 of the document.</p>
                                           </div>
                                        </div>
@@ -9226,14 +8973,6 @@ The following is the JSON format reference for this model, which is organized hi
                                              <div class="remarks-group usa-prose">
                                                 <details open="open">
                                                    <summary class="subhead">Remarks</summary>
-                                                   <div class="remarks">
-                                                      <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
-                                                         names and associated values used in a property. This allows the semantics associated
-                                                         with a given name/value pair to be defined on an organization-by-organization basis.</p>
-                                                      <p>An organization MUST use a URI that they have control over. e.g., a domain registered
-                                                         to the organization in a URI, a registered uniform resource names (URN) namespace.</p>
-                                                      <p>When a <code>ns</code> is not provided, its value should be assumed to be <code>http://csrc.nist.gov/ns/oscal</code> and the name should be a name defined by the associated OSCAL model.</p>
-                                                   </div>
                                                    <div class="remarks">
                                                       <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
                                                          names and associated values used in a property. This allows the semantics associated
@@ -9276,10 +9015,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
                                                          a specific <code>class</code> value.</p>
                                                    </div>
-                                                   <div class="remarks">
-                                                      <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
-                                                         a specific <code>class</code> value.</p>
-                                                   </div>
                                                 </details>
                                              </div>
                                           </div>
@@ -9313,10 +9048,10 @@ The following is the JSON format reference for this model, which is organized hi
                                     <p class="formal-name">Document Identifier</p>
                                  </div>
                                  <div class="body">
-                                    <p class="description"><span class="usa-tag">Description</span> A document identifier qualified by an identifier <code>scheme</code>. A document identifier provides a globally unique identifier for a group of documents
-                                       that are to be treated as different versions of the same document. If this element
-                                       does not appear, or if the value of this element is empty, the value of "document-id"
-                                       is equal to the value of the "uuid" flag of the top-level root element.</p>
+                                    <p class="description"><span class="usa-tag">Description</span> A document identifier qualified by an identifier <code>scheme</code>. A document identifier provides a <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with a <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that is used for a group of documents that are to be treated as different versions
+                                       of the same document. If this element does not appear, or if the value of this element
+                                       is empty, the value of "document-id" is equal to the value of the "uuid" flag of the
+                                       top-level root element.</p>
                                     <div class="remarks-group usa-prose">
                                        <details open="open">
                                           <summary class="subhead">Remarks</summary>
@@ -9349,7 +9084,7 @@ The following is the JSON format reference for this model, which is organized hi
                                                    <p>The value <b>may be locally defined</b>, or the following:</p>
                                                    <ul>
                                                       
-                                                      <li><strong>https://www.doi.org/</strong>: A Digital Object Identifier (DOI); use is preferred, since this allows for retrieval
+                                                      <li><strong>http://www.doi.org/</strong>: A Digital Object Identifier (DOI); use is preferred, since this allows for retrieval
                                                          of a full bibliographic record.</li>
                                                       </ul>
                                                 </div>
@@ -9361,7 +9096,7 @@ The following is the JSON format reference for this model, which is organized hi
                                              <h5 id="/component-definition/back-matter/resources/document-ids/identifier" class="toc5 name">identifier</h5>
                                              <p class="type"><a href="/reference/datatypes/#string">string</a></p>
                                              <p class="occurrence">[0 or 1]</p>
-                                             <div class="crosslink"><a class="usa-button" href="../xml-reference/#/component-definition/back-matter/resource/document-id">Switch to XML</a></div>
+                                             <div class="crosslink"><a class="usa-button" href="../xml-reference/#/component-definition/back-matter/resource/document-id/_VALUE">Switch to XML</a></div>
                                           </div>
                                        </div>
                                     </details>
@@ -9380,11 +9115,6 @@ The following is the JSON format reference for this model, which is organized hi
                                     <div class="remarks-group usa-prose">
                                        <details open="open">
                                           <summary class="subhead">Remarks</summary>
-                                          <div class="remarks">
-                                             <p>The <code>text</code> is used to define the endnote text, without any required bibliographic structure.
-                                                If structured bibliographic data is needed, then the <code>biblio</code> can be used for this purpose.</p>
-                                             <p>A <code>biblio</code> can be used to capture a structured bibliographical citation in an appropriate format.</p>
-                                          </div>
                                           <div class="remarks">
                                              <p>The <code>text</code> is used to define the endnote text, without any required bibliographic structure.
                                                 If structured bibliographic data is needed, then the <code>biblio</code> can be used for this purpose.</p>
@@ -9477,8 +9207,7 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <p class="formal-name">Property Universally Unique Identifier</p>
                                                    </div>
                                                    <div class="body">
-                                                      <p class="description"><span class="usa-tag">Description</span> A unique identifier that can be used to reference this property elsewhere in an OSCAL
-                                                         document. A UUID should be consistently used for a given location across revisions
+                                                      <p class="description"><span class="usa-tag">Description</span> A <a href="/concepts/identifier-use/#machine-oriented">machine-oriented</a>, <a href="/concepts/identifier-use/#globally-unique">globally unique</a> identifier with <a href="/concepts/identifier-use/#cross-instance">cross-instance</a> scope that can be used to reference this defined property elsewhere in <a href="/concepts/identifier-use/#scope">this or other OSCAL instances</a>. This UUID should be assigned <a href="/concepts/identifier-use/#consistency">per-subject</a>, which means it should be consistently used to identify the same subject across revisions
                                                          of the document.</p>
                                                    </div>
                                                 </div>
@@ -9496,14 +9225,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <div class="remarks-group usa-prose">
                                                          <details open="open">
                                                             <summary class="subhead">Remarks</summary>
-                                                            <div class="remarks">
-                                                               <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
-                                                                  names and associated values used in a property. This allows the semantics associated
-                                                                  with a given name/value pair to be defined on an organization-by-organization basis.</p>
-                                                               <p>An organization MUST use a URI that they have control over. e.g., a domain registered
-                                                                  to the organization in a URI, a registered uniform resource names (URN) namespace.</p>
-                                                               <p>When a <code>ns</code> is not provided, its value should be assumed to be <code>http://csrc.nist.gov/ns/oscal</code> and the name should be a name defined by the associated OSCAL model.</p>
-                                                            </div>
                                                             <div class="remarks">
                                                                <p>Provides a means to segment the value space for the <code>name</code>, so that different organizations and individuals can assert control over the allowed
                                                                   names and associated values used in a property. This allows the semantics associated
@@ -9542,10 +9263,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <div class="remarks-group usa-prose">
                                                          <details open="open">
                                                             <summary class="subhead">Remarks</summary>
-                                                            <div class="remarks">
-                                                               <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
-                                                                  a specific <code>class</code> value.</p>
-                                                            </div>
                                                             <div class="remarks">
                                                                <p>A <code>class</code> can be used in validation rules to express extra constraints over named items of
                                                                   a specific <code>class</code> value.</p>
@@ -9597,13 +9314,13 @@ The following is the JSON format reference for this model, which is organized hi
                                              <details class="constraints" open="open">
                                                 <summary>Constraints (3)</summary>
                                                 <div class="constraint">
-                                                   <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
+                                                   <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]/@href</code>: the target value must match the lexical form of the 'uri-reference' data type.</p>
                                                 </div>
                                                 <div class="constraint">
-                                                   <p><span class="usa-tag">index has key</span>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
+                                                   <p><span class="usa-tag">index has key</span>  for <code class="path">.[@rel=('reference') and starts-with(@href,'#')]</code>this value must correspond to a listing in the index <code>index-back-matter-resource</code> using a key constructed of key field(s) <code>@href</code></p>
                                                 </div>
                                                 <div class="constraint">
-                                                   <p><span class="usa-tag">matches</span>  for <code class="path">@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
+                                                   <p><span class="usa-tag">matches</span>  for <code class="path">.[@rel=('reference') and not(starts-with(@href,'#'))]/@href</code>: the target value must match the lexical form of the 'uri' data type.</p>
                                                 </div>
                                              </details>
                                              <details class="properties" open="open">
@@ -9621,15 +9338,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <div class="remarks-group usa-prose">
                                                          <details open="open">
                                                             <summary class="subhead">Remarks</summary>
-                                                            <div class="remarks">
-                                                               <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
-                                                                  that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
-                                                               <p>If a local reference using a fragment is used, this will be indicated by a fragment
-                                                                  "#" followed by an identifier which references an identified <code>resource</code> in the document's <code>back-matter</code> or another object that is within the scope of the containing OSCAL document.</p>
-                                                               <p>If an internet resource is used, the <code>href</code> value will be an absolute or relative URI pointing to the location of the referenced
-                                                                  resource. A relative URI will be resolved relative to the location of the document
-                                                                  containing the link.</p>
-                                                            </div>
                                                             <div class="remarks">
                                                                <p>The value of the <code>href</code> can be an internet resource, or a local reference using a fragment e.g. #fragment
                                                                   that points to a <code>back-matter</code> <code>resource</code> in the same document.</p>
@@ -9682,6 +9390,11 @@ The following is the JSON format reference for this model, which is organized hi
                                                          <details open="open">
                                                             <summary class="subhead">Remarks</summary>
                                                             <div class="remarks">
+                                                               <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                                  type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                                  suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                                            </div>
+                                                            <div class="remarks">
                                                                <p>The <code>media-type</code> provides a hint about the content model of the referenced resource. A valid entry
                                                                   from the <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media Types registry</a> SHOULD be used.</p>
                                                             </div>
@@ -9733,12 +9446,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                 a items in a collection of rlinks. The <code>media-type</code> also provides a hint to the OSCAL document consumer about the structure of the resource
                                                 referenced by the <code>rlink</code>. </p>
                                           </div>
-                                          <div class="remarks">
-                                             <p>This construct is different from <code>link</code>, which makes no provision for a hash or formal title.</p>
-                                             <p>Multiple <code>rlink</code> can be included for a resource. In such a case, all provided <code>rlink</code> items are intended to be equivalent in content, but may differ in structure. A <code>media-type</code> is used to identify the format of a given rlink, and can be used to differentiate
-                                                a items in a collection of rlinks. The <code>media-type</code> also provides a hint to the OSCAL document consumer about the structure of the resource
-                                                referenced by the <code>rlink</code>. </p>
-                                          </div>
                                        </details>
                                     </div>
                                     <details class="properties" open="open">
@@ -9766,6 +9473,16 @@ The following is the JSON format reference for this model, which is organized hi
                                           <div class="body">
                                              <p class="description"><span class="usa-tag">Description</span> Specifies a media type as defined by the Internet Assigned Numbers Authority (IANA)
                                                 <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">Media Types Registry</a>. </p>
+                                             <div class="remarks-group usa-prose">
+                                                <details open="open">
+                                                   <summary class="subhead">Remarks</summary>
+                                                   <div class="remarks">
+                                                      <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                         type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                         suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                                   </div>
+                                                </details>
+                                             </div>
                                           </div>
                                        </div>
                                        <div class="model-entry definition assembly">
@@ -9791,7 +9508,7 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <p>A hash value can be used to authenticate that a referenced resource is the same resources
                                                          as was pointed to by the author of the reference.</p>
                                                    </div>
-                                                   <div class="remarks in-use">
+                                                   <div class="remarks">
                                                       <p>When appearing as part of a <code>resource/rlink</code>, the hash applies to the resource referenced by the <code>href</code>. </p>
                                                    </div>
                                                 </details>
@@ -9811,9 +9528,6 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <div class="remarks-group usa-prose">
                                                          <details open="open">
                                                             <summary class="subhead">Remarks</summary>
-                                                            <div class="remarks">
-                                                               <p>Any other value used MUST be a value defined in the W3C <a href="http://www.w3.org/TR/xmlsec-algorithms/#digest-method">XML Security Algorithm Cross-Reference</a> Digest Methods (W3C, April 2013) or <a href="https://tools.ietf.org/html/rfc6931#section-2.1.5">RFC 6931 Section 2.1.5</a> New SHA Functions.</p>
-                                                            </div>
                                                             <div class="remarks">
                                                                <p>Any other value used MUST be a value defined in the W3C <a href="http://www.w3.org/TR/xmlsec-algorithms/#digest-method">XML Security Algorithm Cross-Reference</a> Digest Methods (W3C, April 2013) or <a href="https://tools.ietf.org/html/rfc6931#section-2.1.5">RFC 6931 Section 2.1.5</a> New SHA Functions.</p>
                                                             </div>
@@ -9859,7 +9573,7 @@ The following is the JSON format reference for this model, which is organized hi
                                                       <h6 id="/component-definition/back-matter/resources/rlinks/hashes/value" class="toc6 name">value</h6>
                                                       <p class="type"><a href="/reference/datatypes/#string">string</a></p>
                                                       <p class="occurrence">[0 or 1]</p>
-                                                      <div class="crosslink"><a class="usa-button" href="../xml-reference/#/component-definition/back-matter/resource/rlink/hash">Switch to XML</a></div>
+                                                      <div class="crosslink"><a class="usa-button" href="../xml-reference/#/component-definition/back-matter/resource/rlink/hash/_VALUE">Switch to XML</a></div>
                                                    </div>
                                                 </div>
                                              </details>
@@ -9903,6 +9617,16 @@ The following is the JSON format reference for this model, which is organized hi
                                           <div class="body">
                                              <p class="description"><span class="usa-tag">Description</span> Specifies a media type as defined by the Internet Assigned Numbers Authority (IANA)
                                                 <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">Media Types Registry</a>. </p>
+                                             <div class="remarks-group usa-prose">
+                                                <details open="open">
+                                                   <summary class="subhead">Remarks</summary>
+                                                   <div class="remarks">
+                                                      <p>The IANA Media Types Registry should be used, but currently there is no official media
+                                                         type for YAML. OSCAL documents should specify <code>application/yaml</code> for general YAML content, or <code>application/oscal+yaml</code> for YAML-based OSCAL content. This approach aligns with use of a structured name
+                                                         suffix, per <a href="https://www.rfc-editor.org/rfc/rfc6838.html#section-4.2.8">RFC 6838 Section 4.2.8</a>.</p>
+                                                   </div>
+                                                </details>
+                                             </div>
                                           </div>
                                        </div>
                                        <div class="model-entry definition assembly">
@@ -9910,7 +9634,7 @@ The following is the JSON format reference for this model, which is organized hi
                                              <h5 id="/component-definition/back-matter/resources/base64/value" class="toc5 name">value</h5>
                                              <p class="type"><a href="/reference/datatypes/#base64binary">base64Binary</a></p>
                                              <p class="occurrence">[0 or 1]</p>
-                                             <div class="crosslink"><a class="usa-button" href="../xml-reference/#/component-definition/back-matter/resource/base64">Switch to XML</a></div>
+                                             <div class="crosslink"><a class="usa-button" href="../xml-reference/#/component-definition/back-matter/resource/base64/_VALUE">Switch to XML</a></div>
                                           </div>
                                        </div>
                                     </details>

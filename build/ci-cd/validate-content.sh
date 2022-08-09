@@ -19,15 +19,14 @@ usage() {                                      # Function: Print a help message.
 Usage: $0 [options]
 
 -a DIR, --artifact-dir            Build source artifacts are stored in DIR.
--o DIR, --oscal-dir DIR           OSCAL schema are located in DIR.
 -c FILE, --config-file FILE       The config file location is FILE.
+-o DIR, --oscal-dir DIR           OSCAL schema are located in DIR.
 -h, --help                        Display help
 -v                                Provide verbose output
 EOF
 }
 
-OPTS=`getopt -o o:vhc:a: --long artifact-dir:,oscal-dir:,help,config-file: -n "$0" -- "$@"`
-if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; usage ; exit 1 ; fi
+if ! OPTS=$(getopt -o o:vhc:a: --long artifact-dir:,oscal-dir:,help,config-file: -n "$0" -- "$@"); then echo "Failed parsing options." >&2 ; usage ; exit 1 ; fi
 
 # Process arguments
 eval set -- "$OPTS"

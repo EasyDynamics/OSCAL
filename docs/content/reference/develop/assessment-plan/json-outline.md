@@ -1,15 +1,16 @@
 ---
 title: "OSCAL Assessment Plan Model Development Snapshot JSON Format Outline"
-heading: Assessment Plan Model Development Snapshot JSON Format Outline
+heading: "Assessment Plan Model Development Snapshot JSON Format Outline"
 custom_js:
   - "/js/oscal-metaschema-map-expander.js"
 weight: 10
+generateanchors: false
 sidenav:
   title: JSON Outline
 
 ---
 
-The following outline is a representation of the [JSON format](https://github.com/usnistgov/OSCAL/blob/develop/json/schema/oscal_assessment-plan_schema.json) for this model. For each property, the name links to the corresponding entry in the [JSON Format Reference](../json-reference/). The cardinality and data type are also provided for each property where appropriate.
+The following outline is a representation of the [JSON format](https://github.com/usnistgov/OSCAL/blob/develop/json/schema/oscal_assessment-plan_schema.json) for this [model](/concepts/layer/assessment/assessment-plan/). For each property, the name links to the corresponding entry in the [JSON Format Reference](../json-reference/). The cardinality and data type are also provided for each property where appropriate.
 
 <!-- DO NOT REMOVE. Generated text below -->
 {{< rawhtml >}}
@@ -55,7 +56,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                  <p class="OM-line"><a class="OM-name" href="../json-reference/#/assessment-plan/metadata/revisions/last-modified">last-modified</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#datetime-with-timezone">dateTime-with-timezone</a></span><span class="OM-lit">,</span></p>
                               </div>
                               <div class="OM-entry">
-                                 <p class="OM-line"><a class="OM-name" href="../json-reference/#/assessment-plan/metadata/revisions/version">version</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#string">string</a></span><span class="OM-lit">,</span></p>
+                                 <p class="OM-line"><a class="OM-name" href="../json-reference/#/assessment-plan/metadata/revisions/version">version</a> <span class="OM-cardinality">[1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#string">string</a></span><span class="OM-lit">,</span></p>
                               </div>
                               <div class="OM-entry">
                                  <p class="OM-line"><a class="OM-name" href="../json-reference/#/assessment-plan/metadata/revisions/oscal-version">oscal-version</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#string">string</a></span><span class="OM-lit">,</span></p>
@@ -535,7 +536,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                  <p><span class="OM-lit">], </span></p>
                               </details>
                               <div class="OM-choices">
-                                 <p class="OM-lit">A choice:</p>
+                                 <p class="OM-lit">A choice of:</p>
                                  <div class="OM-choice">
                                     <details class="OM-entry">
                                        <summary><span class="sq"><a class="OM-name" href="../json-reference/#/assessment-plan/metadata/parties/addresses">addresses</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-lit"> [ <span class="show-closed">… ], </span></span></span></summary>
@@ -1782,7 +1783,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                                                <p><span class="OM-lit">], </span></p>
                                                             </details>
                                                             <div class="OM-choices">
-                                                               <p class="OM-lit">A choice:</p>
+                                                               <p class="OM-lit">A choice of:</p>
                                                                <div class="OM-choice">
                                                                   <details class="OM-entry">
                                                                      <summary><a class="OM-name" href="../json-reference/#/assessment-plan/local-definitions/activities/steps/reviewed-controls/control-selections/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -1913,7 +1914,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                                                <p><span class="OM-lit">], </span></p>
                                                             </details>
                                                             <div class="OM-choices">
-                                                               <p class="OM-lit">A choice:</p>
+                                                               <p class="OM-lit">A choice of:</p>
                                                                <div class="OM-choice">
                                                                   <details class="OM-entry">
                                                                      <summary><a class="OM-name" href="../json-reference/#/assessment-plan/local-definitions/activities/steps/reviewed-controls/control-objective-selections/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -2182,7 +2183,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                                    <p><span class="OM-lit">], </span></p>
                                                 </details>
                                                 <div class="OM-choices">
-                                                   <p class="OM-lit">A choice:</p>
+                                                   <p class="OM-lit">A choice of:</p>
                                                    <div class="OM-choice">
                                                       <details class="OM-entry">
                                                          <summary><a class="OM-name" href="../json-reference/#/assessment-plan/local-definitions/activities/related-controls/control-selections/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -2313,7 +2314,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                                    <p><span class="OM-lit">], </span></p>
                                                 </details>
                                                 <div class="OM-choices">
-                                                   <p class="OM-lit">A choice:</p>
+                                                   <p class="OM-lit">A choice of:</p>
                                                    <div class="OM-choice">
                                                       <details class="OM-entry">
                                                          <summary><a class="OM-name" href="../json-reference/#/assessment-plan/local-definitions/activities/related-controls/control-objective-selections/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -2688,7 +2689,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                  <p><span class="OM-lit">], </span></p>
                               </details>
                               <div class="OM-choices">
-                                 <p class="OM-lit">A choice:</p>
+                                 <p class="OM-lit">A choice of:</p>
                                  <div class="OM-choice">
                                     <details class="OM-entry">
                                        <summary><a class="OM-name" href="../json-reference/#/assessment-plan/reviewed-controls/control-selections/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -2819,7 +2820,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                  <p><span class="OM-lit">], </span></p>
                               </details>
                               <div class="OM-choices">
-                                 <p class="OM-lit">A choice:</p>
+                                 <p class="OM-lit">A choice of:</p>
                                  <div class="OM-choice">
                                     <details class="OM-entry">
                                        <summary><a class="OM-name" href="../json-reference/#/assessment-plan/reviewed-controls/control-objective-selections/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -2941,7 +2942,7 @@ The following outline is a representation of the [JSON format](https://github.co
                            <p><span class="OM-lit">], </span></p>
                         </details>
                         <div class="OM-choices">
-                           <p class="OM-lit">A choice:</p>
+                           <p class="OM-lit">A choice of:</p>
                            <div class="OM-choice">
                               <details class="OM-entry">
                                  <summary><a class="OM-name" href="../json-reference/#/assessment-plan/assessment-subjects/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -3639,7 +3640,7 @@ The following outline is a representation of the [JSON format](https://github.co
                            <summary><a class="OM-name" href="../json-reference/#/assessment-plan/tasks/timing">timing</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
                            <div class="model-container object">
                               <div class="OM-choices">
-                                 <p class="OM-lit">A choice:</p>
+                                 <p class="OM-lit">A choice of:</p>
                                  <div class="OM-choice">
                                     <details class="OM-entry">
                                        <summary><a class="OM-name" href="../json-reference/#/assessment-plan/tasks/timing/on-date">on-date</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -3922,7 +3923,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                                    <p><span class="OM-lit">], </span></p>
                                                 </details>
                                                 <div class="OM-choices">
-                                                   <p class="OM-lit">A choice:</p>
+                                                   <p class="OM-lit">A choice of:</p>
                                                    <div class="OM-choice">
                                                       <details class="OM-entry">
                                                          <summary><a class="OM-name" href="../json-reference/#/assessment-plan/tasks/associated-activities/subjects/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -4167,7 +4168,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                        <p><span class="OM-lit">], </span></p>
                                     </details>
                                     <div class="OM-choices">
-                                       <p class="OM-lit">A choice:</p>
+                                       <p class="OM-lit">A choice of:</p>
                                        <div class="OM-choice">
                                           <details class="OM-entry">
                                              <summary><a class="OM-name" href="../json-reference/#/assessment-plan/tasks/subjects/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>

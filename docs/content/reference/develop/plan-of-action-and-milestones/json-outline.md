@@ -1,15 +1,16 @@
 ---
 title: "OSCAL Plan of Action and Milestones Model Development Snapshot JSON Format Outline"
-heading: Plan of Action and Milestones Model Development Snapshot JSON Format Outline
+heading: "Plan of Action and Milestones Model Development Snapshot JSON Format Outline"
 custom_js:
   - "/js/oscal-metaschema-map-expander.js"
 weight: 10
+generateanchors: false
 sidenav:
   title: JSON Outline
 
 ---
 
-The following outline is a representation of the [JSON format](https://github.com/usnistgov/OSCAL/blob/develop/json/schema/oscal_poam_schema.json) for this model. For each property, the name links to the corresponding entry in the [JSON Format Reference](../json-reference/). The cardinality and data type are also provided for each property where appropriate.
+The following outline is a representation of the [JSON format](https://github.com/usnistgov/OSCAL/blob/develop/json/schema/oscal_poam_schema.json) for this [model](/concepts/layer/assessment/poam/). For each property, the name links to the corresponding entry in the [JSON Format Reference](../json-reference/). The cardinality and data type are also provided for each property where appropriate.
 
 <!-- DO NOT REMOVE. Generated text below -->
 {{< rawhtml >}}
@@ -55,7 +56,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                  <p class="OM-line"><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/metadata/revisions/last-modified">last-modified</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#datetime-with-timezone">dateTime-with-timezone</a></span><span class="OM-lit">,</span></p>
                               </div>
                               <div class="OM-entry">
-                                 <p class="OM-line"><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/metadata/revisions/version">version</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#string">string</a></span><span class="OM-lit">,</span></p>
+                                 <p class="OM-line"><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/metadata/revisions/version">version</a> <span class="OM-cardinality">[1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#string">string</a></span><span class="OM-lit">,</span></p>
                               </div>
                               <div class="OM-entry">
                                  <p class="OM-line"><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/metadata/revisions/oscal-version">oscal-version</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#string">string</a></span><span class="OM-lit">,</span></p>
@@ -535,7 +536,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                  <p><span class="OM-lit">], </span></p>
                               </details>
                               <div class="OM-choices">
-                                 <p class="OM-lit">A choice:</p>
+                                 <p class="OM-lit">A choice of:</p>
                                  <div class="OM-choice">
                                     <details class="OM-entry">
                                        <summary><span class="sq"><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/metadata/parties/addresses">addresses</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-lit"> [ <span class="show-closed">… ], </span></span></span></summary>
@@ -1631,7 +1632,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                                                <p><span class="OM-lit">], </span></p>
                                                             </details>
                                                             <div class="OM-choices">
-                                                               <p class="OM-lit">A choice:</p>
+                                                               <p class="OM-lit">A choice of:</p>
                                                                <div class="OM-choice">
                                                                   <details class="OM-entry">
                                                                      <summary><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/observations/origins/related-tasks/subjects/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -1873,7 +1874,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                                                      <p><span class="OM-lit">], </span></p>
                                                                   </details>
                                                                   <div class="OM-choices">
-                                                                     <p class="OM-lit">A choice:</p>
+                                                                     <p class="OM-lit">A choice of:</p>
                                                                      <div class="OM-choice">
                                                                         <details class="OM-entry">
                                                                            <summary><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/observations/origins/related-tasks/identified-subject/subjects/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -2220,7 +2221,7 @@ The following outline is a representation of the [JSON format](https://github.co
                            <p class="OM-line"><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/observations/expires">expires</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#datetime-with-timezone">dateTime-with-timezone</a></span><span class="OM-lit">,</span></p>
                         </div>
                         <div class="OM-entry">
-                           <p class="OM-line"><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/observations/remarks">remarks</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#markup-multiline">markup-multiline</a></span><span class="OM-lit">,</span></p>
+                           <p class="OM-line"><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/observations/remarks">remarks</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#markup-multiline">markup-multiline</a></span></p>
                         </div>
                      </div>
                      <p><span class="OM-lit"> }</span></p>
@@ -2595,7 +2596,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                                                <p><span class="OM-lit">], </span></p>
                                                             </details>
                                                             <div class="OM-choices">
-                                                               <p class="OM-lit">A choice:</p>
+                                                               <p class="OM-lit">A choice of:</p>
                                                                <div class="OM-choice">
                                                                   <details class="OM-entry">
                                                                      <summary><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/risks/origins/related-tasks/subjects/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -2837,7 +2838,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                                                      <p><span class="OM-lit">], </span></p>
                                                                   </details>
                                                                   <div class="OM-choices">
-                                                                     <p class="OM-lit">A choice:</p>
+                                                                     <p class="OM-lit">A choice of:</p>
                                                                      <div class="OM-choice">
                                                                         <details class="OM-entry">
                                                                            <summary><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/risks/origins/related-tasks/identified-subject/subjects/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -3394,7 +3395,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                                                      <p><span class="OM-lit">], </span></p>
                                                                   </details>
                                                                   <div class="OM-choices">
-                                                                     <p class="OM-lit">A choice:</p>
+                                                                     <p class="OM-lit">A choice of:</p>
                                                                      <div class="OM-choice">
                                                                         <details class="OM-entry">
                                                                            <summary><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/risks/characterizations/origin/related-tasks/subjects/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -3636,7 +3637,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                                                            <p><span class="OM-lit">], </span></p>
                                                                         </details>
                                                                         <div class="OM-choices">
-                                                                           <p class="OM-lit">A choice:</p>
+                                                                           <p class="OM-lit">A choice of:</p>
                                                                            <div class="OM-choice">
                                                                               <details class="OM-entry">
                                                                                  <summary><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/risks/characterizations/origin/related-tasks/identified-subject/subjects/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -4424,7 +4425,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                                                            <p><span class="OM-lit">], </span></p>
                                                                         </details>
                                                                         <div class="OM-choices">
-                                                                           <p class="OM-lit">A choice:</p>
+                                                                           <p class="OM-lit">A choice of:</p>
                                                                            <div class="OM-choice">
                                                                               <details class="OM-entry">
                                                                                  <summary><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/risks/remediations/origins/related-tasks/subjects/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -4666,7 +4667,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                                                                  <p><span class="OM-lit">], </span></p>
                                                                               </details>
                                                                               <div class="OM-choices">
-                                                                                 <p class="OM-lit">A choice:</p>
+                                                                                 <p class="OM-lit">A choice of:</p>
                                                                                  <div class="OM-choice">
                                                                                     <details class="OM-entry">
                                                                                        <summary><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/risks/remediations/origins/related-tasks/identified-subject/subjects/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -5001,7 +5002,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                                    <p><span class="OM-lit">], </span></p>
                                                 </details>
                                                 <div class="OM-entry">
-                                                   <p class="OM-line"><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/risks/remediations/required-assets/remarks">remarks</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#markup-multiline">markup-multiline</a></span><span class="OM-lit">,</span></p>
+                                                   <p class="OM-line"><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/risks/remediations/required-assets/remarks">remarks</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#markup-multiline">markup-multiline</a></span></p>
                                                 </div>
                                              </div>
                                              <p><span class="OM-lit"> }</span></p>
@@ -5085,7 +5086,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                                    <summary><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/risks/remediations/tasks/timing">timing</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
                                                    <div class="model-container object">
                                                       <div class="OM-choices">
-                                                         <p class="OM-lit">A choice:</p>
+                                                         <p class="OM-lit">A choice of:</p>
                                                          <div class="OM-choice">
                                                             <details class="OM-entry">
                                                                <summary><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/risks/remediations/tasks/timing/on-date">on-date</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -5368,7 +5369,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                                                            <p><span class="OM-lit">], </span></p>
                                                                         </details>
                                                                         <div class="OM-choices">
-                                                                           <p class="OM-lit">A choice:</p>
+                                                                           <p class="OM-lit">A choice of:</p>
                                                                            <div class="OM-choice">
                                                                               <details class="OM-entry">
                                                                                  <summary><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/risks/remediations/tasks/associated-activities/subjects/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -5613,7 +5614,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                                                <p><span class="OM-lit">], </span></p>
                                                             </details>
                                                             <div class="OM-choices">
-                                                               <p class="OM-lit">A choice:</p>
+                                                               <p class="OM-lit">A choice of:</p>
                                                                <div class="OM-choice">
                                                                   <details class="OM-entry">
                                                                      <summary><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/risks/remediations/tasks/subjects/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -6254,7 +6255,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                                                                  <p><span class="OM-lit">], </span></p>
                                                                               </details>
                                                                               <div class="OM-choices">
-                                                                                 <p class="OM-lit">A choice:</p>
+                                                                                 <p class="OM-lit">A choice of:</p>
                                                                                  <div class="OM-choice">
                                                                                     <details class="OM-entry">
                                                                                        <summary><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/risks/risk-log/entries/related-responses/related-tasks/subjects/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -6496,7 +6497,7 @@ The following outline is a representation of the [JSON format](https://github.co
                                                                                        <p><span class="OM-lit">], </span></p>
                                                                                     </details>
                                                                                     <div class="OM-choices">
-                                                                                       <p class="OM-lit">A choice:</p>
+                                                                                       <p class="OM-lit">A choice of:</p>
                                                                                        <div class="OM-choice">
                                                                                           <details class="OM-entry">
                                                                                              <summary><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/risks/risk-log/entries/related-responses/related-tasks/identified-subject/subjects/include-all">include-all</a> <span class="OM-cardinality">[1]</span>: <span class="OM-lit">{<span class="show-closed"> … }, </span></span></summary>
@@ -6906,7 +6907,7 @@ The following outline is a representation of the [JSON format](https://github.co
                            <p><span class="OM-lit">], </span></p>
                         </details>
                         <div class="OM-entry">
-                           <p class="OM-line"><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/poam-items/remarks">remarks</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#markup-multiline">markup-multiline</a></span></p>
+                           <p class="OM-line"><a class="OM-name" href="../json-reference/#/plan-of-action-and-milestones/poam-items/remarks">remarks</a> <span class="OM-cardinality">[0 or 1]</span>: <span class="OM-datatype"><a href="/reference/datatypes/#markup-multiline">markup-multiline</a></span><span class="OM-lit">,</span></p>
                         </div>
                      </div>
                      <p><span class="OM-lit"> }</span></p>

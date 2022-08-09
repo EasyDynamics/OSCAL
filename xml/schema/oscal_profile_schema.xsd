@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:m="http://csrc.nist.gov/ns/oscal/metaschema/1.0"
+<xs:schema xmlns:m="http://csrc.nist.gov/ns/oscal/metaschema/1.0"
+           xmlns:metaschema-datatypes="http://csrc.nist.gov/ns/oscal/1.0"
            xmlns:oscal-profile="http://csrc.nist.gov/ns/oscal/1.0"
-           xmlns:oscal-prose="http://csrc.nist.gov/ns/oscal/1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
            elementFormDefault="qualified"
            targetNamespace="http://csrc.nist.gov/ns/oscal/1.0"
-           version="1.0.0">
+           version="1.0.4">
    <xs:annotation>
       <xs:appinfo>
          <m:schema-name>OSCAL Profile Model</m:schema-name>
-         <m:schema-version>1.0.0</m:schema-version>
+         <m:schema-version>1.0.4</m:schema-version>
          <m:short-name>oscal-profile</m:short-name>
          <m:remarks>
             <p>A profile designates a selection and configuration of controls from one or more catalogs, along with a series of operations over them. The topmost element in the OSCAL profile XML schema is <code>profile</code>.</p>
@@ -52,11 +52,11 @@
       <xs:attribute name="uuid" use="required" type="oscal-profile:uuid">
          <xs:annotation>
             <xs:appinfo>
-               <m:formal-name>Catalog Universally Unique Identifier</m:formal-name>
-               <m:description>A globally unique identifier for this profile instance. This UUID should be changed when this document is revised.</m:description>
+               <m:formal-name>Profile Universally Unique Identifier</m:formal-name>
+               <m:description>A <m:a>machine-oriented</m:a>, <m:a>globally unique</m:a> identifier with <m:a>cross-instance</m:a> scope that can be used to reference this profile elsewhere in <m:a>this or other OSCAL instances</m:a>. The locally defined <m:em>UUID</m:em> of the <m:code>profile</m:code> can be used to reference the data item locally or globally (e.g., in an imported OSCAL instance).This identifier should be assigned <m:a>per-subject</m:a>, which means it should be consistently used to identify the same profile across revisions of the document.</m:description>
             </xs:appinfo>
             <xs:documentation>
-               <b>Catalog Universally Unique Identifier</b>: A globally unique identifier for this profile instance. This UUID should be changed when this document is revised.</xs:documentation>
+               <b>Profile Universally Unique Identifier</b>: A machine-oriented, globally unique identifier with cross-instance scope that can be used to reference this profile elsewhere in this or other OSCAL instances. The locally defined UUID of the profile can be used to reference the data item locally or globally (e.g., in an imported OSCAL instance).This identifier should be assigned per-subject, which means it should be consistently used to identify the same profile across revisions of the document.</xs:documentation>
          </xs:annotation>
       </xs:attribute>
    </xs:complexType>
@@ -64,15 +64,15 @@
       <xs:annotation>
          <xs:appinfo>
             <m:formal-name>Import resource</m:formal-name>
-            <m:description>The <m:code>import</m:code> designates a catalog, profile, or other resource to be included (referenced and potentially modified) by this profile. The import also identifies which controls to select using the <m:code>include-all</m:code>, <m:code>include-controls</m:code>, and <m:code>exclude-controls</m:code> directives.</m:description>
+            <m:description>The <m:code>import</m:code> designates a catalog or profile to be included (referenced and potentially modified) by this profile. The import also identifies which controls to select using the <m:code>include-all</m:code>, <m:code>include-controls</m:code>, and <m:code>exclude-controls</m:code> directives.</m:description>
          </xs:appinfo>
          <xs:documentation>
-            <b>Import resource</b>: The import designates a catalog, profile, or other resource to be included (referenced and potentially modified) by this profile. The import also identifies which controls to select using the include-all, include-controls, and exclude-controls directives.</xs:documentation>
+            <b>Import resource</b>: The import designates a catalog or profile to be included (referenced and potentially modified) by this profile. The import also identifies which controls to select using the include-all, include-controls, and exclude-controls directives.</xs:documentation>
       </xs:annotation>
       <xs:sequence>
          <xs:choice>
             <xs:element name="include-all"
-                        type="oscal-profile:oscal-profile-include-all-ASSEMBLY"
+                        type="oscal-profile:oscal-catalog-common-include-all-ASSEMBLY"
                         minOccurs="1"
                         maxOccurs="1"/>
             <xs:element name="include-controls"
@@ -100,77 +100,83 @@
       <xs:annotation>
          <xs:appinfo>
             <m:formal-name>Merge controls</m:formal-name>
-            <m:description>A Merge element merges controls in resolution.</m:description>
+            <m:description>A Merge element provides structuring directives that drive how controls are organized after resolution.</m:description>
          </xs:appinfo>
          <xs:documentation>
-            <b>Merge controls</b>: A Merge element merges controls in resolution.</xs:documentation>
+            <b>Merge controls</b>: A Merge element provides structuring directives that drive how controls are organized after resolution.</xs:documentation>
       </xs:annotation>
       <xs:sequence>
-         <xs:element name="combine"
-                     type="oscal-profile:oscal-profile-combine-ASSEMBLY"
-                     minOccurs="0"
-                     maxOccurs="1"/>
+         <xs:element name="combine" minOccurs="0" maxOccurs="1">
+            <xs:complexType>
+               <xs:annotation>
+                  <xs:appinfo>
+                     <m:formal-name>Combination rule</m:formal-name>
+                     <m:description>A Combine element defines how to combine multiple (competing) versions of the same control.</m:description>
+                  </xs:appinfo>
+                  <xs:documentation>
+                     <b>Combination rule</b>: A Combine element defines how to combine multiple (competing) versions of the same control.</xs:documentation>
+               </xs:annotation>
+               <xs:attribute name="method" type="oscal-profile:string">
+                  <xs:annotation>
+                     <xs:appinfo>
+                        <m:formal-name>Combination method</m:formal-name>
+                        <m:description>How clashing controls should be handled</m:description>
+                     </xs:appinfo>
+                     <xs:documentation>
+                        <b>Combination method</b>: How clashing controls should be handled</xs:documentation>
+                  </xs:annotation>
+               </xs:attribute>
+            </xs:complexType>
+         </xs:element>
          <xs:choice>
-            <xs:element name="as-is"
-                        type="oscal-profile:oscal-profile-as-is-FIELD"
-                        minOccurs="0"
-                        maxOccurs="1"/>
-            <xs:element name="custom"
-                        type="oscal-profile:oscal-profile-custom-ASSEMBLY"
-                        minOccurs="0"
-                        maxOccurs="1"/>
+            <xs:element name="flat" minOccurs="1" maxOccurs="1">
+               <xs:complexType>
+                  <xs:annotation>
+                     <xs:appinfo>
+                        <m:formal-name>Flat</m:formal-name>
+                        <m:description>Use the flat structuring method.</m:description>
+                     </xs:appinfo>
+                     <xs:documentation>
+                        <b>Flat</b>: Use the flat structuring method.</xs:documentation>
+                  </xs:annotation>
+               </xs:complexType>
+            </xs:element>
+            <xs:element name="as-is" minOccurs="1" maxOccurs="1">
+               <xs:simpleType>
+                  <xs:annotation>
+                     <xs:appinfo>
+                        <m:formal-name>As-Is Structuring Directive</m:formal-name>
+                        <m:description>An As-is element indicates that the controls should be structured in resolution as they are structured in their source catalogs. It does not contain any elements or attributes.</m:description>
+                     </xs:appinfo>
+                     <xs:documentation>
+                        <b>As-Is Structuring Directive</b>: An As-is element indicates that the controls should be structured in resolution as they are structured in their source catalogs. It does not contain any elements or attributes.</xs:documentation>
+                  </xs:annotation>
+                  <xs:restriction base="xs:boolean"/>
+               </xs:simpleType>
+            </xs:element>
+            <xs:element name="custom" minOccurs="0" maxOccurs="1">
+               <xs:complexType>
+                  <xs:annotation>
+                     <xs:appinfo>
+                        <m:formal-name>Custom grouping</m:formal-name>
+                        <m:description>A Custom element frames a structure for embedding represented controls in resolution.</m:description>
+                     </xs:appinfo>
+                     <xs:documentation>
+                        <b>Custom grouping</b>: A Custom element frames a structure for embedding represented controls in resolution.</xs:documentation>
+                  </xs:annotation>
+                  <xs:sequence>
+                     <xs:element name="group"
+                                 type="oscal-profile:oscal-profile-group-ASSEMBLY"
+                                 minOccurs="0"
+                                 maxOccurs="unbounded"/>
+                     <xs:element name="insert-controls"
+                                 type="oscal-profile:oscal-profile-insert-controls-ASSEMBLY"
+                                 minOccurs="0"
+                                 maxOccurs="unbounded"/>
+                  </xs:sequence>
+               </xs:complexType>
+            </xs:element>
          </xs:choice>
-      </xs:sequence>
-   </xs:complexType>
-   <xs:complexType name="oscal-profile-combine-ASSEMBLY">
-      <xs:annotation>
-         <xs:appinfo>
-            <m:formal-name>Combination rule</m:formal-name>
-            <m:description>A Combine element defines whether and how to combine multiple (competing) versions of the same control</m:description>
-         </xs:appinfo>
-         <xs:documentation>
-            <b>Combination rule</b>: A Combine element defines whether and how to combine multiple (competing) versions of the same control</xs:documentation>
-      </xs:annotation>
-      <xs:attribute name="method" type="oscal-profile:string">
-         <xs:annotation>
-            <xs:appinfo>
-               <m:formal-name>Combination method</m:formal-name>
-               <m:description>How clashing controls should be handled</m:description>
-            </xs:appinfo>
-            <xs:documentation>
-               <b>Combination method</b>: How clashing controls should be handled</xs:documentation>
-         </xs:annotation>
-      </xs:attribute>
-   </xs:complexType>
-   <xs:simpleType name="oscal-profile-as-is-FIELD">
-      <xs:annotation>
-         <xs:appinfo>
-            <m:formal-name>As is</m:formal-name>
-            <m:description>An As-is element indicates that the controls should be structured in resolution as they are structured in their source catalogs. It does not contain any elements or attributes.</m:description>
-         </xs:appinfo>
-         <xs:documentation>
-            <b>As is</b>: An As-is element indicates that the controls should be structured in resolution as they are structured in their source catalogs. It does not contain any elements or attributes.</xs:documentation>
-      </xs:annotation>
-      <xs:restriction base="xs:boolean"/>
-   </xs:simpleType>
-   <xs:complexType name="oscal-profile-custom-ASSEMBLY">
-      <xs:annotation>
-         <xs:appinfo>
-            <m:formal-name>Custom grouping</m:formal-name>
-            <m:description>A Custom element frames a structure for embedding represented controls in resolution.</m:description>
-         </xs:appinfo>
-         <xs:documentation>
-            <b>Custom grouping</b>: A Custom element frames a structure for embedding represented controls in resolution.</xs:documentation>
-      </xs:annotation>
-      <xs:sequence>
-         <xs:element name="group"
-                     type="oscal-profile:oscal-profile-group-ASSEMBLY"
-                     minOccurs="0"
-                     maxOccurs="unbounded"/>
-         <xs:element name="insert-controls"
-                     type="oscal-profile:oscal-profile-insert-controls-ASSEMBLY"
-                     minOccurs="0"
-                     maxOccurs="unbounded"/>
       </xs:sequence>
    </xs:complexType>
    <xs:complexType name="oscal-profile-group-ASSEMBLY">
@@ -229,10 +235,10 @@
          <xs:annotation>
             <xs:appinfo>
                <m:formal-name>Group Identifier</m:formal-name>
-               <m:description>A unique identifier for a specific group instance that can be used to reference the group within this and in other OSCAL documents. This identifier's uniqueness is document scoped and is intended to be consistent for the same group across minor revisions of the document.</m:description>
+               <m:description>A <m:a>human-oriented</m:a>, <m:a>locally unique</m:a> identifier with <m:a>cross-instance</m:a> scope that can be used to reference this defined group elsewhere in <m:a>this or other OSCAL instances</m:a>. When referenced from another OSCAL instance, this identifier must be referenced in the context of the containing resource (e.g., import-profile). This id should be assigned <m:a>per-subject</m:a>, which means it should be consistently used to identify the same group across revisions of the document.</m:description>
             </xs:appinfo>
             <xs:documentation>
-               <b>Group Identifier</b>: A unique identifier for a specific group instance that can be used to reference the group within this and in other OSCAL documents. This identifier's uniqueness is document scoped and is intended to be consistent for the same group across minor revisions of the document.</xs:documentation>
+               <b>Group Identifier</b>: A human-oriented, locally unique identifier with cross-instance scope that can be used to reference this defined group elsewhere in this or other OSCAL instances. When referenced from another OSCAL instance, this identifier must be referenced in the context of the containing resource (e.g., import-profile). This id should be assigned per-subject, which means it should be consistently used to identify the same group across revisions of the document.</xs:documentation>
          </xs:annotation>
       </xs:attribute>
       <xs:attribute name="class" type="oscal-profile:token">
@@ -328,10 +334,10 @@
                   <xs:annotation>
                      <xs:appinfo>
                         <m:formal-name>Parameter ID</m:formal-name>
-                        <m:description>Indicates the value of the 'id' flag on a target parameter; i.e. which parameter to set</m:description>
+                        <m:description>A <m:a>human-oriented</m:a>, <m:a>locally unique</m:a> identifier with <m:a>cross-instance</m:a> scope that can be used to reference this defined parameter elsewhere in <m:a>this or other OSCAL instances</m:a>. When referenced from another OSCAL instance, this identifier must be referenced in the context of the containing resource (e.g., import-profile). This id should be assigned <m:a>per-subject</m:a>, which means it should be consistently used to identify the same subject across revisions of the document.</m:description>
                      </xs:appinfo>
                      <xs:documentation>
-                        <b>Parameter ID</b>: Indicates the value of the 'id' flag on a target parameter; i.e. which parameter to set</xs:documentation>
+                        <b>Parameter ID</b>: A human-oriented, locally unique identifier with cross-instance scope that can be used to reference this defined parameter elsewhere in this or other OSCAL instances. When referenced from another OSCAL instance, this identifier must be referenced in the context of the containing resource (e.g., import-profile). This id should be assigned per-subject, which means it should be consistently used to identify the same subject across revisions of the document.</xs:documentation>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="class" type="oscal-profile:token">
@@ -348,10 +354,10 @@
                   <xs:annotation>
                      <xs:appinfo>
                         <m:formal-name>Depends on</m:formal-name>
-                        <m:description>Another parameter invoking this one</m:description>
+                        <m:description>**(deprecated)** Another parameter invoking this one. This construct has been deprecated and should not be used.</m:description>
                      </xs:appinfo>
                      <xs:documentation>
-                        <b>Depends on</b>: Another parameter invoking this one</xs:documentation>
+                        <b>Depends on</b>: **(deprecated)** Another parameter invoking this one. This construct has been deprecated and should not be used.</xs:documentation>
                   </xs:annotation>
                </xs:attribute>
             </xs:complexType>
@@ -374,7 +380,7 @@
       <xs:sequence>
          <xs:choice>
             <xs:element name="include-all"
-                        type="oscal-profile:oscal-profile-include-all-ASSEMBLY"
+                        type="oscal-profile:oscal-catalog-common-include-all-ASSEMBLY"
                         minOccurs="1"
                         maxOccurs="1"/>
             <xs:element name="include-controls"
@@ -397,16 +403,6 @@
                <b>Order</b>: A designation of how a selection of controls in a profile is to be ordered.</xs:documentation>
          </xs:annotation>
       </xs:attribute>
-   </xs:complexType>
-   <xs:complexType name="oscal-profile-include-all-ASSEMBLY">
-      <xs:annotation>
-         <xs:appinfo>
-            <m:formal-name>Insert All</m:formal-name>
-            <m:description>Insert all controls from the imported catalog or profile resources identified in the <m:code>import</m:code> directive.</m:description>
-         </xs:appinfo>
-         <xs:documentation>
-            <b>Insert All</b>: Insert all controls from the imported catalog or profile resources identified in the import directive.</xs:documentation>
-      </xs:annotation>
    </xs:complexType>
    <xs:complexType name="oscal-profile-select-control-by-id-ASSEMBLY">
       <xs:annotation>
@@ -484,14 +480,14 @@
                      minOccurs="0"
                      maxOccurs="unbounded"/>
       </xs:sequence>
-      <xs:attribute name="control-id" type="oscal-profile:token">
+      <xs:attribute name="control-id" use="required" type="oscal-profile:token">
          <xs:annotation>
             <xs:appinfo>
                <m:formal-name>Control Identifier Reference</m:formal-name>
-               <m:description>A reference to a control with a corresponding <m:code>id</m:code> value.</m:description>
+               <m:description>A <m:a>human-oriented</m:a> identifier reference to a control with a corresponding <m:code>id</m:code> value. When referencing an externally defined <m:code>control</m:code>, the <m:code>Control Identifier Reference</m:code> must be used in the context of the external / imported OSCAL instance (e.g., uri-reference).</m:description>
             </xs:appinfo>
             <xs:documentation>
-               <b>Control Identifier Reference</b>: A reference to a control with a corresponding id value.</xs:documentation>
+               <b>Control Identifier Reference</b>: A human-oriented identifier reference to a control with a corresponding id value. When referencing an externally defined control, the Control Identifier Reference must be used in the context of the external / imported OSCAL instance (e.g., uri-reference).</xs:documentation>
          </xs:annotation>
       </xs:attribute>
    </xs:complexType>
@@ -750,7 +746,7 @@
                      maxOccurs="1"/>
          <xs:element name="version"
                      type="oscal-profile:oscal-metadata-version-FIELD"
-                     minOccurs="0"
+                     minOccurs="1"
                      maxOccurs="1"/>
          <xs:element name="oscal-version"
                      type="oscal-profile:oscal-metadata-oscal-version-FIELD"
@@ -859,10 +855,10 @@
          <xs:annotation>
             <xs:appinfo>
                <m:formal-name>Location Universally Unique Identifier</m:formal-name>
-               <m:description>A unique identifier that can be used to reference this defined location elsewhere in an OSCAL document. A UUID should be consistently used for a given location across revisions of the document.</m:description>
+               <m:description>A <m:a>machine-oriented</m:a>, <m:a>globally unique</m:a> identifier with <m:a>cross-instance</m:a> scope that can be used to reference this defined location elsewhere in <m:a>this or other OSCAL instances</m:a>. The locally defined <m:em>UUID</m:em> of the <m:code>location</m:code> can be used to reference the data item locally or globally (e.g., from an importing OSCAL instance). This UUID should be assigned <m:a>per-subject</m:a>, which means it should be consistently used to identify the same subject across revisions of the document.</m:description>
             </xs:appinfo>
             <xs:documentation>
-               <b>Location Universally Unique Identifier</b>: A unique identifier that can be used to reference this defined location elsewhere in an OSCAL document. A UUID should be consistently used for a given location across revisions of the document.</xs:documentation>
+               <b>Location Universally Unique Identifier</b>: A machine-oriented, globally unique identifier with cross-instance scope that can be used to reference this defined location elsewhere in this or other OSCAL instances. The locally defined UUID of the location can be used to reference the data item locally or globally (e.g., from an importing OSCAL instance). This UUID should be assigned per-subject, which means it should be consistently used to identify the same subject across revisions of the document.</xs:documentation>
          </xs:annotation>
       </xs:attribute>
    </xs:complexType>
@@ -870,10 +866,10 @@
       <xs:annotation>
          <xs:appinfo>
             <m:formal-name>Location Reference</m:formal-name>
-            <m:description>References a <m:code>location</m:code> defined in <m:code>metadata</m:code>. </m:description>
+            <m:description>A <m:a>machine-oriented</m:a> identifier reference to a <m:code>location</m:code> defined in the <m:code>metadata</m:code> section of this or another OSCAL instance. The <m:em>UUID</m:em> of the <m:code>location</m:code> in the source OSCAL instance is sufficient to reference the data item locally or globally (e.g., in an imported OSCAL instance). </m:description>
          </xs:appinfo>
          <xs:documentation>
-            <b>Location Reference</b>: References a location defined in metadata. </xs:documentation>
+            <b>Location Reference</b>: A machine-oriented identifier reference to a location defined in the metadata section of this or another OSCAL instance. The UUID of the location in the source OSCAL instance is sufficient to reference the data item locally or globally (e.g., in an imported OSCAL instance). </xs:documentation>
       </xs:annotation>
       <xs:restriction base="oscal-profile:uuid"/>
    </xs:simpleType>
@@ -970,10 +966,10 @@
                <xs:annotation>
                   <xs:appinfo>
                      <m:formal-name>Organizational Affiliation</m:formal-name>
-                     <m:description>Identifies that the party object is a member of the organization associated with the provided UUID.</m:description>
+                     <m:description>A <m:a>machine-oriented</m:a> identifier reference to another <m:code>party</m:code> (<m:code>person</m:code> or <m:code>organization</m:code>) that this subject is associated with. The <m:em>UUID</m:em> of the <m:code>party</m:code> in the source OSCAL instance is sufficient to reference the data item locally or globally (e.g., in an imported OSCAL instance). </m:description>
                   </xs:appinfo>
                   <xs:documentation>
-                     <b>Organizational Affiliation</b>: Identifies that the party object is a member of the organization associated with the provided UUID.</xs:documentation>
+                     <b>Organizational Affiliation</b>: A machine-oriented identifier reference to another party (person or organization) that this subject is associated with. The UUID of the party in the source OSCAL instance is sufficient to reference the data item locally or globally (e.g., in an imported OSCAL instance). </xs:documentation>
                </xs:annotation>
                <xs:restriction base="oscal-profile:uuid"/>
             </xs:simpleType>
@@ -998,10 +994,10 @@
          <xs:annotation>
             <xs:appinfo>
                <m:formal-name>Party Universally Unique Identifier</m:formal-name>
-               <m:description>A unique identifier that can be used to reference this defined location elsewhere in an OSCAL document. A UUID should be consistently used for a given party across revisions of the document.</m:description>
+               <m:description>A <m:a>machine-oriented</m:a>, <m:a>globally unique</m:a> identifier with <m:a>cross-instance</m:a> scope that can be used to reference this defined party elsewhere in <m:a>this or other OSCAL instances</m:a>. The locally defined <m:em>UUID</m:em> of the <m:code>party</m:code> can be used to reference the data item locally or globally (e.g., from an importing OSCAL instance). This UUID should be assigned <m:a>per-subject</m:a>, which means it should be consistently used to identify the same subject across revisions of the document.</m:description>
             </xs:appinfo>
             <xs:documentation>
-               <b>Party Universally Unique Identifier</b>: A unique identifier that can be used to reference this defined location elsewhere in an OSCAL document. A UUID should be consistently used for a given party across revisions of the document.</xs:documentation>
+               <b>Party Universally Unique Identifier</b>: A machine-oriented, globally unique identifier with cross-instance scope that can be used to reference this defined party elsewhere in this or other OSCAL instances. The locally defined UUID of the party can be used to reference the data item locally or globally (e.g., from an importing OSCAL instance). This UUID should be assigned per-subject, which means it should be consistently used to identify the same subject across revisions of the document.</xs:documentation>
          </xs:annotation>
       </xs:attribute>
       <xs:attribute name="type" use="required" type="oscal-profile:string">
@@ -1019,10 +1015,10 @@
       <xs:annotation>
          <xs:appinfo>
             <m:formal-name>Party Reference</m:formal-name>
-            <m:description>References a <m:code>party</m:code> defined in <m:code>metadata</m:code>. </m:description>
+            <m:description>A <m:a>machine-oriented</m:a> identifier reference to another <m:code>party</m:code> defined in <m:code>metadata</m:code>. The <m:em>UUID</m:em> of the <m:code>party</m:code> in the source OSCAL instance is sufficient to reference the data item locally or globally (e.g., in an imported OSCAL instance). </m:description>
          </xs:appinfo>
          <xs:documentation>
-            <b>Party Reference</b>: References a party defined in metadata. </xs:documentation>
+            <b>Party Reference</b>: A machine-oriented identifier reference to another party defined in metadata. The UUID of the party in the source OSCAL instance is sufficient to reference the data item locally or globally (e.g., in an imported OSCAL instance). </xs:documentation>
       </xs:annotation>
       <xs:restriction base="oscal-profile:uuid"/>
    </xs:simpleType>
@@ -1107,24 +1103,13 @@
          <xs:annotation>
             <xs:appinfo>
                <m:formal-name>Role Identifier</m:formal-name>
-               <m:description>A unique identifier for a specific role instance. This identifier's uniqueness is document scoped and is intended to be consistent for the same role across minor revisions of the document.</m:description>
+               <m:description>A <m:a>human-oriented</m:a>, <m:a>locally unique</m:a> identifier with <m:a>cross-instance</m:a> scope that can be used to reference this defined role elsewhere in <m:a>this or other OSCAL instances</m:a>. When referenced from another OSCAL instance, the locally defined <m:em>ID</m:em> of the <m:code>Role</m:code> from the imported OSCAL instance must be referenced in the context of the containing resource (e.g., import, import-component-definition, import-profile, import-ssp or import-ap). This ID should be assigned <m:a>per-subject</m:a>, which means it should be consistently used to identify the same subject across revisions of the document.</m:description>
             </xs:appinfo>
             <xs:documentation>
-               <b>Role Identifier</b>: A unique identifier for a specific role instance. This identifier's uniqueness is document scoped and is intended to be consistent for the same role across minor revisions of the document.</xs:documentation>
+               <b>Role Identifier</b>: A human-oriented, locally unique identifier with cross-instance scope that can be used to reference this defined role elsewhere in this or other OSCAL instances. When referenced from another OSCAL instance, the locally defined ID of the Role from the imported OSCAL instance must be referenced in the context of the containing resource (e.g., import, import-component-definition, import-profile, import-ssp or import-ap). This ID should be assigned per-subject, which means it should be consistently used to identify the same subject across revisions of the document.</xs:documentation>
          </xs:annotation>
       </xs:attribute>
    </xs:complexType>
-   <xs:simpleType name="oscal-metadata-role-id-FIELD">
-      <xs:annotation>
-         <xs:appinfo>
-            <m:formal-name>Role Identifier Reference</m:formal-name>
-            <m:description>A reference to the roles served by the user.</m:description>
-         </xs:appinfo>
-         <xs:documentation>
-            <b>Role Identifier Reference</b>: A reference to the roles served by the user.</xs:documentation>
-      </xs:annotation>
-      <xs:restriction base="oscal-profile:token"/>
-   </xs:simpleType>
    <xs:complexType name="oscal-metadata-back-matter-ASSEMBLY">
       <xs:annotation>
          <xs:appinfo>
@@ -1315,10 +1300,10 @@
                   <xs:annotation>
                      <xs:appinfo>
                         <m:formal-name>Resource Universally Unique Identifier</m:formal-name>
-                        <m:description>A globally unique identifier that can be used to reference this defined resource elsewhere in an OSCAL document. A UUID should be consistently used for a given resource across revisions of the document.</m:description>
+                        <m:description>A <m:a>machine-oriented</m:a>, <m:a>globally unique</m:a> identifier with <m:a>cross-instance</m:a> scope that can be used to reference this defined resource elsewhere in <m:a>this or other OSCAL instances</m:a>. This UUID should be assigned <m:a>per-subject</m:a>, which means it should be consistently used to identify the same subject across revisions of the document.</m:description>
                      </xs:appinfo>
                      <xs:documentation>
-                        <b>Resource Universally Unique Identifier</b>: A globally unique identifier that can be used to reference this defined resource elsewhere in an OSCAL document. A UUID should be consistently used for a given resource across revisions of the document.</xs:documentation>
+                        <b>Resource Universally Unique Identifier</b>: A machine-oriented, globally unique identifier with cross-instance scope that can be used to reference this defined resource elsewhere in this or other OSCAL instances. This UUID should be assigned per-subject, which means it should be consistently used to identify the same subject across revisions of the document.</xs:documentation>
                   </xs:annotation>
                </xs:attribute>
             </xs:complexType>
@@ -1365,10 +1350,10 @@
          <xs:annotation>
             <xs:appinfo>
                <m:formal-name>Property Universally Unique Identifier</m:formal-name>
-               <m:description>A unique identifier that can be used to reference this property elsewhere in an OSCAL document. A UUID should be consistently used for a given location across revisions of the document.</m:description>
+               <m:description>A <m:a>machine-oriented</m:a>, <m:a>globally unique</m:a> identifier with <m:a>cross-instance</m:a> scope that can be used to reference this defined property elsewhere in <m:a>this or other OSCAL instances</m:a>. This UUID should be assigned <m:a>per-subject</m:a>, which means it should be consistently used to identify the same subject across revisions of the document.</m:description>
             </xs:appinfo>
             <xs:documentation>
-               <b>Property Universally Unique Identifier</b>: A unique identifier that can be used to reference this property elsewhere in an OSCAL document. A UUID should be consistently used for a given location across revisions of the document.</xs:documentation>
+               <b>Property Universally Unique Identifier</b>: A machine-oriented, globally unique identifier with cross-instance scope that can be used to reference this defined property elsewhere in this or other OSCAL instances. This UUID should be assigned per-subject, which means it should be consistently used to identify the same subject across revisions of the document.</xs:documentation>
          </xs:annotation>
       </xs:attribute>
       <xs:attribute name="ns" type="oscal-profile:uri">
@@ -1501,10 +1486,10 @@
          <xs:annotation>
             <xs:appinfo>
                <m:formal-name>Responsible Role</m:formal-name>
-               <m:description>The role that the party is responsible for.</m:description>
+               <m:description>A <m:a>human-oriented</m:a> identifier reference to <m:code>roles</m:code> served by the user.</m:description>
             </xs:appinfo>
             <xs:documentation>
-               <b>Responsible Role</b>: The role that the party is responsible for.</xs:documentation>
+               <b>Responsible Role</b>: A human-oriented identifier reference to roles served by the user.</xs:documentation>
          </xs:annotation>
       </xs:attribute>
    </xs:complexType>
@@ -1550,10 +1535,10 @@
          <xs:annotation>
             <xs:appinfo>
                <m:formal-name>Responsible Role ID</m:formal-name>
-               <m:description>The role that is responsible for the business function.</m:description>
+               <m:description>A <m:a>human-oriented</m:a> identifier reference to <m:code>roles</m:code> responsible for the business function.</m:description>
             </xs:appinfo>
             <xs:documentation>
-               <b>Responsible Role ID</b>: The role that is responsible for the business function.</xs:documentation>
+               <b>Responsible Role ID</b>: A human-oriented identifier reference to roles responsible for the business function.</xs:documentation>
          </xs:annotation>
       </xs:attribute>
    </xs:complexType>
@@ -1766,10 +1751,10 @@
       <xs:annotation>
          <xs:appinfo>
             <m:formal-name>Document Identifier</m:formal-name>
-            <m:description>A document identifier qualified by an identifier <m:code>scheme</m:code>. A document identifier provides a globally unique identifier for a group of documents that are to be treated as different versions of the same document. If this element does not appear, or if the value of this element is empty, the value of "document-id" is equal to the value of the "uuid" flag of the top-level root element.</m:description>
+            <m:description>A document identifier qualified by an identifier <m:code>scheme</m:code>. A document identifier provides a <m:a>globally unique</m:a> identifier with a <m:a>cross-instance</m:a> scope that is used for a group of documents that are to be treated as different versions of the same document. If this element does not appear, or if the value of this element is empty, the value of "document-id" is equal to the value of the "uuid" flag of the top-level root element.</m:description>
          </xs:appinfo>
          <xs:documentation>
-            <b>Document Identifier</b>: A document identifier qualified by an identifier scheme. A document identifier provides a globally unique identifier for a group of documents that are to be treated as different versions of the same document. If this element does not appear, or if the value of this element is empty, the value of "document-id" is equal to the value of the "uuid" flag of the top-level root element.</xs:documentation>
+            <b>Document Identifier</b>: A document identifier qualified by an identifier scheme. A document identifier provides a globally unique identifier with a cross-instance scope that is used for a group of documents that are to be treated as different versions of the same document. If this element does not appear, or if the value of this element is empty, the value of "document-id" is equal to the value of the "uuid" flag of the top-level root element.</xs:documentation>
       </xs:annotation>
       <xs:simpleContent>
          <xs:extension base="oscal-profile:string">
@@ -1831,10 +1816,10 @@
          <xs:annotation>
             <xs:appinfo>
                <m:formal-name>Part Identifier</m:formal-name>
-               <m:description>A unique identifier for a specific part instance. This identifier's uniqueness is document scoped and is intended to be consistent for the same part across minor revisions of the document.</m:description>
+               <m:description>A <m:a>human-oriented</m:a>, <m:a>locally unique</m:a> identifier with <m:a>cross-instance</m:a> scope that can be used to reference this defined part elsewhere in <m:a>this or other OSCAL instances</m:a>. When referenced from another OSCAL instance, this identifier must be referenced in the context of the containing resource (e.g., import-profile). This id should be assigned <m:a>per-subject</m:a>, which means it should be consistently used to identify the same subject across revisions of the document.</m:description>
             </xs:appinfo>
             <xs:documentation>
-               <b>Part Identifier</b>: A unique identifier for a specific part instance. This identifier's uniqueness is document scoped and is intended to be consistent for the same part across minor revisions of the document.</xs:documentation>
+               <b>Part Identifier</b>: A human-oriented, locally unique identifier with cross-instance scope that can be used to reference this defined part elsewhere in this or other OSCAL instances. When referenced from another OSCAL instance, this identifier must be referenced in the context of the containing resource (e.g., import-profile). This id should be assigned per-subject, which means it should be consistently used to identify the same subject across revisions of the document.</xs:documentation>
          </xs:annotation>
       </xs:attribute>
       <xs:attribute name="name" use="required" type="oscal-profile:token">
@@ -1954,10 +1939,10 @@
          <xs:annotation>
             <xs:appinfo>
                <m:formal-name>Parameter Identifier</m:formal-name>
-               <m:description>A unique identifier for a specific parameter instance. This identifier's uniqueness is document scoped and is intended to be consistent for the same parameter across minor revisions of the document.</m:description>
+               <m:description>A <m:a>human-oriented</m:a>, <m:a>locally unique</m:a> identifier with <m:a>cross-instance</m:a> scope that can be used to reference this defined parameter elsewhere in <m:a>this or other OSCAL instances</m:a>. When referenced from another OSCAL instance, this identifier must be referenced in the context of the containing resource (e.g., import-profile). This id should be assigned <m:a>per-subject</m:a>, which means it should be consistently used to identify the same subject across revisions of the document.</m:description>
             </xs:appinfo>
             <xs:documentation>
-               <b>Parameter Identifier</b>: A unique identifier for a specific parameter instance. This identifier's uniqueness is document scoped and is intended to be consistent for the same parameter across minor revisions of the document.</xs:documentation>
+               <b>Parameter Identifier</b>: A human-oriented, locally unique identifier with cross-instance scope that can be used to reference this defined parameter elsewhere in this or other OSCAL instances. When referenced from another OSCAL instance, this identifier must be referenced in the context of the containing resource (e.g., import-profile). This id should be assigned per-subject, which means it should be consistently used to identify the same subject across revisions of the document.</xs:documentation>
          </xs:annotation>
       </xs:attribute>
       <xs:attribute name="class" type="oscal-profile:token">
@@ -1974,10 +1959,10 @@
          <xs:annotation>
             <xs:appinfo>
                <m:formal-name>Depends on</m:formal-name>
-               <m:description>Another parameter invoking this one</m:description>
+               <m:description>**(deprecated)** Another parameter invoking this one. This construct has been deprecated and should not be used.</m:description>
             </xs:appinfo>
             <xs:documentation>
-               <b>Depends on</b>: Another parameter invoking this one</xs:documentation>
+               <b>Depends on</b>: **(deprecated)** Another parameter invoking this one. This construct has been deprecated and should not be used.</xs:documentation>
          </xs:annotation>
       </xs:attribute>
    </xs:complexType>
@@ -2112,6 +2097,16 @@
                <b>Parameter Cardinality</b>: Describes the number of selections that must occur. Without this setting, only one value should be assumed to be permitted.</xs:documentation>
          </xs:annotation>
       </xs:attribute>
+   </xs:complexType>
+   <xs:complexType name="oscal-catalog-common-include-all-ASSEMBLY">
+      <xs:annotation>
+         <xs:appinfo>
+            <m:formal-name>Include All</m:formal-name>
+            <m:description>Include all controls from the imported catalog or profile resources.</m:description>
+         </xs:appinfo>
+         <xs:documentation>
+            <b>Include All</b>: Include all controls from the imported catalog or profile resources.</xs:documentation>
+      </xs:annotation>
    </xs:complexType>
    <xs:complexType name="markupLineType" mixed="true">
       <xs:group ref="oscal-profile:mixedInlineMarkupGroup"/>
@@ -2274,80 +2269,187 @@
       <xs:annotation>
          <xs:documentation>A string, but not empty and not whitespace-only (whitespace is U+9, U+10, U+32 or [ \n\t]+ )</xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:whiteSpace value="preserve"/>
-         <xs:pattern value="\S(.*\S)?">
-            <xs:annotation>
-               <xs:documentation>A trimmed string, at least one character with no leading or trailing whitespace.</xs:documentation>
-            </xs:annotation>
-         </xs:pattern>
-      </xs:restriction>
+      <xs:restriction base="metaschema-datatypes:StringDatatype"/>
    </xs:simpleType>
    <xs:simpleType name="dateTime-with-timezone">
       <xs:annotation>
          <xs:documentation>The xs:dateTime with a required timezone.</xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:dateTime">
-         <xs:pattern value=".+T.+(Z|[+-].+)"/>
-      </xs:restriction>
+      <xs:restriction base="metaschema-datatypes:DateTimeWithTimezoneDatatype"/>
    </xs:simpleType>
    <xs:simpleType name="email">
       <xs:annotation>
          <xs:documentation>An email address</xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:whiteSpace value="collapse"/>
-         <xs:pattern value=".+@.+">
-            <xs:annotation>
-               <xs:documentation>Need a better pattern.</xs:documentation>
-            </xs:annotation>
-         </xs:pattern>
-      </xs:restriction>
+      <xs:restriction base="metaschema-datatypes:EmailAddressDatatype"/>
    </xs:simpleType>
    <xs:simpleType name="uri">
       <xs:annotation>
          <xs:documentation>A URI</xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:anyURI">
-         <xs:whiteSpace value="collapse"/>
-         <xs:pattern value="\p{L}[\p{L}\d+\-\.]*:.+">
-            <xs:annotation>
-               <xs:documentation>Requires a scheme with colon per RFC 3986</xs:documentation>
-            </xs:annotation>
-         </xs:pattern>
-      </xs:restriction>
+      <xs:restriction base="metaschema-datatypes:URIDatatype"/>
    </xs:simpleType>
    <xs:simpleType name="uri-reference">
       <xs:annotation>
          <xs:documentation>A URI reference, such as a relative URL</xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:anyURI">
-         <xs:whiteSpace value="collapse"/>
-      </xs:restriction>
+      <xs:restriction base="metaschema-datatypes:URIReferenceDatatype"/>
    </xs:simpleType>
    <xs:simpleType name="uuid">
       <xs:annotation>
          <xs:documentation>A Type 4 ('random' or 'pseudorandom' UUID per RFC 4122</xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:whiteSpace value="collapse"/>
-         <xs:pattern value="[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}">
-            <xs:annotation>
-               <xs:documentation>A sequence of 8-4-4-4-12 hex digits, with extra constraints in the 13th and 17-18th places for version 4</xs:documentation>
-            </xs:annotation>
-         </xs:pattern>
-      </xs:restriction>
+      <xs:restriction base="metaschema-datatypes:UUIDDatatype"/>
    </xs:simpleType>
    <xs:simpleType name="token">
       <xs:annotation><!--<xs:documentation>Matching XSD NCName, except whitespace is not collapsed.</xs:documentation>-->
          <xs:documentation>A string token following the rules of XML "no colon" names, with no whitespace. (XML names are single alphabetic characters
       followed by alphanumeric characters, periods, underscores or dashes.)</xs:documentation>
       </xs:annotation>
+      <xs:restriction base="metaschema-datatypes:StringDatatype"/>
+   </xs:simpleType>
+   <xs:simpleType name="Base64Datatype">
+      <xs:restriction base="xs:base64Binary">
+         <xs:pattern value="\S(.*\S)?">
+            <xs:annotation>
+               <xs:documentation>A trimmed string, at least one character with no
+              leading or trailing whitespace.</xs:documentation>
+            </xs:annotation>
+         </xs:pattern>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="DateDatatype">
+      <xs:restriction base="xs:date">
+         <xs:pattern value="(((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)|(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))|(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))|(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30)))(Z|[+-][0-9]{2}:[0-9]{2})?"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="DateWithTimezoneDatatype">
+      <xs:annotation>
+         <xs:documentation>The xs:date with a required timezone.</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="metaschema-datatypes:DateDatatype">
+         <xs:pattern value="(((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)|(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))|(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))|(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30)))(Z|[+-][0-9]{2}:[0-9]{2})"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="DateTimeDatatype">
+      <xs:restriction base="xs:dateTime">
+         <xs:pattern value="(((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)|(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))|(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))|(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30)))T((2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\.[0-9]+)?)(Z|[+-][0-9]{2}:[0-9]{2})?"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="DateTimeWithTimezoneDatatype">
+      <xs:annotation>
+         <xs:documentation>The xs:dateTime with a required timezone.</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="metaschema-datatypes:DateTimeDatatype">
+         <xs:pattern value="(((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)|(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))|(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))|(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30)))T((2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\.[0-9]+)?)(Z|[+-][0-9]{2}:[0-9]{2})"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="EmailAddressDatatype">
+      <xs:annotation>
+         <xs:documentation>An email address</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="metaschema-datatypes:StringDatatype">
+         <xs:pattern value="\S.*@.*\S">
+            <xs:annotation>
+               <xs:documentation>Need a better pattern.</xs:documentation>
+            </xs:annotation>
+         </xs:pattern>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="HostnameDatatype">
+      <xs:annotation>
+         <xs:documentation>A host name</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="metaschema-datatypes:StringDatatype"><!-- TODO: Need a good hostname pattern --></xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="IPV4AddressDatatype">
+      <xs:annotation>
+         <xs:documentation>The ip-v4-address type specifies an IPv4 address in
+          dot decimal notation.</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="metaschema-datatypes:StringDatatype">
+         <xs:pattern value="((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="IPV6AddressDatatype">
+      <xs:annotation>
+         <xs:documentation>The ip-v6-address type specifies an IPv6 address
+          represented in 8 hextets separated by colons.</xs:documentation>
+         <xs:documentation>This is based on the pattern provided here:
+          https://stackoverflow.com/questions/53497/regular-expression-that-matches-valid-ipv6-addresses
+          with some customizations.</xs:documentation>
+      </xs:annotation>
       <xs:restriction base="xs:string">
+         <xs:whiteSpace value="collapse"/>
+         <xs:pattern value="(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|[fF][eE]80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::([fF]{4}(:0{1,4}){0,1}:){0,1}((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9]).){3,3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9]).){3,3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9]))"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="PositiveIntegerDatatype">
+      <xs:restriction base="xs:positiveInteger">
+         <xs:pattern value="\S(.*\S)?">
+            <xs:annotation>
+               <xs:documentation>A trimmed string, at least one character with no
+              leading or trailing whitespace.</xs:documentation>
+            </xs:annotation>
+         </xs:pattern>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="StringDatatype">
+      <xs:annotation>
+         <xs:documentation>A string, but not empty and not whitespace-only
+          (whitespace is U+9, U+10, U+32 or [ \n\t]+ )</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+         <xs:annotation>
+            <xs:documentation>The OSCAL 'string' datatype restricts the XSD type by prohibiting leading 
+            and trailing whitespace, and something (not only whitespace) is required.</xs:documentation>
+         </xs:annotation>
          <xs:whiteSpace value="preserve"/>
-         <xs:pattern value="[\i-[:𐀀-󯿿]][\c-[:𐀀-󯿿]]*">
-            <xs:annotation><!--<xs:documentation>An XML initial character (but not colon), followed by any XML name character (but not colon).</xs:documentation>-->
-               <xs:documentation>A single token may not contain whitespace.</xs:documentation>
+         <xs:pattern value="\S(.*\S)?">
+            <xs:annotation>
+               <xs:documentation>A trimmed string, at least one character with no
+              leading or trailing whitespace.</xs:documentation>
+            </xs:annotation>
+         </xs:pattern>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="URIDatatype">
+      <xs:annotation>
+         <xs:documentation>A URI</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:anyURI">
+         <xs:pattern value="[a-zA-Z][a-zA-Z0-9+\-.]+:.*\S">
+            <xs:annotation>
+               <xs:documentation>Requires a scheme with colon per RFC 3986.</xs:documentation>
+            </xs:annotation>
+         </xs:pattern>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="URIReferenceDatatype">
+      <xs:annotation>
+         <xs:documentation>A URI reference, such as a relative URL
+        </xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:anyURI">
+         <xs:pattern value="\S(.*\S)?">
+            <xs:annotation>
+               <xs:documentation>A trimmed URI, at least one character with no
+              leading or trailing whitespace.</xs:documentation>
+            </xs:annotation>
+         </xs:pattern>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="UUIDDatatype">
+      <xs:annotation>
+         <xs:documentation>A type 4 ('random' or 'pseudorandom') or type 5 UUID per RFC
+          4122.</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="metaschema-datatypes:StringDatatype">
+         <xs:pattern value="[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[45][0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}">
+            <xs:annotation>
+               <xs:documentation>A sequence of 8-4-4-4-12 hex digits, with extra
+              constraints in the 13th and 17-18th places for version 4 and 5
+            </xs:documentation>
             </xs:annotation>
          </xs:pattern>
       </xs:restriction>
