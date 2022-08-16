@@ -62,7 +62,7 @@ jobs:
             cd "${OSCAL_WEBSITE_PATH}"
             hugo -v --debug --minify
       - name: Check internal links
-        uses: untitaker/hyperlink@0.1.15
+        uses: untitaker/hyperlink@0.1.26
         with:
           args: ${{ env.OSCAL_WEBSITE_PATH }}/public/ --sources ${{ env.OSCAL_WEBSITE_PATH }}/content --check-anchors
       - uses: actions/upload-artifact@v2
