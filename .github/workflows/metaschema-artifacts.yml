@@ -124,7 +124,7 @@ jobs:
       - name: Publish Artifacts
         # only do this on master
         if: ${{ github.repository == env.HOME_REPO && github.ref == format('refs/heads/{0}',env.HOME_BRANCH) }}
-        uses: stefanzweifel/git-auto-commit-action@v4.9.2
+        uses: stefanzweifel/git-auto-commit-action@v4.15.1
         with:
           repository: ${{ env.OSCAL_HOME }}
           file_pattern: xml json
